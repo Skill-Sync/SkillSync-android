@@ -1,0 +1,63 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    branches-ignore:
+      - master
+
+jobs:
+  lint:
+    name: "Check project by lint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+          
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
+      - name: lint
+        run: |
+        chmod +x gradlew
+        ./gradlew ktlintCheck
+        
+  ktlint:
+    name: "Check project by ktlint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: ktlint
+        run: |
+        chmod +x gradlew
+        ./gradlew ktlintCheck
+
+        
+  detekt:
+    name: "Check project by detekt"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: detekt
+        run: |
+        chmod +x gradlew
+        ./gradlew ktlintCheck
+        ./gradlew detekt
+  
