@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "526506580041",
+    "project_id": "skillsync-83737",
+    "storage_bucket": "skillsync-83737.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526506580041:android:76d85a5ed417b11a61c798",
+        "android_client_info": {
+          "package_name": "com.ss.skillsync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526506580041-skpiog1fpa4o187iathnpqjhauvfoj9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ss.skillsync",
+            "certificate_hash": "c9e27d0a35490ccedb21b59c2e67a66ad675edb6"
+          }
+        },
+        {
+          "client_id": "526506580041-dt58f0qaidkg517arlv7p0ufjhj5jtmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAgwJULb37zRwfO3ay7Rl_akGTQJHOfoU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526506580041-dt58f0qaidkg517arlv7p0ufjhj5jtmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

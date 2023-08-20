@@ -22,6 +22,10 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 retrofit = "2.9.0"
 kotlinx-coroutines-android = "1.7.2"
 kotlinx-coroutines-core = "1.7.2"
+google-services = "4.3.15"
+firebaseBom = "32.2.0"
+firebaseCrashlyticsGradle = "2.9.7"
+timber = "5.0.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -51,6 +55,9 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-runtime-ktx" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines-android" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -59,6 +66,8 @@ com-google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", versio
 com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "core-ktx" }
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services"}
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradle"}
 
 [bundles]
 

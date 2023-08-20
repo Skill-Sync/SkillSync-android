@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -25,9 +27,38 @@ android {
         }
     }
 
+    signingConfigs {
+        maybeCreate("staging").apply {
+            keyAlias = "key1"
+            keyPassword = "staging007"
+            storeFile = file("keystore/staging.jks")
+            storePassword = "staging007"
+        }
+    }
+
     buildTypes {
-        release {
+        maybeCreate("debug").apply {
+            resValue("bool", "FIREBASE_CRASHLYTICS_ENABLED", "false")
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        maybeCreate("staging").apply {
+            signingConfig = signingConfigs.getByName("staging")
+            resValue("bool", "FIREBASE_CRASHLYTICS_ENABLED", "true")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        maybeCreate("release").apply {
+            resValue("bool", "FIREBASE_CRASHLYTICS_ENABLED", "true")
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -43,6 +74,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
@@ -99,4 +131,12 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
+
+    // Firebase services
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics.ktx)
+
+    // Logging
+    implementation(libs.timber)
+
 }

@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="@bool/FIREBASE_CRASHLYTICS_ENABLED" />
+
     </application>
 
 </manifest>
