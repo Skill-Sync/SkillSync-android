@@ -22,8 +22,8 @@ jobs:
           
       - name: lint
         run: |
-        chmod +x gradlew
-        ./gradlew ktlintCheck
+          chmod +x gradlew
+          ./gradlew ktlintCheck
         
   ktlint:
     name: "Check project by ktlint"
@@ -39,8 +39,8 @@ jobs:
           java-version: '17'
       - name: ktlint
         run: |
-        chmod +x gradlew
-        ./gradlew ktlintCheck
+          chmod +x gradlew
+          ./gradlew ktlintCheck
 
         
   detekt:
@@ -57,7 +57,6 @@ jobs:
           java-version: '17'
       - name: detekt
         run: |
-        chmod +x gradlew
-        ./gradlew ktlintCheck
-        ./gradlew detekt
+          chmod +x gradlew
+          ./gradlew detekt
   
