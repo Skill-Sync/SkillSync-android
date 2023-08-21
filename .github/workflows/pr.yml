@@ -23,7 +23,7 @@ jobs:
       - name: lint
         run: |
           chmod +x gradlew
-          ./gradlew ktlintCheck
+          ./gradlew lint
         
   ktlint:
     name: "Check project by ktlint"
