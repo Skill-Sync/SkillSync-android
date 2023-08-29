@@ -139,4 +139,6 @@ dependencies {
     // Logging
     implementation(libs.timber)
 
+    // Splash screen API
+    implementation(libs.androidx.core.splashscreen)
 }

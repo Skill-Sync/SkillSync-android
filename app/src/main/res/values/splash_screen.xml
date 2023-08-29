@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SkillSync.Splash" parent="Theme.SkillSync">
+        <item name="windowSplashScreenBackground">@color/background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_w_text</item>
+        <item name="postSplashScreenTheme">@style/Theme.SkillSync</item>
+    </style>
+
+</resources>
