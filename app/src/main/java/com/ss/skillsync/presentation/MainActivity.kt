@@ -1,6 +1,5 @@
 package com.ss.skillsync.presentation
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,10 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import com.ss.skillsync.presentation.theme.SkillSyncTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +32,9 @@ class MainActivity : ComponentActivity() {
     private fun splashScreenSetup() {
         installSplashScreen().apply {
             setKeepOnScreenCondition {
-                true
+                // TODO: Add Auth Checking And Navigate to correct navGraph
+                Thread.sleep(1000)
+                false
             }
         }
     }
@@ -45,13 +43,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App(modifier: Modifier = Modifier) {
     Text(
-        text = "Hello SkillNest",
+        text = "Hello, SkillSync",
         modifier = modifier
     )
 }
 
 @Preview(showBackground = true, showSystemUi = true)
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, showSystemUi = true)
 @Composable
 fun AppPreview() {
     SkillSyncTheme {
