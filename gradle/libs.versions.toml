@@ -27,6 +27,7 @@ google-services = "4.3.15"
 firebaseBom = "32.2.0"
 firebaseCrashlyticsGradle = "2.9.7"
 timber = "5.0.1"
+compose-destinations = "1.8.42-beta"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -60,6 +61,8 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
+composeDestinations = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "compose-destinations" }
+composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
