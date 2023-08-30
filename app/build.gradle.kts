@@ -139,4 +139,8 @@ dependencies {
     // Logging
     implementation(libs.timber)
 
+    // Compose destinations
+    implementation(libs.composeDestinations)
+    ksp(libs.composeDestinations.ksp)
+
 }
