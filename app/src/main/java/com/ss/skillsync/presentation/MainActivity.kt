@@ -1,6 +1,5 @@
 package com.ss.skillsync.presentation
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -24,6 +24,7 @@ import com.ss.skillsync.presentation.theme.SkillSyncTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        splashScreenSetup()
         setContent {
             SkillSyncTheme {
                 Surface(
@@ -32,6 +33,16 @@ class MainActivity : ComponentActivity() {
                 ) {
                     App(Modifier.fillMaxSize())
                 }
+            }
+        }
+    }
+
+    private fun splashScreenSetup() {
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                // TODO: Add Auth Checking And Navigate to correct navGraph
+                Thread.sleep(1000)
+                false
             }
         }
     }
@@ -58,7 +69,6 @@ fun App(modifier: Modifier = Modifier) {
 }
 
 @Preview(showBackground = true, showSystemUi = true)
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, showSystemUi = true)
 @Composable
 fun AppPreview() {
     SkillSyncTheme {

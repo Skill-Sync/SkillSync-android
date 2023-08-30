@@ -139,8 +139,10 @@ dependencies {
     // Logging
     implementation(libs.timber)
 
+    // Splash screen API
+    implementation(libs.androidx.core.splashscreen)
+
     // Compose destinations
     implementation(libs.composeDestinations)
     ksp(libs.composeDestinations.ksp)
-
 }
