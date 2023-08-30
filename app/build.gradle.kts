@@ -128,10 +128,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-
     // Firebase services
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics.ktx)

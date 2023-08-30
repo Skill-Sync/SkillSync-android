@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
 fun App(modifier: Modifier = Modifier) {
@@ -56,9 +57,8 @@ fun App(modifier: Modifier = Modifier) {
         rootDefaultAnimations = RootNavGraphDefaultAnimations(
             enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
             exitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Right) },
-        ),
-
         )
+    )
 
     DestinationsNavHost(
         modifier = modifier,
