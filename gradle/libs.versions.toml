@@ -28,6 +28,9 @@ firebaseBom = "32.2.0"
 firebaseCrashlyticsGradle = "2.9.7"
 timber = "5.0.1"
 compose-destinations = "1.8.42-beta"
+appcompat = "1.6.1"
+material = "1.9.0"
+org-jetbrains-kotlin-jvm = "1.9.0"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -63,6 +66,8 @@ firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-cra
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
 composeDestinations = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "compose-destinations" }
 composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -73,6 +78,8 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services"}
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradle"}
+com-android-library = { id = "com.android.library", version.ref = "agp" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 
 [bundles]
 

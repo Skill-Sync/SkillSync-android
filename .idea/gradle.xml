@@ -12,6 +12,27 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/data" />
+            <option value="$PROJECT_DIR$/core/domain" />
+            <option value="$PROJECT_DIR$/core/model" />
+            <option value="$PROJECT_DIR$/core/navigation" />
+            <option value="$PROJECT_DIR$/core/notifications" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/chat" />
+            <option value="$PROJECT_DIR$/feature/forgetpassword" />
+            <option value="$PROJECT_DIR$/feature/friends" />
+            <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/onboarding" />
+            <option value="$PROJECT_DIR$/feature/payment" />
+            <option value="$PROJECT_DIR$/feature/profile" />
+            <option value="$PROJECT_DIR$/feature/profile/mentor" />
+            <option value="$PROJECT_DIR$/feature/profile/user" />
+            <option value="$PROJECT_DIR$/feature/session" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/signin" />
+            <option value="$PROJECT_DIR$/feature/signup" />
+            <option value="$PROJECT_DIR$/feature/welcome" />
           </set>
         </option>
       </GradleProjectSettings>
