@@ -19,7 +19,7 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import com.ss.skillsync.presentation.authentication.NavGraphs
-import com.ss.skillsync.presentation.theme.SkillSyncTheme
+import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +71,7 @@ fun App(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AppPreview() {
-    SkillSyncTheme {
+    com.ss.skillsync.commonandroid.theme.SkillSyncTheme {
         App(Modifier.fillMaxSize())
     }
 }

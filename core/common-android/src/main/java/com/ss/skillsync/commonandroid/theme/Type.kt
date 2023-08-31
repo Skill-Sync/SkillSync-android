@@ -1,0 +1,68 @@
+package com.ss.skillsync.commonandroid.theme
+
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.ss.skillsync.commonandroid.R
+
+val MontserratFontFamily = FontFamily(
+    Font(R.font.montserrat_bold, FontWeight.Bold),
+    Font(R.font.montserrat_extrabold, FontWeight.ExtraBold),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+)
+
+val DMSansFontFamily = FontFamily(
+    Font(R.font.dmsans_bold, FontWeight.Bold),
+    Font(R.font.dmsans_regular, FontWeight.Normal),
+)
+
+val InterFontFamily = FontFamily(
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_semibold, FontWeight.SemiBold)
+)
+
+val Typography = Typography(
+    headlineLarge = TextStyle(
+        fontFamily = DMSansFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 30.sp,
+        lineHeight = 40.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = DMSansFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp,
+        lineHeight = 18.sp,
+        letterSpacing = 0.6.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = DMSansFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        lineHeight = 19.sp,
+        textAlign = TextAlign.Center
+    ),
+    labelSmall = TextStyle(
+        fontFamily = InterFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = DMSansFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+        lineHeight = 16.sp
+    ),
+    titleLarge = TextStyle(
+        fontFamily = MontserratFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 40.sp,
+        lineHeight = 38.sp
+    )
+)
