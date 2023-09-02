@@ -1,5 +1,6 @@
 [versions]
 agp = "8.1.0"
+coreSplashscreen = "1.0.1"
 kotlin = "1.9.0"
 compose-compiler = "1.5.1"
 core-ktx = "1.9.0"
@@ -26,8 +27,13 @@ google-services = "4.3.15"
 firebaseBom = "32.2.0"
 firebaseCrashlyticsGradle = "2.9.7"
 timber = "5.0.1"
+compose-destinations = "1.8.42-beta"
+ktlint-runtime = "0.50.0"
+ktlint-gradle = "11.5.0"
+detekt-gradle = "1.23.0"
 
 [libraries]
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
@@ -58,6 +64,14 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
+composeDestinations = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "compose-destinations" }
+composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
+
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt-gradle" }
+ktlint-gradle = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-gradle" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
@@ -68,6 +82,8 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services"}
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsGradle"}
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt-gradle" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 
 [bundles]
 
