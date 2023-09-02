@@ -1,3 +1,4 @@
+import com.android.build.gradle.BaseExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -9,6 +10,10 @@ class AndroidComposePlugin: Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("com.google.devtools.ksp")
+            }
+
+            extensions.configure(BaseExtension::class.java) {
+                configureCompose(project)
             }
 
             dependencies.apply {

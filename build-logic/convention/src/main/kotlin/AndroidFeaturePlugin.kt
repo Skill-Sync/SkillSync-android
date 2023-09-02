@@ -12,12 +12,14 @@ class AndroidFeaturePlugin : Plugin<Project> {
                 apply("ss.android.compose")
             }
             extensions.configure(BaseExtension::class.java) {
-                commonAndroid(target)
+                commonAndroid(project)
             }
 
             dependencies.apply {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:domain"))
+                add("implementation", project(":core:navigation"))
+                add("implementation", project(":core:common-android"))
             }
 
         }
