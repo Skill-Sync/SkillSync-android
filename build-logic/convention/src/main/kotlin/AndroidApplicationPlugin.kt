@@ -13,6 +13,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
 
             extensions.configure(BaseExtension::class.java) {
                 commonAndroid(project)
+                configureCompose(project)
 
                 namespace = ApkConfig.APPLICATION_ID
                 defaultConfig {

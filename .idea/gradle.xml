@@ -24,6 +24,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common-android" />
             <option value="$PROJECT_DIR$/core/data" />
@@ -42,12 +44,11 @@
             <option value="$PROJECT_DIR$/feature/profile/mentor" />
             <option value="$PROJECT_DIR$/feature/profile/user" />
             <option value="$PROJECT_DIR$/feature/session" />
+            <option value="$PROJECT_DIR$/feature/session-making" />
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/signin" />
             <option value="$PROJECT_DIR$/feature/signup" />
             <option value="$PROJECT_DIR$/feature/welcome" />
-            <option value="$PROJECT_DIR$/build-logic" />
-            <option value="$PROJECT_DIR$/build-logic/convention" />
           </set>
         </option>
       </GradleProjectSettings>
