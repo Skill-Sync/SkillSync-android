@@ -2,6 +2,8 @@
 plugins {
     id("ss.android.library")
     id("ss.android.compose")
+    id("ss.android.testing")
+    id("ss.testing")
 }
 
 android {

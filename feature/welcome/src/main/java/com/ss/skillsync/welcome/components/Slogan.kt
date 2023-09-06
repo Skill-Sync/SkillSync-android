@@ -1,24 +1,21 @@
-package com.ss.skillsync.presentation.component
+package com.ss.skillsync.welcome.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.ss.skillsync.R
+import com.ss.skillsync.commonandroid.theme.MontserratFontFamily
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun Slogan(
     modifier: Modifier = Modifier,
@@ -29,9 +26,10 @@ fun Slogan(
 ) {
     val textStyle = SpanStyle(
         fontSize = fontSize,
-        fontFamily = FontFamily(Font(R.font.montserrat_bold)),
+        fontFamily = MontserratFontFamily,
         color = primaryColor,
-        letterSpacing = 1.5.sp
+        letterSpacing = 1.5.sp,
+        fontWeight = FontWeight.Bold
     )
     Text(
         text = buildAnnotatedString {
