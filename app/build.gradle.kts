@@ -54,4 +54,5 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     implementation(project(":core:common-android"))
+    implementation(project(":feature:welcome"))
 }

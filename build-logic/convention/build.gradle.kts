@@ -56,5 +56,13 @@ gradlePlugin {
             id = "ss.android.compose"
             implementationClass = "AndroidComposePlugin"
         }
+        register("skillSyncUnitTesting") {
+            id = "ss.testing"
+            implementationClass = "UnitTestingPlugin"
+        }
+        register("skillSyncAndroidTesting") {
+            id = "ss.android.testing"
+            implementationClass = "AndroidTestingPlugin"
+        }
     }
 }
