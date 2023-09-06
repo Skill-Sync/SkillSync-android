@@ -3,6 +3,9 @@ import org.gradle.api.Project
 
 class LibraryPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        project.plugins.apply("kotlin")
+        project.plugins.apply {
+            apply("kotlin")
+            apply("ss.lint")
+        }
     }
 }

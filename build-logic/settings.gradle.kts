@@ -23,3 +23,4 @@ dependencyResolutionManagement {
 }
 
 include(":convention")
+include(":task")

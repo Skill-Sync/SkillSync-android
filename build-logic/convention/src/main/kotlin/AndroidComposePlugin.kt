@@ -1,4 +1,5 @@
 import com.android.build.gradle.BaseExtension
+import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -14,6 +15,11 @@ class AndroidComposePlugin: Plugin<Project> {
 
             extensions.configure(BaseExtension::class.java) {
                 configureCompose(project)
+            }
+
+            extensions.configure(KspExtension::class.java) {
+                arg("compose-destinations.mode", "destinations")
+                arg("compose-destinations.moduleName", target.name)
             }
 
             dependencies.apply {
