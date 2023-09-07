@@ -1,0 +1,13 @@
+plugins {
+    id("ss.android.compose")
+    id("ss.android.library")
+}
+
+android {
+    namespace = "com.ss.skillsync.feature.${name}.impl"
+}
+
+dependencies {
+    implementation(project.feature.${name}.api)
+    implementation(project.core.model)
+}

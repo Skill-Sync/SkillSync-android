@@ -13,7 +13,8 @@ private val DarkColorScheme = darkColorScheme(
     primary = Purple,
     secondary = Yellow,
     tertiary = Blue,
-    background = SemiBlack
+    background = SemiBlack,
+    onBackground = White
 )
 
 @Composable

@@ -1,4 +1,5 @@
 import com.android.build.gradle.BaseExtension
+import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -16,6 +17,11 @@ class AndroidComposePlugin: Plugin<Project> {
                 configureCompose(project)
             }
 
+            extensions.configure(KspExtension::class.java) {
+                arg("compose-destinations.mode", "destinations")
+                arg("compose-destinations.moduleName", target.name)
+            }
+
             dependencies.apply {
                 add("implementation", platform(libs.compose.bom))
                 add("implementation", libs.ui)
@@ -24,6 +30,7 @@ class AndroidComposePlugin: Plugin<Project> {
                 add("implementation", libs.ui.tooling.preview)
                 add("implementation", libs.androidx.lifecycle.viewmodel.compose)
                 add("implementation", libs.composeDestinations)
+                add("debugImplementation", libs.ui.tooling)
                 add("ksp", libs.composeDestinations.ksp)
             }
 

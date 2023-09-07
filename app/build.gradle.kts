@@ -33,11 +33,6 @@ android {
             }
         }
     }
-
-    ksp {
-
-    }
-
 }
 
 dependencies {
@@ -46,7 +41,6 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.data)
     implementation(projects.core.model)
-    implementation(projects.core.navigation)
     implementation(projects.core.notifications)
 
     implementation(projects.feature.home)
