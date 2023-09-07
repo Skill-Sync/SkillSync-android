@@ -54,10 +54,18 @@ val Typography = Typography(
         lineHeight = 16.sp,
     ),
     bodyLarge = TextStyle(
+        fontFamily = MontserratFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 17.sp,
+        color = White
+    ),
+    bodyMedium = TextStyle(
         fontFamily = DMSansFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        lineHeight = 16.sp
+        lineHeight = 16.sp,
+        color = White
     ),
     titleLarge = TextStyle(
         fontFamily = MontserratFontFamily,

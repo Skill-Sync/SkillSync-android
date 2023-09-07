@@ -10,6 +10,8 @@ class AndroidFeaturePlugin : Plugin<Project> {
                 apply("kotlin-android")
                 apply("ss.hilt")
                 apply("ss.android.compose")
+                apply("ss.android.testing")
+                apply("ss.testing")
                 apply("ss.lint")
             }
             extensions.configure(BaseExtension::class.java) {

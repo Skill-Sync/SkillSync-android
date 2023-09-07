@@ -30,6 +30,7 @@ class AndroidComposePlugin: Plugin<Project> {
                 add("implementation", libs.ui.tooling.preview)
                 add("implementation", libs.androidx.lifecycle.viewmodel.compose)
                 add("implementation", libs.composeDestinations)
+                add("debugImplementation", libs.ui.tooling)
                 add("ksp", libs.composeDestinations.ksp)
             }
 
