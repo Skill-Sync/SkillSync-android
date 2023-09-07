@@ -1,6 +1,5 @@
 package com.ss.skillsync.welcome
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -21,10 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
 import com.ss.skillsync.commonandroid.components.BrandButton
-import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.welcome.components.Slogan
 import com.ss.skillsync.commonandroid.R as commonRes
 
@@ -33,9 +31,15 @@ import com.ss.skillsync.commonandroid.R as commonRes
  * @date 31/08/2023
  */
 
-@SuppressLint("CoroutineCreationDuringComposition")
+interface WelcomeNavigator {
+    fun leaveWelcomeScreen()
+
+}
+@Destination
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    navigator: WelcomeNavigator
+) {
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,19 +86,11 @@ fun WelcomeScreen() {
             BrandButton(
                 text = stringResource(R.string.find_your_skills),
                 onClick = {
-                    // TODO: Navigate to the OnBoarding Feature
+                    navigator.leaveWelcomeScreen()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 isUppercase = false
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WelcomeScreenPreview() {
-    SkillSyncTheme {
-        WelcomeScreen()
     }
 }

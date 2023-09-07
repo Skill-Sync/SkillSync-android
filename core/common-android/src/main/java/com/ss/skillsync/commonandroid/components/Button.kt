@@ -1,11 +1,13 @@
 package com.ss.skillsync.commonandroid.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
@@ -43,7 +45,8 @@ fun BrandButton(
     background: Brush = Brush.linearGradient(colors = listOf(Color.White, Color.White)),
     textColor: Color = Color.Black,
     iconPainter: Painter? = null,
-    iconTintColor: Color = textColor,
+    iconTintColor: Color? = textColor,
+    iconSize: Int = 40,
     isUppercase: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp)
 ) {
@@ -62,12 +65,23 @@ fun BrandButton(
             horizontalArrangement = Arrangement.Center
         ) {
             if (iconPainter != null) {
-                Icon(
-                    painter = iconPainter,
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 16.dp),
-                    tint = iconTintColor
-                )
+                if (iconTintColor == null)
+                    Image(
+                        painter = iconPainter,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(iconSize.dp)
+                            .padding(end = 16.dp),
+                    )
+                else
+                    Icon(
+                        painter = iconPainter,
+                        contentDescription = null,
+                        tint = iconTintColor,
+                        modifier = Modifier
+                            .size(iconSize.dp)
+                            .padding(end = 16.dp),
+                    )
             }
             Text(
                 text = if (isUppercase) text.uppercase() else text,
