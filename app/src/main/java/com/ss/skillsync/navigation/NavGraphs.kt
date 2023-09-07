@@ -10,8 +10,8 @@ import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/7/2023.
  */
-class NavGraphs(
-    private val isFirstOpen: Boolean = false
+class NavGraphs private constructor(
+    private var isFirstOpen: Boolean,
 ) {
     val root = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
@@ -57,6 +57,19 @@ class NavGraphs(
             welcome
         } else {
             auth
+        }
+    }
+
+    companion object {
+        private var instance: NavGraphs? = null
+        fun create(isFirstOpen: Boolean): NavGraphs {
+            return instance?.also { it.isFirstOpen = isFirstOpen } ?: NavGraphs(isFirstOpen).also {
+                instance = it
+            }
+        }
+
+        fun get(): NavGraphs {
+            return instance ?: throw IllegalStateException("NavGraphs is not initialized")
         }
     }
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.ss.skillsync.commonAndroid.R
+import com.ss.skillsync.commonandroid.R
 
 val MontserratFontFamily = FontFamily(
     Font(R.font.montserrat_bold, FontWeight.Bold),
