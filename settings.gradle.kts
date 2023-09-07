@@ -17,7 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "SkillSync"
 include(":app")
 include(":core:data")
-include(":core:navigation")
 include(":core:notifications")
 include(":core:domain")
 include(":core:model")

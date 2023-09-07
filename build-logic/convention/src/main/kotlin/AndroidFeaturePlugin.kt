@@ -10,6 +10,7 @@ class AndroidFeaturePlugin : Plugin<Project> {
                 apply("kotlin-android")
                 apply("ss.hilt")
                 apply("ss.android.compose")
+                apply("ss.lint")
             }
             extensions.configure(BaseExtension::class.java) {
                 commonAndroid(project)
@@ -18,7 +19,6 @@ class AndroidFeaturePlugin : Plugin<Project> {
             dependencies.apply {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:domain"))
-                add("implementation", project(":core:navigation"))
                 add("implementation", project(":core:common-android"))
             }
 
