@@ -7,5 +7,5 @@ plugins {
 }
 
 android {
-    namespace = "com.ss.skillsync.commonandroid"
+    namespace = "com.ss.skillsync.commonAndroid"
 }

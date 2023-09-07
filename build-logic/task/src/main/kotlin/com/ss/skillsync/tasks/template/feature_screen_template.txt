@@ -1,0 +1,14 @@
+package com.ss.skillsync.feature.${featureNameSmall}
+
+import androidx.compose.runtime.Composable
+import com.ramcosta.composedestinations.annotation.Destination
+
+interface ${featureName}Navigator
+
+@Destination
+@Composable
+fun ${featureName}Screen(
+    navigator: ${featureName}Navigator,
+) {
+
+}

@@ -33,10 +33,31 @@ android {
             }
         }
     }
-
 }
 
 dependencies {
+
+    implementation(projects.core.commonAndroid)
+    implementation(projects.core.domain)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
+    implementation(projects.core.notifications)
+
+    implementation(projects.feature.home)
+    implementation(projects.feature.forgetpassword)
+    implementation(projects.feature.chat)
+    implementation(projects.feature.onboarding)
+    implementation(projects.feature.friends)
+    implementation(projects.feature.payment)
+    implementation(projects.feature.profile.mentor)
+    implementation(projects.feature.profile.user)
+    implementation(projects.feature.session)
+    implementation(projects.feature.sessionMaking)
+    implementation(projects.feature.settings)
+    implementation(projects.feature.signin)
+    implementation(projects.feature.signup)
+    implementation(projects.feature.welcome)
+
     implementation(libs.activity.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
@@ -52,7 +73,4 @@ dependencies {
 
     // Splash screen API
     implementation(libs.androidx.core.splashscreen)
-
-    implementation(project(":core:common-android"))
-    implementation(project(":feature:welcome"))
 }

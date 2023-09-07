@@ -12,9 +12,10 @@ class AndroidFeaturePlugin : Plugin<Project> {
                 apply("ss.android.compose")
                 apply("ss.android.testing")
                 apply("ss.testing")
+                apply("ss.lint")
             }
             extensions.configure(BaseExtension::class.java) {
-                commonAndroid(target)
+                commonAndroid(project)
             }
 
             dependencies.apply {

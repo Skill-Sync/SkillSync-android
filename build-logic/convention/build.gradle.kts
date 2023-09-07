@@ -24,6 +24,8 @@ dependencies {
     implementation(libs.detekt.gradle)
 
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
+    implementation(project(":task"))
+    compileOnly(libs.ksp.gradlePlugin)
 }
 
 gradlePlugin {

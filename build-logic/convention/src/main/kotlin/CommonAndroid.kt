@@ -11,7 +11,6 @@ fun BaseExtension.commonAndroid(target: Project) {
     configureBuildFeatures()
     configureCompileOptions()
     configurePackagingOptions()
-    target.configureComposeOptions(this)
 
     target.suppressOptIn()
 
@@ -65,16 +64,6 @@ private fun BaseExtension.configureBuildTypes() {
 @Suppress("UnstableApiUsage")
 private fun BaseExtension.configureBuildFeatures() {
     buildFeatures.buildConfig = true
-    buildFeatures.compose = true
-}
-
-@Suppress("UnstableApiUsage")
-private fun Project.configureComposeOptions(
-    extension: BaseExtension
-) {
-    extension.composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
 }
 
 private fun BaseExtension.configureCompileOptions() {
