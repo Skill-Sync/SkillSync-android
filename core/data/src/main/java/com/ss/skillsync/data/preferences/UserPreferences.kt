@@ -1,0 +1,56 @@
+package com.ss.skillsync.data.preferences
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.ss.skillsync.data.model.UserDTO
+import kotlinx.coroutines.flow.first
+
+/**
+ * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
+ * @date 08/09/2023
+ */
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+
+class UserPreferences(context: Context) {
+    private val dataStore = context.dataStore
+
+    companion object Keys {
+        private val accessTokenKey = stringPreferencesKey("access_token")
+        private val refreshTokenKey = stringPreferencesKey("refresh_token")
+    }
+
+    suspend fun saveUserTokens(userDTO: UserDTO) {
+        saveUserTokens(userDTO.accessToken, userDTO.refreshToken)
+    }
+
+    suspend fun saveUserTokens(accessToken: String, refreshToken: String) {
+        dataStore.edit { preferences ->
+            preferences[accessTokenKey] = accessToken
+            preferences[refreshTokenKey] = refreshToken
+        }
+    }
+
+    suspend fun getUserToken(): String {
+        val preferences = dataStore.data.first()
+        val accessToken = preferences.getNotNullString(accessTokenKey)
+        val refreshToken = preferences.getNotNullString(refreshTokenKey)
+        return "Bearer $accessToken $refreshToken"
+    }
+
+    suspend fun clearUserTokens() {
+        dataStore.edit { preferences ->
+            preferences[accessTokenKey] = ""
+            preferences[refreshTokenKey] = ""
+        }
+    }
+
+    private fun Preferences.getNotNullString(key: Preferences.Key<String>): String {
+        return this[key].orEmpty()
+            .ifEmpty { throw Exception("Access token not found") }
+    }
+}
