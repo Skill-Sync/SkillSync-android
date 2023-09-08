@@ -1,4 +1,4 @@
-package com.ss.skillsync.data.source.remote
+package com.ss.skillsync.data.source.remote.user
 
 import com.ss.skillsync.data.model.UserDTO
 import com.ss.skillsync.data.source.remote.interceptor.Authenticated
@@ -20,5 +20,5 @@ interface UserApiService {
     suspend fun signUp(@Body signUpPayload: SignUpPayload): Response<String>
     @GET("getUserData")
     @Authenticated
-    suspend fun getUserDataWithToken(@Body token: String): Response<UserDTO>
+    suspend fun getUserData(): Response<UserDTO>
 }

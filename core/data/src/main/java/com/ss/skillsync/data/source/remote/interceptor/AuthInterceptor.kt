@@ -30,7 +30,7 @@ class AuthInterceptor @Inject constructor(
     }
 
     private suspend fun Interceptor.Chain.handleRequest(shouldAttachAuthHeader: Boolean): Response {
-        return if (shouldAttachAuthHeader) {
+        return if (shouldAttachAuthHeader and userPreferences.areTokensAvailable()) {
             val response = proceed(
                 request()
                     .newBuilder()

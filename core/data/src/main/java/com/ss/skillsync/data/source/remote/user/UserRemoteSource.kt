@@ -1,4 +1,4 @@
-package com.ss.skillsync.data.source.remote
+package com.ss.skillsync.data.source.remote.user
 
 import com.ss.skillsync.data.model.UserDTO
 import com.ss.skillsync.domain.payload.SignInPayload
@@ -39,6 +39,19 @@ class UserRemoteSource @Inject constructor(
             }
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    suspend fun getUserData(): UserDTO? {
+        return try {
+            val response = apiService.getUserData()
+            if (response.isSuccessful) {
+                response.body()!!
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 }
