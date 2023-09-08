@@ -14,7 +14,8 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Yellow,
     tertiary = Blue,
     background = SemiBlack,
-    onBackground = White
+    onBackground = White,
+    outline = Scorpion
 )
 
 @Composable
