@@ -6,7 +6,7 @@ import com.ss.skillsync.model.Skill
  * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
  * @date 08/09/2023
  */
-class UserDTO(
+data class UserDTO(
     val uid: Long = -1,
     val accessToken: String = "",
     val refreshToken: String = "",
