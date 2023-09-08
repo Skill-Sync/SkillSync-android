@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/8/2023.
  */
 class IsUserActiveUseCase @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(): Result<Unit> {
         return withContext(Dispatchers.IO) {
@@ -21,5 +21,4 @@ class IsUserActiveUseCase @Inject constructor(
             }
         }
     }
-
 }

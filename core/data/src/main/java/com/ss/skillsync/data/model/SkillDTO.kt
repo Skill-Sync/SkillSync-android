@@ -6,5 +6,5 @@ package com.ss.skillsync.data.model
 data class SkillDTO(
     val id: Long,
     val name: String,
-    val level: String
+    val level: String,
 )

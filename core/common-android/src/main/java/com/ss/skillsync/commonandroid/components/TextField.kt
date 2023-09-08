@@ -42,13 +42,14 @@ fun RoundedTextFieldWithTitle(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            value = value, onValueChange = onValueChange,
+            value = value,
+            onValueChange = onValueChange,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.tertiary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
             ),
             singleLine = true,
-            shape = MaterialTheme.shapes.small
+            shape = MaterialTheme.shapes.small,
         )
     }
 }
@@ -71,7 +72,7 @@ fun RoundedPasswordTextField(
             value = value, onValueChange = onValueChange,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.tertiary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -81,11 +82,11 @@ fun RoundedPasswordTextField(
                 IconButton(
                     onClick = {
                         isPasswordVisible = !isPasswordVisible
-                    }
+                    },
                 ) {
                     Image(
                         painter = painterResource(id = iconRes),
-                        contentDescription = "Toggle password visibility"
+                        contentDescription = "Toggle password visibility",
                     )
                 }
             },
@@ -99,8 +100,9 @@ fun RoundedPasswordTextField(
 private fun TextFieldTitle(title: String) {
     Text(
         modifier = Modifier.padding(start = 5.dp, bottom = 5.dp),
-        text = title, style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-        color = MaterialTheme.colorScheme.onBackground
+        text = title,
+        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+        color = MaterialTheme.colorScheme.onBackground,
     )
     Spacer(modifier = Modifier.height(2.dp))
 }

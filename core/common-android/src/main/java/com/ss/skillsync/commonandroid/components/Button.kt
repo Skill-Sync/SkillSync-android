@@ -48,13 +48,13 @@ fun BrandButton(
     iconTintColor: Color? = textColor,
     iconSize: Int = 40,
     isUppercase: Boolean = true,
-    contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp)
+    contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
 ) {
     Button(
         onClick = onClick,
         shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(0.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
     ) {
         Row(
             modifier = Modifier
@@ -62,10 +62,10 @@ fun BrandButton(
                 .padding(contentPadding)
                 .then(modifier),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             if (iconPainter != null) {
-                if (iconTintColor == null)
+                if (iconTintColor == null) {
                     Image(
                         painter = iconPainter,
                         contentDescription = null,
@@ -73,7 +73,7 @@ fun BrandButton(
                             .size(iconSize.dp)
                             .padding(end = 16.dp),
                     )
-                else
+                } else {
                     Icon(
                         painter = iconPainter,
                         contentDescription = null,
@@ -82,12 +82,13 @@ fun BrandButton(
                             .size(iconSize.dp)
                             .padding(end = 16.dp),
                     )
+                }
             }
             Text(
                 text = if (isUppercase) text.uppercase() else text,
                 style = MaterialTheme.typography.labelLarge,
                 color = textColor,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -101,7 +102,7 @@ fun ThemeButtonPreview() {
             "Find Your Skills",
             {},
             modifier = Modifier.fillMaxWidth(),
-            isUppercase = false
+            isUppercase = false,
         )
     }
 }
@@ -117,10 +118,10 @@ fun ColorfulThemeButtonPreview() {
             background = Brush.horizontalGradient(
                 listOf(
                     Purple,
-                    Blue
-                )
+                    Blue,
+                ),
             ),
-            textColor = White
+            textColor = White,
         )
     }
 }
@@ -136,11 +137,11 @@ fun ColorfulThemeButtonPreviewWithIcon() {
             background = Brush.horizontalGradient(
                 listOf(
                     Orange,
-                    Yellow
-                )
+                    Yellow,
+                ),
             ),
             textColor = White,
-            iconPainter = rememberVectorPainter(image = Icons.Default.Lock)
+            iconPainter = rememberVectorPainter(image = Icons.Default.Lock),
         )
     }
 }

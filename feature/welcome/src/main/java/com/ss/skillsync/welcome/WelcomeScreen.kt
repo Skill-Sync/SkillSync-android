@@ -33,30 +33,30 @@ import com.ss.skillsync.commonandroid.R as commonRes
 
 interface WelcomeNavigator {
     fun leaveWelcomeScreen()
-
 }
+
 @Destination
 @Composable
 fun WelcomeScreen(
-    navigator: WelcomeNavigator
+    navigator: WelcomeNavigator,
 ) {
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background),
     ) {
         Spacer(modifier = Modifier.height(12.dp))
         Image(
             painter = painterResource(id = commonRes.drawable.logo_w_text),
             contentDescription = "Skill Sync",
             contentScale = ContentScale.Fit,
-            modifier = Modifier.fillMaxWidth(0.8f)
+            modifier = Modifier.fillMaxWidth(0.8f),
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             repeat(3) { rowIndex ->
                 val scrollState = rememberScrollState(rowIndex * 560)
@@ -67,7 +67,7 @@ fun WelcomeScreen(
                         .height(48.dp)
                         .horizontalScroll(scrollState, enabled = false)
                         .fillMaxWidth(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
                 )
             }
         }
@@ -75,7 +75,7 @@ fun WelcomeScreen(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .paddingFromBaseline(bottom = 12.dp)
-                .padding(24.dp)
+                .padding(24.dp),
         ) {
             Slogan(modifier = Modifier.padding(bottom = 16.dp))
             Text(
@@ -89,7 +89,7 @@ fun WelcomeScreen(
                     navigator.leaveWelcomeScreen()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                isUppercase = false
+                isUppercase = false,
             )
         }
     }

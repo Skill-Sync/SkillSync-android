@@ -13,8 +13,8 @@ import javax.inject.Inject
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/8/2023.
  */
 class SkillRepositoryImpl @Inject constructor(
-    private val skillRemoteSource: SkillRemoteSource
-): SkillRepository {
+    private val skillRemoteSource: SkillRemoteSource,
+) : SkillRepository {
 
     private val userInterestedSkillsFlow = MutableStateFlow<List<Skill>>(emptyList())
     private val userStrengthsFlow = MutableStateFlow<List<Skill>>(emptyList())
@@ -68,7 +68,6 @@ class SkillRepositoryImpl @Inject constructor(
     }
 
     override suspend fun setInterestedSkills() {
-
     }
 
     override suspend fun setStrengths() {

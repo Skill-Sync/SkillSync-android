@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         setContent {
-            val navParams  by viewModel.navigationParams.collectAsState()
+            val navParams by viewModel.navigationParams.collectAsState()
             if (navParams != null) {
                 App(navigationParams = navParams!!)
             }
@@ -53,20 +53,20 @@ fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
     SkillSyncTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             val snackbarHostState = remember { SnackbarHostState() }
             Scaffold(
                 snackbarHost = {
                     DefaultSnackbarHost(state = snackbarHostState)
-                }
+                },
             ) {
                 AppNavigation(
                     modifier = modifier
                         .fillMaxSize()
                         .padding(it),
                     snackbarHostState = snackbarHostState,
-                    navigationParams = navigationParams
+                    navigationParams = navigationParams,
                 )
             }
         }

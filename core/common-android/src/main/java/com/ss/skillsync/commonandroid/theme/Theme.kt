@@ -15,12 +15,12 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = Blue,
     background = SemiBlack,
     onBackground = White,
-    outline = Scorpion
+    outline = Scorpion,
 )
 
 @Composable
 fun SkillSyncTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -35,6 +35,6 @@ fun SkillSyncTheme(
         colorScheme = DarkColorScheme,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

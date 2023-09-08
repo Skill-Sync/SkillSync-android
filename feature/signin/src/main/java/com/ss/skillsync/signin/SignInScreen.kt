@@ -53,7 +53,7 @@ fun SignInScreen(
         LaunchedEffect(Unit) {
             snackbarHostState.showSnackbar(
                 message = text,
-                duration = SnackbarDuration.Short
+                duration = SnackbarDuration.Short,
             )
             viewModel.resetErrors()
         }
@@ -61,7 +61,7 @@ fun SignInScreen(
 
     state.navigate(
         toHomeScreen = navigator::navigateToHome,
-        toOnboarding = navigator::navigateToOnboarding
+        toOnboarding = navigator::navigateToOnboarding,
     )
 
     SignInContent(
@@ -71,9 +71,8 @@ fun SignInScreen(
         onSignInClicked = viewModel::onSignInClicked,
         onSignupClicked = {
             navigator.navigateToSignUp()
-        }
+        },
     )
-
 }
 
 @Composable
@@ -93,7 +92,7 @@ private fun SignInContent(
         )
         SignInButtonsSection(
             onSignInClicked = onSignInClicked,
-            onSignupClicked = onSignupClicked
+            onSignupClicked = onSignupClicked,
         )
     }
 }
@@ -121,13 +120,13 @@ private fun SignInForm(
         RoundedTextFieldWithTitle(
             title = stringResource(R.string.email),
             value = state.email,
-            onValueChange = onEmailChanged
+            onValueChange = onEmailChanged,
         )
         Spacer(modifier = Modifier.height(space))
         RoundedPasswordTextField(
             title = stringResource(R.string.password),
             value = state.password,
-            onValueChange = onPasswordChanged
+            onValueChange = onPasswordChanged,
         )
     }
 }
@@ -136,7 +135,7 @@ private fun SignInForm(
 private fun SignInButtonsSection(
     modifier: Modifier = Modifier,
     onSignInClicked: () -> Unit,
-    onSignupClicked: () -> Unit
+    onSignupClicked: () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         BrandButton(
@@ -146,14 +145,14 @@ private fun SignInButtonsSection(
             background = Brush.horizontalGradient(
                 listOf(
                     Purple,
-                    Blue
-                )
+                    Blue,
+                ),
             ),
-            textColor = MaterialTheme.colorScheme.onBackground
+            textColor = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(modifier = Modifier.height(10.dp))
         FooterSection(
-            onSignupClicked = onSignupClicked
+            onSignupClicked = onSignupClicked,
         )
     }
 }
@@ -165,17 +164,17 @@ private fun FooterSection(
 ) {
     Row(
         modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(R.string.you_dont_have_an_account),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(modifier = Modifier.width(5.dp))
         ClickableText(
             text = stringResource(R.string.sign_up),
-            onClick = onSignupClicked
+            onClick = onSignupClicked,
         )
     }
 }

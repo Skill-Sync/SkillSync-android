@@ -16,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
-    private val getNavigationParamsUseCase: GetNavigationParamsUseCase
-): ViewModel() {
+    private val getNavigationParamsUseCase: GetNavigationParamsUseCase,
+) : ViewModel() {
 
     private var _state = MutableStateFlow(SignInState())
     val state = _state.asStateFlow()

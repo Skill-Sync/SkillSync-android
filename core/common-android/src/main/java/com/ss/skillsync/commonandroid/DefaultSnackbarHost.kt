@@ -14,7 +14,7 @@ fun DefaultSnackbarHost(state: SnackbarHostState) {
     SnackbarHost(state) {
         Snackbar(
             snackbarData = it,
-            containerColor = Black
+            containerColor = Black,
         )
     }
 }

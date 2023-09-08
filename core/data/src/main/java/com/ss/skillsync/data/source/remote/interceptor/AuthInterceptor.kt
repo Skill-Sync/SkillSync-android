@@ -35,10 +35,12 @@ class AuthInterceptor @Inject constructor(
                 request()
                     .newBuilder()
                     .addHeader("Authorization", userPreferences.getUserToken())
-                    .build()
+                    .build(),
             )
             handleResponse(response)
-        } else handleResponse(proceed(request()))
+        } else {
+            handleResponse(proceed(request()))
+        }
     }
 
     private suspend fun handleResponse(response: Response): Response {

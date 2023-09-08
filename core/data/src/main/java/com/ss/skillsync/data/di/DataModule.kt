@@ -30,8 +30,8 @@ object DataModule {
     fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient = if (BuildConfig.DEBUG) {
         OkHttpClient.Builder()
             .addInterceptor(
-                HttpLoggingInterceptor().
-                setLevel(HttpLoggingInterceptor.Level.BODY)
+                HttpLoggingInterceptor()
+                    .setLevel(HttpLoggingInterceptor.Level.BODY),
             )
             .addInterceptor(authInterceptor)
             .build()
@@ -64,7 +64,6 @@ object DataModule {
     @Provides
     @Singleton
     fun provideUserPreferences(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): UserPreferences = UserPreferences(context)
-
 }

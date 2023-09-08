@@ -14,8 +14,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class SignupViewModel @Inject constructor(
-    private val signupUseCase: SignupUseCase
-): ViewModel() {
+    private val signupUseCase: SignupUseCase,
+) : ViewModel() {
 
     private var _state = MutableStateFlow(SignupState())
     val state = _state.asStateFlow()
@@ -55,12 +55,11 @@ class SignupViewModel @Inject constructor(
             state.fullName,
             state.email,
             state.password,
-            state.confirmPassword
+            state.confirmPassword,
         ).onSuccess {
             _state.value = state.copy(isSignupSuccessful = true, isLoading = false)
         }.onFailure {
             _state.value = state.copy(error = it.message, isLoading = false)
         }
     }
-
 }

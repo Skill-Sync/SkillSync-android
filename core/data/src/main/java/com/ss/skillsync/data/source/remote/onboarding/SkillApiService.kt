@@ -27,5 +27,4 @@ interface SkillApiService {
     suspend fun setStrengths(
         @Body skills: SkillsDTO,
     )
-
 }

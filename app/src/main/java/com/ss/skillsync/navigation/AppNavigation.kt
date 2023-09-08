@@ -10,7 +10,6 @@ import com.ramcosta.composedestinations.navigation.DependenciesContainerBuilder
 import com.ramcosta.composedestinations.navigation.dependency
 import com.ss.skillsync.model.NavigationParams
 
-
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/6/2023.
  */
@@ -37,6 +36,6 @@ internal fun AppNavigation(
         dependenciesContainerBuilder = {
             dependency(currentNavigator())
             dependency(snackbarHostState)
-        }
+        },
     )
 }

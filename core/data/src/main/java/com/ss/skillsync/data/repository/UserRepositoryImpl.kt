@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userRemoteSource: UserRemoteSource,
-    private val preferences: UserPreferences
+    private val preferences: UserPreferences,
 ) : UserRepository {
 
     private var activeUser: UserDTO? = null

@@ -5,7 +5,7 @@ import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 @HiltAndroidApp
-class SkillSyncApp: Application() {
+class SkillSyncApp : Application() {
     override fun onCreate() {
         super.onCreate()
         plantTimberTree()

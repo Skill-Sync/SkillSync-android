@@ -24,7 +24,7 @@ fun HeaderLargeText(
         text = text,
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.headlineLarge,
-        color = MaterialTheme.colorScheme.onBackground
+        color = MaterialTheme.colorScheme.onBackground,
     )
 }
 
@@ -38,7 +38,7 @@ fun SubHeaderText(
         text = text,
         style = MaterialTheme.typography.bodyMedium,
         color = DoveGray,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }
 
@@ -55,6 +55,6 @@ fun ClickableText(
         text = text,
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.tertiary,
-        textDecoration = TextDecoration.Underline
+        textDecoration = TextDecoration.Underline,
     )
 }

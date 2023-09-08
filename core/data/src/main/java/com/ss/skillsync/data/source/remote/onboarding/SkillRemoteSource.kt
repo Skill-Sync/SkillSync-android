@@ -29,7 +29,6 @@ class SkillRemoteSource @Inject constructor(
             staticSkillSet?.filter {
                 it.name.contains(query, true)
             } ?: emptyList()
-
         } catch (e: Exception) {
             e.printStackTrace()
             emptyList()

@@ -16,8 +16,10 @@ import retrofit2.http.POST
 interface UserApiService {
     @POST("signIn")
     suspend fun signIn(@Body signInPayload: SignInPayload): Response<UserDTO>
+
     @POST("signUp")
     suspend fun signUp(@Body signUpPayload: SignUpPayload): Response<String>
+
     @GET("getUserData")
     @Authenticated
     suspend fun getUserData(): Response<UserDTO>

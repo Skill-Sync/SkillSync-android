@@ -13,7 +13,7 @@ fun SkillDTO.toDomainModel(): Skill {
     return Skill(
         id = id,
         name = name,
-        level = level
+        level = level,
     )
 }
 
@@ -22,6 +22,6 @@ fun Skill.toDTOModel(): SkillDTO {
     return SkillDTO(
         id = id,
         name = name,
-        level = level
+        level = level,
     )
 }

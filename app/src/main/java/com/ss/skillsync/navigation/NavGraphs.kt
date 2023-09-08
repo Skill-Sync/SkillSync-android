@@ -25,7 +25,7 @@ class NavGraphs private constructor(
         override val nestedNavGraphs: List<NavGraphSpec>
             get() = listOf(
                 welcome,
-                auth
+                auth,
             )
     }
 
@@ -33,7 +33,7 @@ class NavGraphs private constructor(
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = mapOf(
                 SignupScreenDestination.route to SignupScreenDestination,
-                SignInScreenDestination.route to SignInScreenDestination
+                SignInScreenDestination.route to SignInScreenDestination,
             )
 
         override val route: String
@@ -54,7 +54,7 @@ class NavGraphs private constructor(
     val welcome = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = mapOf(
-                WelcomeScreenDestination.route to WelcomeScreenDestination
+                WelcomeScreenDestination.route to WelcomeScreenDestination,
             )
         override val route: String
             get() = "welcome"
@@ -80,7 +80,7 @@ class NavGraphs private constructor(
         private var instance: NavGraphs? = null
         fun create(navigationParams: NavigationParams): NavGraphs {
             return instance?.also { it.navigationParams = navigationParams } ?: NavGraphs(
-                navigationParams
+                navigationParams,
             ).also {
                 instance = it
             }

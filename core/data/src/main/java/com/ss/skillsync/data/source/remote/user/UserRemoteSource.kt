@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/8/2023.
  */
 class UserRemoteSource @Inject constructor(
-    private val apiService: UserApiService
+    private val apiService: UserApiService,
 ) {
 
     suspend fun signUp(

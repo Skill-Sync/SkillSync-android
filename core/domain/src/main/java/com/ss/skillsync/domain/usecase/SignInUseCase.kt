@@ -12,7 +12,7 @@ import javax.inject.Inject
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/8/2023.
  */
 class SignInUseCase @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) {
     suspend operator fun invoke(
         email: String,
