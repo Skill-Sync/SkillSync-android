@@ -3,8 +3,9 @@ package com.ss.skillsync.data.di
 import android.content.Context
 import com.ss.skillsync.data.BuildConfig
 import com.ss.skillsync.data.preferences.UserPreferences
-import com.ss.skillsync.data.source.remote.UserApiService
 import com.ss.skillsync.data.source.remote.interceptor.AuthInterceptor
+import com.ss.skillsync.data.source.remote.onboarding.SkillApiService
+import com.ss.skillsync.data.source.remote.user.UserApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,7 +46,7 @@ object DataModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("" /* TODO: Add Tha BaseURL */)
+            .baseUrl("https://api.skillsync.app/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -54,6 +55,11 @@ object DataModule {
     @Singleton
     fun provideUserApiService(retrofit: Retrofit): UserApiService =
         retrofit.create(UserApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideOnboardingApiService(retrofit: Retrofit): SkillApiService =
+        retrofit.create(SkillApiService::class.java)
 
     @Provides
     @Singleton

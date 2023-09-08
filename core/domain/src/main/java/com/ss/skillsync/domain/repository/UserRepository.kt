@@ -1,4 +1,4 @@
-package com.ss.skillsync.domain
+package com.ss.skillsync.domain.repository
 
 import com.ss.skillsync.domain.payload.SignInPayload
 import com.ss.skillsync.domain.payload.SignUpPayload
@@ -10,8 +10,10 @@ import com.ss.skillsync.model.User
  */
 
 interface UserRepository {
-    suspend fun getActiveUser(): User?
+    suspend fun getActiveUser(): Result<User>
     suspend fun signIn(signInPayload: SignInPayload): Result<User>
     suspend fun signUp(signUpPayload: SignUpPayload): Result<Unit>
     suspend fun signOut()
+
+    suspend fun isFirstOpen(): Boolean
 }

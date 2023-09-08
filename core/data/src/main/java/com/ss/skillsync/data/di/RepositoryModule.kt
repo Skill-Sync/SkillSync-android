@@ -1,7 +1,9 @@
 package com.ss.skillsync.data.di
 
+import com.ss.skillsync.data.repository.SkillRepositoryImpl
 import com.ss.skillsync.data.repository.UserRepositoryImpl
-import com.ss.skillsync.domain.UserRepository
+import com.ss.skillsync.domain.repository.SkillRepository
+import com.ss.skillsync.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +23,10 @@ abstract class RepositoryModule {
     abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl,
     ): UserRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSkillRepository(
+        skillRepositoryImpl: SkillRepositoryImpl,
+    ): SkillRepository
 }

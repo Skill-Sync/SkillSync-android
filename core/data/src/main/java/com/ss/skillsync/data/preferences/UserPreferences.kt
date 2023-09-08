@@ -3,6 +3,7 @@ package com.ss.skillsync.data.preferences
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -22,6 +23,7 @@ class UserPreferences(context: Context) {
     companion object Keys {
         private val accessTokenKey = stringPreferencesKey("access_token")
         private val refreshTokenKey = stringPreferencesKey("refresh_token")
+        private val isFirstOpenKey = booleanPreferencesKey("is_first_open")
     }
 
     suspend fun saveUserTokens(userDTO: UserDTO) {
@@ -32,6 +34,15 @@ class UserPreferences(context: Context) {
         dataStore.edit { preferences ->
             preferences[accessTokenKey] = accessToken
             preferences[refreshTokenKey] = refreshToken
+        }
+    }
+
+    suspend fun isFirstOpen(): Boolean {
+        val preferences = dataStore.data.first()
+        return (preferences[isFirstOpenKey] ?: true).also {
+            dataStore.edit { preferences ->
+                preferences[isFirstOpenKey] = false
+            }
         }
     }
 
@@ -46,6 +57,15 @@ class UserPreferences(context: Context) {
         dataStore.edit { preferences ->
             preferences[accessTokenKey] = ""
             preferences[refreshTokenKey] = ""
+        }
+    }
+
+    suspend fun areTokensAvailable(): Boolean {
+        return try {
+            getUserToken()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 
