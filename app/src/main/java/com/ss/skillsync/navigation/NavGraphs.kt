@@ -3,6 +3,7 @@ package com.ss.skillsync.navigation
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route
+import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
 import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
@@ -11,7 +12,7 @@ import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/7/2023.
  */
 class NavGraphs private constructor(
-    private var isFirstOpen: Boolean,
+    private var navigationParams: NavigationParams,
 ) {
     val root = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
@@ -41,6 +42,15 @@ class NavGraphs private constructor(
             get() = SignInScreenDestination
     }
 
+    val main = object : NavGraphSpec {
+        override val destinationsByRoute: Map<String, DestinationSpec<*>>
+            get() = emptyMap()
+        override val route: String
+            get() = "main"
+        override val startRoute: Route
+            get() = WelcomeScreenDestination
+    }
+
     val welcome = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = mapOf(
@@ -53,17 +63,25 @@ class NavGraphs private constructor(
     }
 
     private fun getRootStartRoute(): Route {
+        val isFirstOpen = navigationParams.isFirstTime
+        val isUserActive = navigationParams.isUserActive
         return if (isFirstOpen) {
             welcome
         } else {
-            auth
+            if (isUserActive) {
+                main
+            } else {
+                auth
+            }
         }
     }
 
     companion object {
         private var instance: NavGraphs? = null
-        fun create(isFirstOpen: Boolean): NavGraphs {
-            return instance?.also { it.isFirstOpen = isFirstOpen } ?: NavGraphs(isFirstOpen).also {
+        fun create(navigationParams: NavigationParams): NavGraphs {
+            return instance?.also { it.navigationParams = navigationParams } ?: NavGraphs(
+                navigationParams
+            ).also {
                 instance = it
             }
         }
