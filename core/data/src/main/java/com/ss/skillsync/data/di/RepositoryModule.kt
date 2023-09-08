@@ -1,6 +1,6 @@
 package com.ss.skillsync.data.di
 
-import com.ss.skillsync.data.UserRepositoryImpl
+import com.ss.skillsync.data.repository.UserRepositoryImpl
 import com.ss.skillsync.domain.UserRepository
 import dagger.Binds
 import dagger.Module

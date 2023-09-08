@@ -11,6 +11,7 @@ class NetworkingPlugin: Plugin<Project> {
             dependencies.apply {
                 add("implementation", libs.retrofit)
                 add("implementation", libs.okhttp3)
+                add("implementation", libs.retrofit.gsonConverter)
             }
         }
     }

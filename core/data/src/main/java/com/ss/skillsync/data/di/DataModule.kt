@@ -1,15 +1,19 @@
 package com.ss.skillsync.data.di
 
+import android.content.Context
 import com.ss.skillsync.data.BuildConfig
-import com.ss.skillsync.data.interceptor.AuthInterceptor
-import com.ss.skillsync.data.retrofit.UserApiService
+import com.ss.skillsync.data.preferences.UserPreferences
+import com.ss.skillsync.data.source.remote.UserApiService
+import com.ss.skillsync.data.source.remote.interceptor.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -22,18 +26,18 @@ import javax.inject.Singleton
 object DataModule {
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient = if (BuildConfig.DEBUG) {
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().
                 setLevel(HttpLoggingInterceptor.Level.BODY)
             )
-            .addInterceptor(AuthInterceptor())
+            .addInterceptor(authInterceptor)
             .build()
     } else {
         OkHttpClient
             .Builder()
-            .addInterceptor(AuthInterceptor())
+            .addInterceptor(authInterceptor)
             .build()
     }
 
@@ -42,6 +46,7 @@ object DataModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl("" /* TODO: Add Tha BaseURL */)
+            .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
 
@@ -49,4 +54,11 @@ object DataModule {
     @Singleton
     fun provideUserApiService(retrofit: Retrofit): UserApiService =
         retrofit.create(UserApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserPreferences(
+        @ApplicationContext context: Context
+    ): UserPreferences = UserPreferences(context)
+
 }

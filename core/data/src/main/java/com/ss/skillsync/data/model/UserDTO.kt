@@ -1,4 +1,4 @@
-package com.ss.skillsync.data
+package com.ss.skillsync.data.model
 
 import com.ss.skillsync.model.Skill
 

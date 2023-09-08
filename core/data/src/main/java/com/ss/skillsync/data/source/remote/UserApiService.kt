@@ -1,7 +1,7 @@
-package com.ss.skillsync.data.retrofit
+package com.ss.skillsync.data.source.remote
 
-import com.ss.skillsync.data.UserDTO
-import com.ss.skillsync.data.interceptor.Authenticated
+import com.ss.skillsync.data.model.UserDTO
+import com.ss.skillsync.data.source.remote.interceptor.Authenticated
 import com.ss.skillsync.domain.payload.SignInPayload
 import com.ss.skillsync.domain.payload.SignUpPayload
 import retrofit2.Response

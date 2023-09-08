@@ -3,9 +3,11 @@ package com.ss.skillsync.data.preferences
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.ss.skillsync.data.UserDTO
+import com.ss.skillsync.data.model.UserDTO
+import kotlinx.coroutines.flow.first
 
 /**
  * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
@@ -14,32 +16,41 @@ import com.ss.skillsync.data.UserDTO
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
-val accessTokenKey = stringPreferencesKey("access_token")
-val refreshTokenKey = stringPreferencesKey("refresh_token")
+class UserPreferences(context: Context) {
+    private val dataStore = context.dataStore
 
-fun saveUserTokens(userDTO: UserDTO) {
-    // TODO: Save user token to DataStore preferences
-    /*dataStore.edit { preferences ->
-        preferences[accessToken] = userDTO.accessToken
-        preferences[refreshToken] = userDTO.refreshToken
-    }*/
-}
+    companion object Keys {
+        private val accessTokenKey = stringPreferencesKey("access_token")
+        private val refreshTokenKey = stringPreferencesKey("refresh_token")
+    }
 
-fun getUserToken(): String {
-    // TODO: Get user tokens from DataStore preferences
-    /*val tokensPairFlow: Flow<Pair<String, String>> = context.dataStore.data.map { preferences ->
-        val accessToken = preferences[accessToken] ?: ""
-        val refreshToken = preferences[refreshToken] ?: ""
-        Pair(accessToken, refreshToken)
-    }*/
-    val accessToken = "" /* TEMPORARILY */
-    val refreshToken = "" /* TEMPORARILY */
-    return "Bearer $accessToken $refreshToken" /* TEMPORARILY */
-}
+    suspend fun saveUserTokens(userDTO: UserDTO) {
+        saveUserTokens(userDTO.accessToken, userDTO.refreshToken)
+    }
 
-fun clearUserTokens() {
-    // TODO: Clear user tokens from DataStore preferences
-    /*dataStore.edit { preferences ->
-        preferences.clear()
-    }*/
+    suspend fun saveUserTokens(accessToken: String, refreshToken: String) {
+        dataStore.edit { preferences ->
+            preferences[accessTokenKey] = accessToken
+            preferences[refreshTokenKey] = refreshToken
+        }
+    }
+
+    suspend fun getUserToken(): String {
+        val preferences = dataStore.data.first()
+        val accessToken = preferences.getNotNullString(accessTokenKey)
+        val refreshToken = preferences.getNotNullString(refreshTokenKey)
+        return "Bearer $accessToken $refreshToken"
+    }
+
+    suspend fun clearUserTokens() {
+        dataStore.edit { preferences ->
+            preferences[accessTokenKey] = ""
+            preferences[refreshTokenKey] = ""
+        }
+    }
+
+    private fun Preferences.getNotNullString(key: Preferences.Key<String>): String {
+        return this[key].orEmpty()
+            .ifEmpty { throw Exception("Access token not found") }
+    }
 }

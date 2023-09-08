@@ -1,6 +1,6 @@
 package com.ss.skillsync.data.mapper
 
-import com.ss.skillsync.data.UserDTO
+import com.ss.skillsync.data.model.UserDTO
 import com.ss.skillsync.model.User
 
 /**
