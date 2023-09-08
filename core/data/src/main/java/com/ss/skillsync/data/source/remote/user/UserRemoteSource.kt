@@ -1,4 +1,4 @@
-package com.ss.skillsync.data.source.remote
+package com.ss.skillsync.data.source.remote.user
 
 import com.ss.skillsync.data.model.UserDTO
 import com.ss.skillsync.domain.payload.SignInPayload
@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/8/2023.
  */
 class UserRemoteSource @Inject constructor(
-    private val apiService: UserApiService
+    private val apiService: UserApiService,
 ) {
 
     suspend fun signUp(
@@ -39,6 +39,19 @@ class UserRemoteSource @Inject constructor(
             }
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    suspend fun getUserData(): UserDTO? {
+        return try {
+            val response = apiService.getUserData()
+            if (response.isSuccessful) {
+                response.body()!!
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
         }
     }
 }

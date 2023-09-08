@@ -29,7 +29,6 @@ private fun BasicScreen(
     ) {
         content()
     }
-
 }
 
 @Composable

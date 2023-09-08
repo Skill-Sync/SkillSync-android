@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ss.skillsync.commonandroid.DefaultSnackbarHost
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,8 +32,10 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         setContent {
-            val isFirstOpen by viewModel.isFirstOpen.collectAsState()
-            App(isFirstOpen = isFirstOpen)
+            val navParams by viewModel.navigationParams.collectAsState()
+            if (navParams != null) {
+                App(navigationParams = navParams!!)
+            }
         }
     }
 
@@ -46,24 +49,24 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(modifier: Modifier = Modifier, isFirstOpen: Boolean) {
+fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
     SkillSyncTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             val snackbarHostState = remember { SnackbarHostState() }
             Scaffold(
                 snackbarHost = {
                     DefaultSnackbarHost(state = snackbarHostState)
-                }
+                },
             ) {
                 AppNavigation(
                     modifier = modifier
                         .fillMaxSize()
                         .padding(it),
                     snackbarHostState = snackbarHostState,
-                    isFirstTime = isFirstOpen
+                    navigationParams = navigationParams,
                 )
             }
         }
@@ -74,6 +77,6 @@ fun App(modifier: Modifier = Modifier, isFirstOpen: Boolean) {
 @Composable
 fun AppPreview() {
     SkillSyncTheme {
-        App(Modifier.fillMaxSize(), true)
+        App(Modifier.fillMaxSize(), NavigationParams())
     }
 }

@@ -8,7 +8,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.DependenciesContainerBuilder
 import com.ramcosta.composedestinations.navigation.dependency
-
+import com.ss.skillsync.model.NavigationParams
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/6/2023.
@@ -24,9 +24,9 @@ private fun DependenciesContainerBuilder<*>.currentNavigator(): CommonGraphNavig
 internal fun AppNavigation(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
-    isFirstTime: Boolean,
+    navigationParams: NavigationParams,
 ) {
-    val navGraph = NavGraphs.create(isFirstTime).root
+    val navGraph = NavGraphs.create(navigationParams).root
     val navController = rememberAnimatedNavController()
 
     DestinationsNavHost(
@@ -36,6 +36,6 @@ internal fun AppNavigation(
         dependenciesContainerBuilder = {
             dependency(currentNavigator())
             dependency(snackbarHostState)
-        }
+        },
     )
 }

@@ -49,13 +49,23 @@ fun SignupScreen(
     snackbarHostState: SnackbarHostState,
     viewModel: SignupViewModel = hiltViewModel(),
 ) {
-
     val state by viewModel.state.collectAsState()
 
     if (state.isSignupSuccessful) {
         SuccessfulSignUp(snackbarHostState = snackbarHostState) {
             viewModel.reset()
             navigator.navigateToLogin()
+        }
+    }
+
+    if (state.isSignupFailed()) {
+        val text = state.error ?: stringResource(R.string.something_went_wrong)
+        LaunchedEffect(Unit) {
+            snackbarHostState.showSnackbar(
+                message = text,
+                duration = SnackbarDuration.Short,
+            )
+            viewModel.resetError()
         }
     }
 
@@ -67,7 +77,7 @@ fun SignupScreen(
             onPasswordChanged = viewModel::onPasswordChanged,
             onConfirmPasswordChanged = viewModel::onConfirmPasswordChanged,
             onSignupClicked = viewModel::onSignupClicked,
-            onSignInClicked = { navigator.navigateToLogin() }
+            onSignInClicked = { navigator.navigateToLogin() },
         )
     }
 }
@@ -84,7 +94,7 @@ private fun SignupContent(
 ) {
     ScreenColumn {
         HeaderSection()
-        //Spacer(modifier = Modifier.height(20.dp))
+        // Spacer(modifier = Modifier.height(20.dp))
         SignupForm(
             state = state,
             onFullNameChanged = onFullNameChanged,
@@ -92,13 +102,13 @@ private fun SignupContent(
             onPasswordChanged = onPasswordChanged,
             onConfirmPasswordChanged = onConfirmPasswordChanged,
         )
-        //Spacer(modifier = Modifier.height(30.dp))
+        // Spacer(modifier = Modifier.height(30.dp))
         SignupButtonsSection(
-            onSignupClicked = onSignupClicked
+            onSignupClicked = onSignupClicked,
         )
-        //Spacer(modifier = Modifier.height(20.dp))
+        // Spacer(modifier = Modifier.height(20.dp))
         FooterSection(
-            onSignInClicked = onSignInClicked
+            onSignInClicked = onSignInClicked,
         )
     }
 }
@@ -129,25 +139,25 @@ private fun SignupForm(
         RoundedTextFieldWithTitle(
             title = stringResource(R.string.full_name),
             value = state.fullName,
-            onValueChange = onFullNameChanged
+            onValueChange = onFullNameChanged,
         )
         Spacer(modifier = Modifier.height(space))
         RoundedTextFieldWithTitle(
             title = stringResource(R.string.email),
             value = state.email,
-            onValueChange = onEmailChanged
+            onValueChange = onEmailChanged,
         )
         Spacer(modifier = Modifier.height(space))
         RoundedPasswordTextField(
             title = stringResource(R.string.password),
             value = state.password,
-            onValueChange = onPasswordChanged
+            onValueChange = onPasswordChanged,
         )
         Spacer(modifier = Modifier.height(space))
         RoundedPasswordTextField(
             title = stringResource(R.string.confirm_password),
             value = state.confirmPassword,
-            onValueChange = onConfirmPasswordChanged
+            onValueChange = onConfirmPasswordChanged,
         )
     }
 }
@@ -165,10 +175,10 @@ private fun SignupButtonsSection(
             background = Brush.horizontalGradient(
                 listOf(
                     Orange,
-                    Yellow
-                )
+                    Yellow,
+                ),
             ),
-            textColor = MaterialTheme.colorScheme.onBackground
+            textColor = MaterialTheme.colorScheme.onBackground,
         )
     }
 }
@@ -180,17 +190,17 @@ private fun FooterSection(
 ) {
     Row(
         modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         Text(
             text = stringResource(R.string.you_have_an_account),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
         )
         Spacer(modifier = Modifier.width(5.dp))
         ClickableText(
             text = stringResource(R.string.sign_in),
-            onClick = onSignInClicked
+            onClick = onSignInClicked,
         )
     }
 }
@@ -205,7 +215,7 @@ private fun SuccessfulSignUp(
         LaunchedEffect(Unit) {
             val result = snackbarHostState.showSnackbar(
                 message = text,
-                duration = SnackbarDuration.Short
+                duration = SnackbarDuration.Short,
             )
             if (result == SnackbarResult.Dismissed) {
                 onFinish()
@@ -224,7 +234,7 @@ private fun SignupPrev() {
             onEmailChanged = {},
             onPasswordChanged = {},
             onConfirmPasswordChanged = {},
-            onSignupClicked = {}
+            onSignupClicked = {},
         )
     }
 }

@@ -30,15 +30,17 @@ class AuthInterceptor @Inject constructor(
     }
 
     private suspend fun Interceptor.Chain.handleRequest(shouldAttachAuthHeader: Boolean): Response {
-        return if (shouldAttachAuthHeader) {
+        return if (shouldAttachAuthHeader and userPreferences.areTokensAvailable()) {
             val response = proceed(
                 request()
                     .newBuilder()
                     .addHeader("Authorization", userPreferences.getUserToken())
-                    .build()
+                    .build(),
             )
             handleResponse(response)
-        } else handleResponse(proceed(request()))
+        } else {
+            handleResponse(proceed(request()))
+        }
     }
 
     private suspend fun handleResponse(response: Response): Response {

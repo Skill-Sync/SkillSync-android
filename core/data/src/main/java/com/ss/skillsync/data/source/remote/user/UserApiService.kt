@@ -1,4 +1,4 @@
-package com.ss.skillsync.data.source.remote
+package com.ss.skillsync.data.source.remote.user
 
 import com.ss.skillsync.data.model.UserDTO
 import com.ss.skillsync.data.source.remote.interceptor.Authenticated
@@ -16,9 +16,11 @@ import retrofit2.http.POST
 interface UserApiService {
     @POST("signIn")
     suspend fun signIn(@Body signInPayload: SignInPayload): Response<UserDTO>
+
     @POST("signUp")
     suspend fun signUp(@Body signUpPayload: SignUpPayload): Response<String>
+
     @GET("getUserData")
     @Authenticated
-    suspend fun getUserDataWithToken(@Body token: String): Response<UserDTO>
+    suspend fun getUserData(): Response<UserDTO>
 }
