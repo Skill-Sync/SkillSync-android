@@ -22,7 +22,7 @@ class SignupUseCase @Inject constructor(
     ): Result<Unit> {
         return try {
             ValidationUtil.validateEmail(email)
-            ValidationUtil.validateName(email)
+            ValidationUtil.validateName(fullName)
             ValidationUtil.validatePasswords(password, confirmPassword)
             val signupPayload = SignUpPayload(
                 name = fullName,
