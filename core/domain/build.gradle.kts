@@ -1,5 +1,6 @@
 plugins {
     id("ss.android.library")
+    id("ss.hilt")
 }
 android {
     namespace = "com.ss.skillsync.domain"
