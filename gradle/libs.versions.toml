@@ -31,6 +31,8 @@ compose-destinations = "1.8.42-beta"
 ktlint-runtime = "0.50.0"
 ktlint-gradle = "11.5.0"
 detekt-gradle = "1.23.0"
+okhttp3 = "4.9.1"
+datastore = "1.0.0"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -66,6 +68,8 @@ firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-cra
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber"}
 composeDestinations = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "compose-destinations" }
 composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
+okhttp3 = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3" }
+datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
