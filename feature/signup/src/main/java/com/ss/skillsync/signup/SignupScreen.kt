@@ -59,6 +59,17 @@ fun SignupScreen(
         }
     }
 
+    if (state.isSignupFailed()) {
+        val text = state.error ?: stringResource(R.string.something_went_wrong)
+        LaunchedEffect(Unit) {
+            snackbarHostState.showSnackbar(
+                message = text,
+                duration = SnackbarDuration.Short
+            )
+            viewModel.resetError()
+        }
+    }
+
     SkillSyncTheme {
         SignupContent(
             state = state,

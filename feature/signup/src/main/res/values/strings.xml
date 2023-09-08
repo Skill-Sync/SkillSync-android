@@ -11,4 +11,5 @@
     <string name="you_have_an_account">You have an account?</string>
     <string name="sign_in">Sign in</string>
     <string name="signup_successful">You signed up successfully! Check your email to active account</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
