@@ -2,6 +2,10 @@ package com.ss.skillsync.navigation
 
 import androidx.navigation.NavController
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ss.skillsync.home.HomeNavigator
+import com.ss.skillsync.home.destinations.HomeScreenDestination
+import com.ss.skillsync.onboarding.OnboardingNavigator
+import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.signin.SignInNavigator
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.SignupNavigator
@@ -15,7 +19,9 @@ class CommonGraphNavigator(
     private val navController: NavController,
 ) : WelcomeNavigator,
     SignInNavigator,
-    SignupNavigator {
+    SignupNavigator,
+    OnboardingNavigator,
+    HomeNavigator {
 
     override fun leaveWelcomeScreen() {
         navController.navigate(SignupScreenDestination)
@@ -30,10 +36,10 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToHome() {
+        navController.navigate(HomeScreenDestination)
     }
 
     override fun navigateToOnboarding() {
-        // TODO change to onboarding screen
-        navController.navigate(SignInScreenDestination)
+        navController.navigate(OnboardingScreenDestination)
     }
 }

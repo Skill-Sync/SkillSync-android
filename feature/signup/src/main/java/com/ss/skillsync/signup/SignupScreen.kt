@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -19,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -92,9 +95,9 @@ private fun SignupContent(
     onSignupClicked: () -> Unit,
     onSignInClicked: () -> Unit = {},
 ) {
-    ScreenColumn {
+    val scrollState = rememberScrollState()
+    ScreenColumn(modifier = Modifier.verticalScroll(scrollState)) {
         HeaderSection()
-        // Spacer(modifier = Modifier.height(20.dp))
         SignupForm(
             state = state,
             onFullNameChanged = onFullNameChanged,
@@ -102,11 +105,9 @@ private fun SignupContent(
             onPasswordChanged = onPasswordChanged,
             onConfirmPasswordChanged = onConfirmPasswordChanged,
         )
-        // Spacer(modifier = Modifier.height(30.dp))
         SignupButtonsSection(
             onSignupClicked = onSignupClicked,
         )
-        // Spacer(modifier = Modifier.height(20.dp))
         FooterSection(
             onSignInClicked = onSignInClicked,
         )
@@ -124,12 +125,12 @@ private fun HeaderSection(modifier: Modifier = Modifier) {
 
 @Composable
 private fun SignupForm(
-    modifier: Modifier = Modifier,
     state: SignupState,
     onFullNameChanged: (String) -> Unit,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onConfirmPasswordChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -158,14 +159,15 @@ private fun SignupForm(
             title = stringResource(R.string.confirm_password),
             value = state.confirmPassword,
             onValueChange = onConfirmPasswordChanged,
+            imeAction = ImeAction.Done,
         )
     }
 }
 
 @Composable
 private fun SignupButtonsSection(
-    modifier: Modifier = Modifier,
     onSignupClicked: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         BrandButton(
@@ -185,8 +187,8 @@ private fun SignupButtonsSection(
 
 @Composable
 private fun FooterSection(
-    modifier: Modifier = Modifier,
     onSignInClicked: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier.fillMaxWidth(),

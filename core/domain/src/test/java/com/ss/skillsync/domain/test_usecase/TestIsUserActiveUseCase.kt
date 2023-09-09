@@ -2,7 +2,7 @@ package com.ss.skillsync.domain.test_usecase
 
 import com.ss.skillsync.domain.fake.FakeUserRepository
 import com.ss.skillsync.domain.payload.SignInPayload
-import com.ss.skillsync.domain.usecase.IsUserActiveUseCase
+import com.ss.skillsync.domain.usecase.auth.IsUserActiveUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Before

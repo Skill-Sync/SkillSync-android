@@ -1,5 +1,6 @@
 package com.ss.skillsync.data.source.remote.onboarding
 
+import com.ss.skillsync.data.R
 import com.ss.skillsync.data.model.SkillDTO
 import com.ss.skillsync.data.model.SkillsDTO
 import kotlinx.coroutines.Deferred
