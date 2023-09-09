@@ -1,4 +1,4 @@
-package com.ss.skillsync.domain.usecase
+package com.ss.skillsync.domain.usecase.auth
 
 import com.ss.skillsync.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers

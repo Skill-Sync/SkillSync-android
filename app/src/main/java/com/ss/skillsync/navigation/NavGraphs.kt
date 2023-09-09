@@ -4,6 +4,7 @@ import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route
 import com.ss.skillsync.model.NavigationParams
+import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
 import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
@@ -34,6 +35,7 @@ class NavGraphs private constructor(
             get() = mapOf(
                 SignupScreenDestination.route to SignupScreenDestination,
                 SignInScreenDestination.route to SignInScreenDestination,
+                OnboardingScreenDestination.route to OnboardingScreenDestination,
             )
 
         override val route: String
