@@ -27,6 +27,7 @@ import com.ss.skillsync.commonandroid.components.HeaderLargeText
 import com.ss.skillsync.commonandroid.components.RoundedPasswordTextField
 import com.ss.skillsync.commonandroid.components.RoundedTextFieldWithTitle
 import com.ss.skillsync.commonandroid.components.ScreenColumn
+import com.ss.skillsync.commonandroid.composition.LocalMeetingManager
 import com.ss.skillsync.commonandroid.theme.Blue
 import com.ss.skillsync.commonandroid.theme.Purple
 
@@ -64,13 +65,14 @@ fun SignInScreen(
         toOnboarding = navigator::navigateToOnboarding,
     )
 
+    val meetingManager = LocalMeetingManager.current
     SignInContent(
         state = state,
         onEmailChanged = viewModel::onEmailChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
         onSignInClicked = viewModel::onSignInClicked,
         onSignupClicked = {
-            navigator.navigateToSignUp()
+            meetingManager.joinMeeting("test")
         },
     )
 }

@@ -42,6 +42,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.notifications)
+    implementation(projects.core.meeting.api)
 
     implementation(projects.feature.home)
     implementation(projects.feature.forgetpassword)

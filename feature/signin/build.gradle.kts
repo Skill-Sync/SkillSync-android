@@ -4,3 +4,7 @@ plugins {
 android {
     namespace = "com.ss.skillsync.signin"
 }
+
+dependencies {
+    implementation(projects.core.meeting.api)
+}
