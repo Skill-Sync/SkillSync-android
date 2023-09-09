@@ -3,7 +3,7 @@ package com.ss.skillsync.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ss.skillsync.domain.usecase.GetNavigationParamsUseCase
-import com.ss.skillsync.domain.usecase.SignInUseCase
+import com.ss.skillsync.domain.usecase.auth.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,7 +50,11 @@ class SignInViewModel @Inject constructor(
             state.email,
             state.password,
         ).onSuccess {
-            _state.value = state.copy(isSignInSuccessful = true, isLoading = false)
+            _state.value = state.copy(
+                isSignInSuccessful = true,
+                isLoading = false,
+                isOnboardingCompleted = it.onboardingCompleted
+            )
         }.onFailure {
             _state.value = state.copy(error = it.message, isLoading = false)
         }

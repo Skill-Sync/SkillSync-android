@@ -3,6 +3,7 @@ package com.ss.skillsync.commonandroid.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +20,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 private fun BasicScreen(
-    content: @Composable () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -38,7 +39,9 @@ fun ScreenColumn(
 ) {
     BasicScreen {
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .then(modifier),
             content = content,
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,

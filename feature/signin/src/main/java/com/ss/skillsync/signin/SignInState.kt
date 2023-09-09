@@ -11,6 +11,7 @@ data class SignInState(
     val error: String? = null,
     val isSignInSuccessful: Boolean = false,
     val isFirstOpen: Boolean = false,
+    val isOnboardingCompleted: Boolean = false,
 ) {
     fun isSignInFailed() = error != null && isSignInSuccessful.not()
 
@@ -19,7 +20,7 @@ data class SignInState(
         toOnboarding: () -> Unit = {},
     ) {
         if (isSignInSuccessful.not()) return
-        if (isFirstOpen) {
+        if (isOnboardingCompleted.not()) {
             toOnboarding()
         } else {
             toHomeScreen()

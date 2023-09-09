@@ -67,10 +67,20 @@ class SkillRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setInterestedSkills() {
+    override suspend fun updateInterestSkills(skills: List<Skill>): Result<Unit> {
+        return if(skills.isEmpty()) Result.failure(Exception("Can't have empty skills list."))
+        else {
+            // TODO: Update the user's interested skills in the backend
+            Result.success(Unit)
+        }
     }
 
-    override suspend fun setStrengths() {
-        TODO("Not yet implemented")
+
+    override suspend fun updateStrengths(skills: List<Skill>): Result<Unit> {
+        return if(skills.isEmpty()) Result.failure(Exception("Can't have empty skills list."))
+        else {
+            // TODO: Update the user's interested skills in the backend
+            Result.success(Unit)
+        }
     }
 }

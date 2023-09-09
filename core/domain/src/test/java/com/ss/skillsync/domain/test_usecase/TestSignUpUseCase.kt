@@ -1,7 +1,7 @@
 package com.ss.skillsync.domain.test_usecase
 
 import com.ss.skillsync.domain.fake.FakeUserRepository
-import com.ss.skillsync.domain.usecase.SignupUseCase
+import com.ss.skillsync.domain.usecase.auth.SignupUseCase
 import com.ss.skillsync.model.exception.EmailInvalidException
 import com.ss.skillsync.model.exception.NameEmptyException
 import com.ss.skillsync.model.exception.PasswordEmptyException

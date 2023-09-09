@@ -18,6 +18,7 @@ interface SkillRepository {
     suspend fun removeInterestSkill(skill: Skill)
     suspend fun removeStrength(skill: Skill)
 
-    suspend fun setInterestedSkills()
-    suspend fun setStrengths()
+    suspend fun updateInterestSkills(skills: List<Skill>): Result<Unit>
+
+    suspend fun updateStrengths(skills: List<Skill>): Result<Unit>
 }

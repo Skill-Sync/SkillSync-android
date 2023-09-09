@@ -26,8 +26,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ss.skillsync.commonandroid.theme.Blue
+import com.ss.skillsync.commonandroid.theme.DoveGray
 import com.ss.skillsync.commonandroid.theme.Orange
 import com.ss.skillsync.commonandroid.theme.Purple
+import com.ss.skillsync.commonandroid.theme.Scorpion
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.commonandroid.theme.White
 import com.ss.skillsync.commonandroid.theme.Yellow
@@ -43,54 +45,100 @@ fun BrandButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     background: Brush = Brush.linearGradient(colors = listOf(Color.White, Color.White)),
+    disabledBackgroud: Brush = Brush.linearGradient(colors = listOf(Scorpion, Scorpion)),
     textColor: Color = Color.Black,
-    iconPainter: Painter? = null,
-    iconTintColor: Color? = textColor,
-    iconSize: Int = 40,
+    disabledTextColor: Color = DoveGray,
     isUppercase: Boolean = true,
     contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
+    enabled: Boolean = true,
 ) {
     Button(
         onClick = onClick,
         shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+        enabled = enabled,
     ) {
         Row(
             modifier = Modifier
-                .background(background)
+                .background(
+                    if (enabled) background
+                    else disabledBackgroud
+                )
                 .padding(contentPadding)
                 .then(modifier),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            if (iconPainter != null) {
-                if (iconTintColor == null) {
-                    Image(
-                        painter = iconPainter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(iconSize.dp)
-                            .padding(end = 16.dp),
-                    )
-                } else {
-                    Icon(
-                        painter = iconPainter,
-                        contentDescription = null,
-                        tint = iconTintColor,
-                        modifier = Modifier
-                            .size(iconSize.dp)
-                            .padding(end = 16.dp),
-                    )
-                }
-            }
             Text(
                 text = if (isUppercase) text.uppercase() else text,
                 style = MaterialTheme.typography.labelLarge,
-                color = textColor,
+                color = if (enabled) textColor else disabledTextColor,
                 textAlign = TextAlign.Center,
             )
         }
+    }
+}
+
+@Composable
+fun BrandButtonWithIcon(
+    text: String,
+    onClick: () -> Unit,
+    iconPainter: Painter,
+    modifier: Modifier = Modifier,
+    background: Brush = Brush.linearGradient(colors = listOf(Color.White, Color.White)),
+    disabledBackgroud: Brush = Brush.linearGradient(colors = listOf(Scorpion, Scorpion)),
+    textColor: Color = Color.Black,
+    disabledTextColor: Color = DoveGray,
+    iconTintColor: Color? = textColor,
+    iconSize: Int = 40,
+    isUppercase: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
+    enabled: Boolean = true,
+) {
+    Button(
+        onClick = onClick,
+        shape = MaterialTheme.shapes.small,
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+        enabled = enabled,
+    ) {
+        Row(
+            modifier = Modifier
+                .background(
+                    if (enabled) background
+                    else disabledBackgroud
+                )
+                .padding(contentPadding)
+                .then(modifier),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            if (iconTintColor == null) {
+                Image(
+                    painter = iconPainter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(iconSize.dp)
+                        .padding(end = 16.dp),
+                )
+            } else {
+                Icon(
+                    painter = iconPainter,
+                    contentDescription = null,
+                    tint = iconTintColor,
+                    modifier = Modifier
+                        .size(iconSize.dp)
+                        .padding(end = 16.dp),
+                )
+            }
+        }
+        Text(
+            text = if (isUppercase) text.uppercase() else text,
+            style = MaterialTheme.typography.labelLarge,
+            color = if (enabled) textColor else disabledTextColor,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -130,7 +178,7 @@ fun ColorfulThemeButtonPreview() {
 @Composable
 fun ColorfulThemeButtonPreviewWithIcon() {
     SkillSyncTheme {
-        BrandButton(
+        BrandButtonWithIcon(
             "Signup",
             {},
             modifier = Modifier.fillMaxWidth(),
