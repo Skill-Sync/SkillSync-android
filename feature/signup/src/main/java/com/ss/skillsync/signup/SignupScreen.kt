@@ -94,7 +94,6 @@ private fun SignupContent(
 ) {
     ScreenColumn {
         HeaderSection()
-        // Spacer(modifier = Modifier.height(20.dp))
         SignupForm(
             state = state,
             onFullNameChanged = onFullNameChanged,
@@ -102,12 +101,8 @@ private fun SignupContent(
             onPasswordChanged = onPasswordChanged,
             onConfirmPasswordChanged = onConfirmPasswordChanged,
         )
-        // Spacer(modifier = Modifier.height(30.dp))
         SignupButtonsSection(
             onSignupClicked = onSignupClicked,
-        )
-        // Spacer(modifier = Modifier.height(20.dp))
-        FooterSection(
             onSignInClicked = onSignInClicked,
         )
     }
@@ -166,6 +161,7 @@ private fun SignupForm(
 private fun SignupButtonsSection(
     modifier: Modifier = Modifier,
     onSignupClicked: () -> Unit,
+    onSignInClicked: () -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         BrandButton(
@@ -180,6 +176,10 @@ private fun SignupButtonsSection(
             ),
             textColor = MaterialTheme.colorScheme.onBackground,
         )
+        Spacer(modifier = Modifier.height(10.dp))
+        FooterSection {
+            onSignInClicked()
+        }
     }
 }
 
