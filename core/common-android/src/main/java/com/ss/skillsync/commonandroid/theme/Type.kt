@@ -73,4 +73,16 @@ val Typography = Typography(
         fontSize = 40.sp,
         lineHeight = 38.sp,
     ),
+    titleMedium = TextStyle(
+        fontFamily = MontserratFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        lineHeight = 21.sp,
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = MontserratFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+    ),
 )
