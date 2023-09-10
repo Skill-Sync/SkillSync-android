@@ -31,11 +31,11 @@ class FakeUserRepository : UserRepository {
             profilePictureUrl = "https://example.com/fakeuser.jpg",
             onboardingCompleted = true,
             interestedSkills = listOf(
-                Skill(id = 1, name = "Programming", level = SkillLevel.ADVANCED),
-                Skill(id = 2, name = "Design", level = SkillLevel.INTERMEDIATE)
+                Skill(id = "1", name = "Programming", level = SkillLevel.ADVANCED),
+                Skill(id = "2", name = "Design", level = SkillLevel.INTERMEDIATE)
             ),
             strengths = listOf(
-                Skill(id = 3, name = "Communication", level = SkillLevel.BEGINNER)
+                Skill(id = "3", name = "Communication", level = SkillLevel.BEGINNER)
             )
         )
         activeUser = dummyUser

@@ -1,7 +1,7 @@
 package com.ss.skillsync.model
 
 data class Skill(
-    val id: Long = -1,
+    val id: String = "",
     val name: String = "",
     val level: SkillLevel = SkillLevel.NOCHOICE,
 )

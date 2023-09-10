@@ -12,6 +12,7 @@ data class SignInState(
     val isSignInSuccessful: Boolean = false,
     val isFirstOpen: Boolean = false,
     val isOnboardingCompleted: Boolean = false,
+    val loginType: String = "user"
 ) {
     fun isSignInFailed() = error != null && isSignInSuccessful.not()
 

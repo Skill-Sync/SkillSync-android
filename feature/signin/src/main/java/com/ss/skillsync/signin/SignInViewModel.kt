@@ -34,6 +34,12 @@ class SignInViewModel @Inject constructor(
         _state.value = _state.value.copy(password = password)
     }
 
+    fun onTypeChanged() {
+        val currentType = _state.value.loginType
+        val type = if (currentType == "user") "mentor" else "user"
+        _state.value = _state.value.copy(loginType = type)
+    }
+
     fun onSignInClicked() = viewModelScope.launch {
         val state = _state.value
         if (state.isLoading) return@launch
@@ -49,6 +55,7 @@ class SignInViewModel @Inject constructor(
         signInUseCase(
             state.email,
             state.password,
+            state.loginType
         ).onSuccess {
             _state.value = state.copy(
                 isSignInSuccessful = true,

@@ -28,6 +28,7 @@ class NavGraphs private constructor(
             get() = listOf(
                 welcome,
                 auth,
+                main
             )
     }
 
@@ -36,7 +37,7 @@ class NavGraphs private constructor(
             get() = mapOf(
                 SignupScreenDestination.route to SignupScreenDestination,
                 SignInScreenDestination.route to SignInScreenDestination,
-                OnboardingScreenDestination.route to OnboardingScreenDestination,
+                OnboardingScreenDestination.route to OnboardingScreenDestination
             )
 
         override val route: String
@@ -48,12 +49,12 @@ class NavGraphs private constructor(
     val main = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = mapOf(
-                HomeScreenDestination.route to HomeScreenDestination
+                HomeScreenDestination.route to HomeScreenDestination,
             )
         override val route: String
             get() = "main"
         override val startRoute: Route
-            get() = WelcomeScreenDestination
+            get() = HomeScreenDestination
     }
 
     val welcome = object : NavGraphSpec {
