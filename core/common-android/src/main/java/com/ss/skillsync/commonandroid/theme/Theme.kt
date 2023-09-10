@@ -17,7 +17,11 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = White,
     outline = Scorpion,
     surface = LightBlack,
-    onSurface = White
+    onSurface = White,
+    primaryContainer = LightBlue10,
+    secondaryContainer = LightBlue20,
+    onPrimaryContainer = RibbonBlue,
+    onSecondaryContainer = LightBlue
 )
 
 @Composable

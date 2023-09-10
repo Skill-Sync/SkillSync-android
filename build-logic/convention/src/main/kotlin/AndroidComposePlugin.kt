@@ -11,6 +11,7 @@ class AndroidComposePlugin: Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("com.google.devtools.ksp")
+                apply("ss.coil")
             }
 
             extensions.configure(BaseExtension::class.java) {

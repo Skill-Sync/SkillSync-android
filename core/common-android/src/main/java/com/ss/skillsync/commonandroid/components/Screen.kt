@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/7/2023.
@@ -22,13 +23,15 @@ import androidx.compose.ui.unit.dp
 private fun BasicScreen(
     content: @Composable BoxScope.() -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
-    ) {
-        content()
+    SkillSyncTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp),
+        ) {
+            content()
+        }
     }
 }
 

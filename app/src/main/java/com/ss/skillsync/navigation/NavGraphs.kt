@@ -3,9 +3,12 @@ package com.ss.skillsync.navigation
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route
+import com.ss.skillsync.R
+import com.ss.skillsync.friends.destinations.FriendListScreenDestination
 import com.ss.skillsync.home.destinations.HomeScreenDestination
 import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
+import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
 import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
@@ -50,6 +53,8 @@ class NavGraphs private constructor(
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = mapOf(
                 HomeScreenDestination.route to HomeScreenDestination,
+                SessionMakingScreenDestination.route to SessionMakingScreenDestination,
+                FriendListScreenDestination.route to FriendListScreenDestination
             )
         override val route: String
             get() = "main"
@@ -66,6 +71,14 @@ class NavGraphs private constructor(
             get() = "welcome"
         override val startRoute: Route
             get() = WelcomeScreenDestination
+    }
+
+    fun getBottomNavRoutes(): List<Pair<Route, Int>> {
+        return listOf(
+            HomeScreenDestination to R.drawable.ic_home,
+            SessionMakingScreenDestination to R.drawable.ic_matching,
+            FriendListScreenDestination to R.drawable.ic_friends
+        )
     }
 
     private fun getRootStartRoute(): Route {

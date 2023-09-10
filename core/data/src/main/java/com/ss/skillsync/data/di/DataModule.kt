@@ -4,6 +4,7 @@ import android.content.Context
 import com.ss.skillsync.data.BuildConfig
 import com.ss.skillsync.data.preferences.UserPreferences
 import com.ss.skillsync.data.source.remote.interceptor.AuthInterceptor
+import com.ss.skillsync.data.source.remote.mentors.MentorApiService
 import com.ss.skillsync.data.source.remote.profile.SkillApiService
 import com.ss.skillsync.data.source.remote.user.UserApiService
 import dagger.Module
@@ -15,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -27,19 +29,22 @@ import javax.inject.Singleton
 object DataModule {
     @Provides
     @Singleton
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient = if (BuildConfig.DEBUG) {
-        OkHttpClient.Builder()
-            .addInterceptor(
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+        val timeout = 30_000L
+        val client = OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .callTimeout(timeout, TimeUnit.MILLISECONDS)
+            .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+            .readTimeout(timeout, TimeUnit.MILLISECONDS)
+            .writeTimeout(timeout, TimeUnit.MILLISECONDS)
+
+        if (BuildConfig.DEBUG) {
+            client.addInterceptor(
                 HttpLoggingInterceptor()
                     .setLevel(HttpLoggingInterceptor.Level.BODY),
             )
-            .addInterceptor(authInterceptor)
-            .build()
-    } else {
-        OkHttpClient
-            .Builder()
-            .addInterceptor(authInterceptor)
-            .build()
+        }
+        return client.build()
     }
 
     @Provides
@@ -63,6 +68,11 @@ object DataModule {
     @Singleton
     fun provideOnboardingApiService(retrofit: Retrofit): SkillApiService =
         retrofit.create(SkillApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMentorApiService(retrofit: Retrofit): MentorApiService =
+        retrofit.create(MentorApiService::class.java)
 
     @Provides
     @Singleton
