@@ -1,8 +1,8 @@
 package com.ss.skillsync.data.repository
 
-import com.ss.skillsync.data.mapper.toDomainModel
-import com.ss.skillsync.data.model.UserDTO
+import com.ss.skillsync.data.mapper.toDomain
 import com.ss.skillsync.data.preferences.UserPreferences
+import com.ss.skillsync.data.source.remote.model.auth.UserData
 import com.ss.skillsync.data.source.remote.user.UserRemoteSource
 import com.ss.skillsync.domain.payload.SignInPayload
 import com.ss.skillsync.domain.payload.SignUpPayload
@@ -20,21 +20,21 @@ class UserRepositoryImpl @Inject constructor(
     private val preferences: UserPreferences,
 ) : UserRepository {
 
-    private var activeUser: UserDTO? = null
+    private var activeUser: UserData? = null
 
     override suspend fun getActiveUser(): Result<User> {
         if (preferences.areTokensAvailable().not()) {
-            return Result.failure(Throwable("User not found"))
+            return Result.failure(Throwable("SignupResponseUser not found"))
         }
 
         if (activeUser == null) {
             activeUser = userRemoteSource.getUserData()
         }
         return if (activeUser != null) {
-            Result.success(activeUser!!.toDomainModel())
+            Result.success(activeUser!!.toDomain())
         } else {
             signOut()
-            Result.failure(Throwable("User not found"))
+            Result.failure(Throwable("SignupResponseUser not found"))
         }
     }
 
@@ -43,7 +43,7 @@ class UserRepositoryImpl @Inject constructor(
         return if (response.isSuccess) {
             activeUser = response.getOrNull()!!
             preferences.saveUserTokens(activeUser!!)
-            Result.success(activeUser!!.toDomainModel())
+            Result.success(activeUser!!.toDomain())
         } else {
             signOut()
             Result.failure(response.exceptionOrNull()!!)

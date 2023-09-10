@@ -44,15 +44,21 @@ class AuthInterceptor @Inject constructor(
     }
 
     private suspend fun handleResponse(response: Response): Response {
-        val refreshTokenHeader = "RefreshToken"
-        val accessTokenHeader = "AccessToken"
-        val refreshToken = response.header(refreshTokenHeader)
-        val accessToken = response.header(accessTokenHeader)
-        if (refreshToken == null || accessToken == null) {
+        val code = response.code
+        val tokensRefreshedCode = 309
+        if (code != tokensRefreshedCode) {
             return response
         }
-
+        val authHeader = response.header("Authorization") ?: return response
+        val (accessToken, refreshToken) = extractTokensFromHeader(authHeader) ?: return response
         userPreferences.saveUserTokens(accessToken, refreshToken)
         return response
+    }
+
+    private fun extractTokensFromHeader(authHeader: String) : Pair<String, String>? {
+        val tokens = authHeader.split(" ")
+        if (tokens.isEmpty()) return null
+        if (tokens[0] != "Bearer") return null
+        return tokens[1] to tokens[2]
     }
 }

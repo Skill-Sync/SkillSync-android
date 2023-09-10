@@ -1,8 +1,12 @@
 package com.ss.skillsync.data.source.remote.user
 
-import com.ss.skillsync.data.model.UserDTO
+import com.ss.skillsync.data.source.remote.model.auth.UserData
+import com.ss.skillsync.data.source.remote.model.auth.signin.SignInRequest
+import com.ss.skillsync.data.source.remote.model.auth.signup.SignupRequest
 import com.ss.skillsync.domain.payload.SignInPayload
 import com.ss.skillsync.domain.payload.SignUpPayload
+import com.ss.skillsync.model.exception.EmailNotActivatedException
+import com.ss.skillsync.model.exception.UnknownErrorException
 import javax.inject.Inject
 
 /**
@@ -16,7 +20,12 @@ class UserRemoteSource @Inject constructor(
         payload: SignUpPayload,
     ): Result<Unit> {
         return try {
-            val response = apiService.signUp(payload)
+            val request = SignupRequest(
+                name = payload.name,
+                email = payload.email,
+                pass = payload.password,
+                passConfirm = payload.password)
+            val response = apiService.signUp(request)
             if (response.isSuccessful) {
                 Result.success(Unit)
             } else {
@@ -29,20 +38,25 @@ class UserRemoteSource @Inject constructor(
 
     suspend fun signIn(
         payload: SignInPayload,
-    ): Result<UserDTO> {
+    ): Result<UserData> {
         return try {
-            val response = apiService.signIn(payload)
+            val request = SignInRequest(
+                email = payload.email,
+                pass = payload.password,
+                type = payload.type)
+            val response = apiService.signIn(request)
             if (response.isSuccessful) {
                 Result.success(response.body()!!)
             } else {
-                Result.failure(Throwable(response.errorBody()?.string()))
+                val errorCode = response.code()
+                Result.failure(handleSignInError(errorCode))
             }
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    suspend fun getUserData(): UserDTO? {
+    suspend fun getUserData(): UserData? {
         return try {
             val response = apiService.getUserData()
             if (response.isSuccessful) {
@@ -52,6 +66,15 @@ class UserRemoteSource @Inject constructor(
             }
         } catch (e: Exception) {
             null
+        }
+    }
+
+    private fun handleSignInError(code: Int): Exception {
+        val inactivatedEmailCode = 401
+        return if (code ==  inactivatedEmailCode) {
+            EmailNotActivatedException()
+        } else {
+            UnknownErrorException()
         }
     }
 }
