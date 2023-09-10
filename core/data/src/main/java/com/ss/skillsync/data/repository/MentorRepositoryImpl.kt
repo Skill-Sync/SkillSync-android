@@ -14,12 +14,6 @@ class MentorRepositoryImpl @Inject constructor(
 ) : MentorRepository {
 
     override suspend fun getSuggestedMentors(): List<Mentor> {
-        return mentorRemoteSource.getSuggestedMentors().map {
-            Mentor(
-                name = it.name,
-                pictureUrl = it.pictureUrl,
-                field = it.field
-            )
-        }
+        return mentorRemoteSource.getSuggestedMentors()
     }
 }

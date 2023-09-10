@@ -42,4 +42,8 @@ class CommonGraphNavigator(
     override fun navigateToOnboarding() {
         navController.navigate(OnboardingScreenDestination)
     }
+
+    fun navigate(route: String) {
+        navController.navigate(route)
+    }
 }

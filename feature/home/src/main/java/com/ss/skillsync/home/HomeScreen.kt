@@ -10,7 +10,7 @@ import com.ss.skillsync.commonandroid.components.ScreenColumn
  * @date 09/09/2023
  */
 
-@Destination
+@Destination("Home")
 @Composable
 fun HomeScreen() {
     ScreenColumn {
