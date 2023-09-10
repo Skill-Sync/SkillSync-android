@@ -3,6 +3,7 @@ package com.ss.skillsync.navigation
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route
+import com.ss.skillsync.home.destinations.HomeScreenDestination
 import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
@@ -46,7 +47,9 @@ class NavGraphs private constructor(
 
     val main = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
-            get() = emptyMap()
+            get() = mapOf(
+                HomeScreenDestination.route to HomeScreenDestination
+            )
         override val route: String
             get() = "main"
         override val startRoute: Route

@@ -70,5 +70,9 @@ gradlePlugin {
             id = "ss.networking"
             implementationClass = "NetworkingPlugin"
         }
+        register("skillSyncCoil") {
+            id = "ss.coil"
+            implementationClass = "CoilPlugin"
+        }
     }
 }
