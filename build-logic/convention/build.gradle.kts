@@ -66,5 +66,13 @@ gradlePlugin {
             id = "ss.android.testing"
             implementationClass = "AndroidTestingPlugin"
         }
+        register("skillSyncNetworking") {
+            id = "ss.networking"
+            implementationClass = "NetworkingPlugin"
+        }
+        register("skillSyncCoil") {
+            id = "ss.coil"
+            implementationClass = "CoilPlugin"
+        }
     }
 }

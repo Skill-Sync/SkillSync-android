@@ -22,14 +22,14 @@ fun Slogan(
     fontSize: TextUnit = 42.sp,
     lineHeight: TextUnit = 41.sp,
     primaryColor: Color = Color.White,
-    hasUnderline: Boolean = true
+    hasUnderline: Boolean = true,
 ) {
     val textStyle = SpanStyle(
         fontSize = fontSize,
         fontFamily = MontserratFontFamily,
         color = primaryColor,
         letterSpacing = 1.5.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     )
     Text(
         text = buildAnnotatedString {
@@ -44,11 +44,11 @@ fun Slogan(
                                 0f to Color(0xFF3A86FF),
                                 0.2f to Color(0xFF8338EC),
                                 0.65f to Color(0xFFFFBE0B),
-                                0.78f to Color(0xFFFB5607)
-                            )
+                                0.78f to Color(0xFFFB5607),
+                            ),
                         ),
-                        textDecoration = if (hasUnderline) TextDecoration.Underline else TextDecoration.None
-                    )
+                        textDecoration = if (hasUnderline) TextDecoration.Underline else TextDecoration.None,
+                    ),
                 ) {
                     append("Future skills\n")
                 }
@@ -57,7 +57,7 @@ fun Slogan(
                 }
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 

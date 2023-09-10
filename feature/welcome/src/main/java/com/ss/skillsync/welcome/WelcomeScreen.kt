@@ -1,6 +1,5 @@
 package com.ss.skillsync.welcome
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -21,10 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.annotation.Destination
 import com.ss.skillsync.commonandroid.components.BrandButton
-import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.welcome.components.Slogan
 import com.ss.skillsync.commonandroid.R as commonRes
 
@@ -33,26 +31,32 @@ import com.ss.skillsync.commonandroid.R as commonRes
  * @date 31/08/2023
  */
 
-@SuppressLint("CoroutineCreationDuringComposition")
+interface WelcomeNavigator {
+    fun leaveWelcomeScreen()
+}
+
+@Destination
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    navigator: WelcomeNavigator,
+) {
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background),
     ) {
         Spacer(modifier = Modifier.height(12.dp))
         Image(
             painter = painterResource(id = commonRes.drawable.logo_w_text),
             contentDescription = "Skill Sync",
             contentScale = ContentScale.Fit,
-            modifier = Modifier.fillMaxWidth(0.8f)
+            modifier = Modifier.fillMaxWidth(0.8f),
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             repeat(3) { rowIndex ->
                 val scrollState = rememberScrollState(rowIndex * 560)
@@ -63,7 +67,7 @@ fun WelcomeScreen() {
                         .height(48.dp)
                         .horizontalScroll(scrollState, enabled = false)
                         .fillMaxWidth(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
                 )
             }
         }
@@ -71,7 +75,7 @@ fun WelcomeScreen() {
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .paddingFromBaseline(bottom = 12.dp)
-                .padding(24.dp)
+                .padding(24.dp),
         ) {
             Slogan(modifier = Modifier.padding(bottom = 16.dp))
             Text(
@@ -82,19 +86,11 @@ fun WelcomeScreen() {
             BrandButton(
                 text = stringResource(R.string.find_your_skills),
                 onClick = {
-                    // TODO: Navigate to the OnBoarding Feature
+                    navigator.leaveWelcomeScreen()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                isUppercase = false
+                isUppercase = false,
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WelcomeScreenPreview() {
-    SkillSyncTheme {
-        WelcomeScreen()
     }
 }

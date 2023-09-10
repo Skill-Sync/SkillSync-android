@@ -11,6 +11,7 @@ class HiltPlugin : Plugin<Project> {
             }
             dependencies {
                 add("implementation",libs.hilt.android)
+                add("implementation", libs.hilt.navigation.compose)
                 add("kapt",libs.hilt.android.compiler)
             }
         }

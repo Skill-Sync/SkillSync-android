@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_an_account">Create an Account</string>
+    <string name="sign_up_to_start_your_learning_journey">Sign up to start your learning journey</string>
+    <string name="full_name">Full name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="you_have_an_account">You have an account?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="signup_successful">You signed up successfully! Check your email to active account</string>
+    <string name="something_went_wrong">Something went wrong</string>
+</resources>
