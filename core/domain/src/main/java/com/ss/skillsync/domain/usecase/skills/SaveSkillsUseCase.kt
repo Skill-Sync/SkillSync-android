@@ -11,9 +11,12 @@ import javax.inject.Inject
 class SaveSkillsUseCase @Inject constructor(
     private val skillRepository: SkillRepository,
 ) {
-    suspend operator fun invoke(skills: Set<Skill>): Result<Unit> {
+    suspend operator fun invoke(
+        interestedSkills: List<Skill>,
+        strengthSkills: List<Skill>,
+    ): Result<Unit> {
         return try {
-            skillRepository.updateInterestSkills(skills.toList())
+            skillRepository.setUserSkills(interestedSkills, strengthSkills)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

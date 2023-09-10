@@ -2,6 +2,7 @@ package com.ss.skillsync.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ss.skillsync.domain.usecase.skills.SaveSkillsUseCase
 import com.ss.skillsync.domain.usecase.skills.SearchSkillsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
-    private val searchSkillsUseCase: SearchSkillsUseCase
+    private val searchSkillsUseCase: SearchSkillsUseCase,
+    private val saveSkillsUseCase: SaveSkillsUseCase
 ) : ViewModel() {
 
     private var _state = MutableStateFlow(OnboardingState())
@@ -68,10 +70,7 @@ class OnboardingViewModel @Inject constructor(
             }
 
             is OnboardingEvent.DoneClicked -> {
-                // TODO: Call the use case to save the selected skills
-                _state.value = _state.value.copy(
-                    onboardingDone = true
-                )
+                saveSkills()
             }
 
             is OnboardingEvent.BackClicked -> {
@@ -100,6 +99,18 @@ class OnboardingViewModel @Inject constructor(
                         selectedStrengths = _state.value.selectedStrengths - onboardingEvent.skill,
                     )
                 }
+            }
+        }
+    }
+
+    private fun saveSkills() {
+        viewModelScope.launch {
+            val interestedSkills = _state.value.selectedInterests.toList()
+            val strengthSkills = _state.value.selectedStrengths.toList()
+            saveSkillsUseCase(interestedSkills, strengthSkills).onSuccess {
+                _state.value = _state.value.copy(
+                    onboardingDone = true
+                )
             }
         }
     }

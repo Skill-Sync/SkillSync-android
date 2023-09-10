@@ -17,6 +17,7 @@ class SignInUseCase @Inject constructor(
     suspend operator fun invoke(
         email: String,
         password: String,
+        type: String
     ): Result<User> {
         return try {
             ValidationUtil.validateEmail(email)
@@ -24,6 +25,7 @@ class SignInUseCase @Inject constructor(
             val signupPayload = SignInPayload(
                 email = email,
                 password = password,
+                type = type
             )
             withContext(Dispatchers.IO) {
                 userRepository.signIn(signupPayload)
