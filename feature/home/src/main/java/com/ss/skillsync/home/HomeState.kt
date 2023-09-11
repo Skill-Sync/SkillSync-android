@@ -14,4 +14,13 @@ data class HomeState(
     val activeUser: User = User(),
     val error: Throwable? = null,
     val isLoading: Boolean = true,
+    val navDestination: HomeNavDestinations? = null,
 )
+
+sealed class HomeNavDestinations {
+    data class MentorProfile(val mentor: Mentor) : HomeNavDestinations()
+    data class SessionDetails(val session: Session) : HomeNavDestinations()
+    object Profile : HomeNavDestinations()
+    object Settings : HomeNavDestinations()
+    object Match : HomeNavDestinations()
+}

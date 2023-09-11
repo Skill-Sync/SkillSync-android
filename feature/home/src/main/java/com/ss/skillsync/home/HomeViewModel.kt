@@ -28,9 +28,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun resetErrors() {
+    fun resetEvents() {
         _state.value = _state.value.copy(
-            error = null
+            error = null,
+            navDestination = null
         )
     }
 

@@ -12,6 +12,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.home.components.TopHomeBar
+import com.ss.skillsync.model.User
 
 /**
  * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
@@ -32,13 +33,31 @@ fun HomeScreen(
                 message = state.error!!.message ?: "Something went wrong.",
                 duration = SnackbarDuration.Short,
             )
-            viewModel.resetErrors()
+            viewModel.resetEvents()
         }
     }
+
+    LaunchedEffect(key1 = state.navDestination) {
+        when (val navDestination = state.navDestination) {
+            HomeNavDestinations.Profile -> navigator.navigateToProfile()
+            HomeNavDestinations.Settings -> navigator.navigateToSettings()
+            HomeNavDestinations.Match -> navigator.navigateToMatch()
+            is HomeNavDestinations.MentorProfile -> {
+                navigator.navigateToMentorProfile(mentor = navDestination.mentor)
+            }
+
+            is HomeNavDestinations.SessionDetails -> {
+                navigator.navigateToSessionDetails(session = navDestination.session)
+            }
+
+            null -> return@LaunchedEffect
+        }
+        viewModel.resetEvents()
+    }
+
     HomeContent(
         state = state,
-        onEvent = viewModel::onEvent,
-        navigator = navigator
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -46,13 +65,12 @@ fun HomeScreen(
 fun HomeContent(
     state: HomeState,
     onEvent: (HomeEvent) -> Unit,
-    navigator: HomeNavigator,
 ) {
     ScreenColumn(isLoading = state.isLoading) {
-
         TopHomeBar(
             state.activeUser,
-            onProfileClicked = { navigator.navigateToProfile() }
+            onProfileClicked = { onEvent(HomeEvent.OnProfileClicked) },
+            onSettingsClicked = { onEvent(HomeEvent.OnSettingsClicked) },
         )
     }
 }
@@ -61,6 +79,12 @@ fun HomeContent(
 @Composable
 fun HomeScreenPreview() {
     SkillSyncTheme {
-//        HomeContent()
+        HomeContent(
+            HomeState(
+                isLoading = false,
+                activeUser = User(name = "Mohannad El-Sayeh")
+            ),
+            {}
+        )
     }
 }

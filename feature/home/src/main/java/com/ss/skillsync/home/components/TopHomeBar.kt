@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import com.ss.skillsync.model.User
 fun TopHomeBar(
     user: User,
     onProfileClicked: () -> Unit,
+    onSettingsClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -43,12 +45,14 @@ fun TopHomeBar(
             name = user.name,
             onClick = onProfileClicked
         )
-        Icon(
-            imageVector = Icons.TwoTone.Settings,
-            contentDescription = "Settings",
-            tint = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.size(26.dp)
-        )
+        IconButton(onClick = onSettingsClicked) {
+            Icon(
+                imageVector = Icons.TwoTone.Settings,
+                contentDescription = "Settings",
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.size(26.dp)
+            )
+        }
     }
 }
 
@@ -66,7 +70,8 @@ fun TobHomeBarPreview() {
                     name = "Mohannad El-Sayeh",
                     profilePictureUrl = "https://avatars.githubusercontent.com/u/10069642?v=4",
                 ),
-                onProfileClicked = {}
+                onProfileClicked = {},
+                {}
             )
         }
     }
