@@ -4,5 +4,5 @@ data class SkillLearned(
     val _id: String,
     val id: String,
     val level: String,
-    val skill: SkillData
+    val skill: SkillData,
 )

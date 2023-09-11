@@ -1,9 +1,11 @@
 package com.ss.skillsync.data.di
 
 import com.ss.skillsync.data.repository.MentorRepositoryImpl
+import com.ss.skillsync.data.repository.SessionRepositoryImpl
 import com.ss.skillsync.data.repository.SkillRepositoryImpl
 import com.ss.skillsync.data.repository.UserRepositoryImpl
 import com.ss.skillsync.domain.repository.MentorRepository
+import com.ss.skillsync.domain.repository.SessionRepository
 import com.ss.skillsync.domain.repository.SkillRepository
 import com.ss.skillsync.domain.repository.UserRepository
 import dagger.Binds
@@ -37,4 +39,10 @@ abstract class RepositoryModule {
     abstract fun bindMentorRepository(
         mentorRepositoryImpl: MentorRepositoryImpl,
     ): MentorRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSessionRepository(
+        sessionRepositoryImpl: SessionRepositoryImpl,
+    ): SessionRepository
 }

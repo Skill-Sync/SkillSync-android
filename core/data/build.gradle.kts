@@ -6,10 +6,14 @@ plugins {
 
 android {
     namespace = "com.ss.skillsync.data"
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.model)
     implementation(libs.datastore)
+    coreLibraryDesugaring(libs.desugarJdkLibs)
 }

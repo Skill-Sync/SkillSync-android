@@ -16,15 +16,17 @@ class SignInUseCase @Inject constructor(
     suspend operator fun invoke(
         email: String,
         password: String,
-        type: String
+        type: String,
     ): Result<User> {
         if (BuildConfig.DEBUG && email.isBlank() && password.isBlank()) {
             return try {
-                userRepository.signIn(SignInPayload(
-                    email = BuildConfig.userEmail,
-                    password = BuildConfig.userPass,
-                    type = type
-                ))
+                userRepository.signIn(
+                    SignInPayload(
+                        email = BuildConfig.userEmail,
+                        password = BuildConfig.userPass,
+                        type = type,
+                    ),
+                )
             } catch (e: Exception) {
                 Result.failure(e)
             }
@@ -36,7 +38,7 @@ class SignInUseCase @Inject constructor(
             val signInPayload = SignInPayload(
                 email = email,
                 password = password,
-                type = type
+                type = type,
             )
             userRepository.signIn(signInPayload)
         } catch (e: Exception) {

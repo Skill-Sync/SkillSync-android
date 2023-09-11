@@ -1,6 +1,8 @@
 package com.ss.skillsync.data.mapper
 
 import com.ss.skillsync.data.source.remote.model.auth.UserData
+import com.ss.skillsync.domain.util.StringUtil
+import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.User
 
 /**
@@ -8,14 +10,32 @@ import com.ss.skillsync.model.User
  */
 
 fun UserData.toDomain(): User {
-    val user = User(
+    val image = if (StringUtil.isUrl(photo)) {
+        photo!!
+    } else {
+        StringUtil.getRandomImageUrl()
+    }
+    return User(
         name = name ?: "",
         email = email ?: "",
         about = about ?: "",
-        profilePictureUrl = photo ?: "",
+        profilePictureUrl = image,
         onboardingCompleted = onboardingCompleted ?: false,
         interestedSkills = skillsToLearn?.map { it.toSkill() } ?: emptyList(),
-        strengths = skillsLearned?.map { it.toSkill() } ?: emptyList()
+        strengths = skillsLearned?.map { it.toSkill() } ?: emptyList(),
     )
-    return user
+}
+
+fun UserData.toMentor(): Mentor {
+    val user = toDomain()
+    return with(user) {
+        Mentor(
+            id = id ?: "",
+            name = name,
+            email = email,
+            field = skill?.name ?: "",
+            pictureUrl = profilePictureUrl,
+            about = about,
+        )
+    }
 }

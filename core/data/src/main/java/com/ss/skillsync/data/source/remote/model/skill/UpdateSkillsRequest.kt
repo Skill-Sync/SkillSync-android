@@ -5,7 +5,7 @@ package com.ss.skillsync.data.source.remote.model.skill
  */
 data class UpdateSkillsRequest(
     val skillsToLearn: List<String>,
-    val skillsLearned: List<SkillLearnedRequest>
+    val skillsLearned: List<SkillLearnedRequest>,
 )
 
 data class SkillLearnedRequest(

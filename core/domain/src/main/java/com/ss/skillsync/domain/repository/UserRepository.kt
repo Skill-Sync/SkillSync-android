@@ -2,6 +2,7 @@ package com.ss.skillsync.domain.repository
 
 import com.ss.skillsync.domain.payload.SignInPayload
 import com.ss.skillsync.domain.payload.SignUpPayload
+import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.User
 
 /**
@@ -16,4 +17,6 @@ interface UserRepository {
     suspend fun signOut()
 
     suspend fun isFirstOpen(): Boolean
+
+    suspend fun getRecommendedMentors(): List<Mentor>
 }

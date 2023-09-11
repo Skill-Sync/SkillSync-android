@@ -34,6 +34,7 @@ ktlint-gradle = "11.5.0"
 detekt-gradle = "1.23.0"
 okhttp3 = "4.9.1"
 datastore = "1.0.0"
+desugarJdkLibs = "2.0.3"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -73,6 +74,7 @@ composeDestinations = { module = "io.github.raamcosta.compose-destinations:anima
 composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
 okhttp3 = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
