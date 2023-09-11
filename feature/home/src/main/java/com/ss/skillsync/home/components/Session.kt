@@ -1,15 +1,21 @@
 package com.ss.skillsync.home.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -25,34 +31,50 @@ import com.ss.skillsync.model.Session
  */
 
 @Composable
-fun UserSessionScheduled(
+fun SessionsScheduledList(
     sessions: List<Session>,
+    onSessionClicked: (Session) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(vertical = 20.dp, horizontal = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
         items(sessions, key = { it.sessionId }) {
             SessionScheduledItem(
                 session = it,
-                modifier = Modifier.padding(bottom = 8.dp)
+                onSessionClicked = {
+                    onSessionClicked(it)
+                },
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SessionScheduledItem(
+    session: Session,
+    onSessionClicked: () -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
-    session: Session,
 ) {
     val subTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-    Section(
+    Card(
         modifier = modifier,
-        containerColor = containerColor,
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        onClick = onSessionClicked,
     ) {
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
             CircularAsyncImage(
                 modifier = Modifier.weight(1f),
-                imageUrl = session.image, contentDescription = session.name,
+                imageUrl = session.image,
+                contentDescription = session.name,
                 size = 60.dp
             )
             Column(
@@ -104,7 +126,7 @@ fun ScheduledSessionPrev() {
             scheduledDate = "12/12/2021",
         )
 
-        SessionScheduledItem(session = session)
+        SessionScheduledItem(session = session, onSessionClicked = {})
     }
 }
 
@@ -124,9 +146,10 @@ fun UserScheduledListPrev() {
 
     SkillSyncTheme {
         Section(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentPadding = 0.dp
         ) {
-            UserSessionScheduled(sessions = sessions)
+            SessionsScheduledList(sessions = sessions, {})
         }
     }
 }

@@ -20,13 +20,16 @@ class SignInUseCase @Inject constructor(
         password: String,
         type: String
     ): Result<User> {
-        if (BuildConfig.DEBUG && email == "test" && password == "test") {
-            return Result.success(User(
-                name = listOf("Mohannad El-Sayeh", "Muhammed Salman").random(),
-                email = listOf("eng.mohannadelsayeh@gmail.com", "mahmadslman@gmail.com").random(),
-                profilePictureUrl = "https://avatars.githubusercontent.com/u/18093076?v=4",
-                onboardingCompleted = false,
-            ))
+        if (BuildConfig.DEBUG && email.isBlank() && password.isBlank()) {
+            return try {
+                userRepository.signIn(SignInPayload(
+                    email = BuildConfig.userEmail,
+                    password = BuildConfig.userPass,
+                    type = type
+                ))
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
         }
 
         return try {

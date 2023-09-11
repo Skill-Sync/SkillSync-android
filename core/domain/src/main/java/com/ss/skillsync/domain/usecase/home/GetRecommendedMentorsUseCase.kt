@@ -14,38 +14,14 @@ class GetRecommendedMentorsUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): List<Mentor> {
         return if (BuildConfig.DEBUG) {
-            return listOf(
+            List(10) {
                 Mentor(
-                    "Mohannad El-Sayeh",
-                    "https://avatars.githubusercontent.com/u/24874166?v=4",
-                    "Android"
-                ),
-                Mentor(
-                    "Mohannad El-Sayeh",
-                    "https://avatars.githubusercontent.com/u/24874166?v=4",
-                    "Java"
-                ),
-                Mentor(
-                    "Mohannad El-Sayeh",
-                    "https://avatars.githubusercontent.com/u/24874166?v=4",
-                    "Kotlin"
-                ),
-                Mentor(
-                    "Mohannad El-Sayeh",
-                    "https://avatars.githubusercontent.com/u/24874166?v=4",
-                    "Graphics Design"
-                ),
-                Mentor(
-                    "Mohannad El-Sayeh",
-                    "https://avatars.githubusercontent.com/u/24874166?v=4",
-                    "UI/UX"
-                ),
-                Mentor(
-                    "Mohannad El-Sayeh",
-                    "https://avatars.githubusercontent.com/u/24874166?v=4",
-                    "Android"
-                ),
-            )
+                    it.toString(),
+                    "Mentor $it",
+                    "https://picsum.photos/200/300",
+                    "Software Engineer",
+                )
+            }
         } else {
             mentorRepository.getSuggestedMentors()
         }

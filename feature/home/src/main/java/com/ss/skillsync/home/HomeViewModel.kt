@@ -28,10 +28,31 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun resetErrors() {
+        _state.value = _state.value.copy(
+            error = null
+        )
+    }
+
     fun onEvent(homeEvent: HomeEvent) {
         when(homeEvent) {
             is HomeEvent.OnMentorClicked -> {
                 /* Navigate to mentor profile */
+            }
+            is HomeEvent.OnSessionClicked -> {
+                /* Navigate to session details */
+            }
+            HomeEvent.OnMatchClicked -> {
+                /* Navigate to match screen */
+            }
+            HomeEvent.OnProfileClicked -> {
+                /* Navigate to profile screen */
+            }
+            HomeEvent.OnRefresh -> {
+                /* Refresh sessions scheduled */
+            }
+            HomeEvent.OnSettingsClicked -> {
+                /* Navigate to settings screen */
             }
         }
     }
