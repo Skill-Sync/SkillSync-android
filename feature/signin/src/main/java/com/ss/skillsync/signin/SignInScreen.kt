@@ -104,7 +104,10 @@ private fun SignInContent(
     onSignupClicked: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
-    ScreenColumn(modifier = Modifier.verticalScroll(scrollState)) {
+    ScreenColumn(
+        modifier = Modifier.verticalScroll(scrollState),
+        isLoading = state.isLoading
+    ) {
         HeaderSection()
         SignInForm(
             state = state,

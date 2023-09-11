@@ -33,7 +33,7 @@ fun SkillSyncTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = DarkColorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
 

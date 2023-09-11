@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ss.skillsync.commonandroid.components.CircleImage
+import com.ss.skillsync.commonandroid.components.CircularAsyncImage
 import com.ss.skillsync.commonandroid.components.Section
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.model.Session
@@ -50,7 +50,7 @@ fun SessionScheduledItem(
         containerColor = containerColor,
     ) {
         Row {
-            CircleImage(
+            CircularAsyncImage(
                 modifier = Modifier.weight(1f),
                 imageUrl = session.image, contentDescription = session.name,
                 size = 60.dp
