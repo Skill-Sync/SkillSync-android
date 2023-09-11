@@ -1,10 +1,13 @@
 package com.ss.skillsync.data.di
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.ss.skillsync.data.BuildConfig
 import com.ss.skillsync.data.preferences.UserPreferences
 import com.ss.skillsync.data.source.remote.interceptor.AuthInterceptor
 import com.ss.skillsync.data.source.remote.mentors.MentorApiService
+import com.ss.skillsync.data.source.remote.model.auth.UserData
+import com.ss.skillsync.data.source.remote.model.auth.UserDeserializer
 import com.ss.skillsync.data.source.remote.profile.SkillApiService
 import com.ss.skillsync.data.source.remote.user.UserApiService
 import dagger.Module
@@ -50,11 +53,14 @@ object DataModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = kotlin.run {
+        val gson = GsonBuilder()
+            .registerTypeAdapter(UserData::class.java, UserDeserializer())
+            .create()
         val url = "https://skill-sync-backup.onrender.com/"
         val postfix = "api/v1/"
         Retrofit.Builder()
             .baseUrl(url + postfix)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
     }

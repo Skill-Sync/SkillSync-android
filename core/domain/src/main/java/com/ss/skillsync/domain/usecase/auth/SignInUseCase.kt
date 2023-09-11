@@ -5,8 +5,6 @@ import com.ss.skillsync.domain.payload.SignInPayload
 import com.ss.skillsync.domain.repository.UserRepository
 import com.ss.skillsync.domain.util.ValidationUtil
 import com.ss.skillsync.model.User
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -40,9 +38,7 @@ class SignInUseCase @Inject constructor(
                 password = password,
                 type = type
             )
-            withContext(Dispatchers.IO) {
-                userRepository.signIn(signInPayload)
-            }
+            userRepository.signIn(signInPayload)
         } catch (e: Exception) {
             Result.failure(e)
         }

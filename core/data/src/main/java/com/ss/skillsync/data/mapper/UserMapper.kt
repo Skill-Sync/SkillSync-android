@@ -8,13 +8,14 @@ import com.ss.skillsync.model.User
  */
 
 fun UserData.toDomain(): User {
-    return User(
+    val user = User(
         name = name ?: "",
         email = email ?: "",
         about = about ?: "",
         profilePictureUrl = photo ?: "",
-        onboardingCompleted = onboarding_completed ?: false,
+        onboardingCompleted = onboardingCompleted ?: false,
         interestedSkills = skillsToLearn?.map { it.toSkill() } ?: emptyList(),
         strengths = skillsLearned?.map { it.toSkill() } ?: emptyList()
     )
+    return user
 }
