@@ -88,7 +88,7 @@ fun RoundedPasswordTextField(
             ),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
-                imeAction = imeAction
+                imeAction = imeAction,
             ),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {

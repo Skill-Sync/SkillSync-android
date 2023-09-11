@@ -66,8 +66,11 @@ fun BrandButton(
         Row(
             modifier = Modifier
                 .background(
-                    if (enabled) background
-                    else disabledBackgroud
+                    if (enabled) {
+                        background
+                    } else {
+                        disabledBackgroud
+                    },
                 )
                 .padding(contentPadding)
                 .then(modifier),
@@ -104,10 +107,13 @@ fun BrandButtonWithIcon(
 ) {
     Button(
         onClick = onClick,
-        shape = if (cornerRadius == null) MaterialTheme.shapes.small
-        else RoundedCornerShape(
-            cornerRadius
-        ),
+        shape = if (cornerRadius == null) {
+            MaterialTheme.shapes.small
+        } else {
+            RoundedCornerShape(
+                cornerRadius,
+            )
+        },
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
         enabled = enabled,
@@ -115,8 +121,11 @@ fun BrandButtonWithIcon(
         Row(
             modifier = modifier
                 .background(
-                    if (enabled) background
-                    else disabledBackgroud
+                    if (enabled) {
+                        background
+                    } else {
+                        disabledBackgroud
+                    },
                 )
                 .padding(contentPadding),
             verticalAlignment = Alignment.CenterVertically,

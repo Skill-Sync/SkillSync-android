@@ -1,6 +1,5 @@
 package com.ss.skillsync.home
 
-import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.Session
 
 /**
@@ -10,7 +9,7 @@ import com.ss.skillsync.model.Session
 interface HomeNavigator {
     fun navigateToProfile()
     fun navigateToSettings()
-    fun navigateToMentorProfile(mentor: Mentor)
+    fun navigateToMentorProfile()
     fun navigateToSessionDetails(session: Session)
     fun navigateToMatch()
 }

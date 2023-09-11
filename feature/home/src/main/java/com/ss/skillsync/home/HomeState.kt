@@ -18,9 +18,9 @@ data class HomeState(
 )
 
 sealed class HomeNavDestinations {
-    data class MentorProfile(val mentor: Mentor) : HomeNavDestinations()
+    data object MentorProfile : HomeNavDestinations()
     data class SessionDetails(val session: Session) : HomeNavDestinations()
-    object Profile : HomeNavDestinations()
-    object Settings : HomeNavDestinations()
-    object Match : HomeNavDestinations()
+    data object Profile : HomeNavDestinations()
+    data object Settings : HomeNavDestinations()
+    data object Match : HomeNavDestinations()
 }

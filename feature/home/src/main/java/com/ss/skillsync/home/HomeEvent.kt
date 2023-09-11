@@ -10,8 +10,8 @@ import com.ss.skillsync.model.Session
 sealed class HomeEvent {
     data class OnMentorClicked(val mentor: Mentor) : HomeEvent()
     data class OnSessionClicked(val session: Session) : HomeEvent()
-    object OnRefresh : HomeEvent()
-    object OnMatchClicked : HomeEvent()
-    object OnProfileClicked : HomeEvent()
-    object OnSettingsClicked : HomeEvent()
+    data object OnRefresh : HomeEvent()
+    data object OnMatchClicked : HomeEvent()
+    data object OnProfileClicked : HomeEvent()
+    data object OnSettingsClicked : HomeEvent()
 }

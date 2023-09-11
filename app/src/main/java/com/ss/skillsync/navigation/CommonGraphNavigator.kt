@@ -4,10 +4,11 @@ import androidx.navigation.NavController
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ss.skillsync.home.HomeNavigator
 import com.ss.skillsync.home.destinations.HomeScreenDestination
-import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.Session
 import com.ss.skillsync.onboarding.OnboardingNavigator
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
+import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
+import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
 import com.ss.skillsync.signin.SignInNavigator
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.SignupNavigator
@@ -50,15 +51,15 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToProfile() {
-        TODO("Not yet implemented")
+        navController.navigate(UserProfileScreenDestination)
     }
 
     override fun navigateToSettings() {
         TODO("Not yet implemented")
     }
 
-    override fun navigateToMentorProfile(mentor: Mentor) {
-        TODO("Not yet implemented")
+    override fun navigateToMentorProfile() {
+        navController.navigate(MentorProfileScreenDestination)
     }
 
     override fun navigateToSessionDetails(session: Session) {

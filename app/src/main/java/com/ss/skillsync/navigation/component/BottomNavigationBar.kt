@@ -1,7 +1,6 @@
 package com.ss.skillsync.navigation.component
 
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -20,6 +19,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ss.skillsync.commonandroid.theme.NeutralGray
+import com.ss.skillsync.commonandroid.theme.Shark
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.commonandroid.theme.White
 import com.ss.skillsync.navigation.NavGraphs
@@ -39,7 +39,7 @@ fun SSBottomNavigation(
     if (shouldShowBottomNav(backStackEntry)) {
         NavigationBar(
             modifier = Modifier,
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = Shark,
             tonalElevation = 5.dp,
         ) {
             navItems.forEachIndexed { index, navItem ->
@@ -48,13 +48,13 @@ fun SSBottomNavigation(
                     icon = {
                         Icon(
                             painter = painterResource(id = navItem.second),
-                            contentDescription = navItem.first.route
+                            contentDescription = navItem.first.route,
                         )
                     },
                     label = {
                         Text(
                             text = navItem.first.route,
-                            color = if (index == selectedItem) White else NeutralGray
+                            color = if (index == selectedItem) White else NeutralGray,
                         )
                     },
                     onClick = {
@@ -62,7 +62,7 @@ fun SSBottomNavigation(
                         navigator.navigate(navItem.first.route)
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor = MaterialTheme.colorScheme.background.copy(),
+                        indicatorColor = Shark,
                         selectedIconColor = White,
                         unselectedIconColor = NeutralGray,
                     ),

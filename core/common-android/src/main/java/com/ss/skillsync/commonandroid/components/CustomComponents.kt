@@ -43,23 +43,24 @@ fun WelcomeCard(
     Row(
         modifier = modifier
             .clickable { onClick() },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         CircularAsyncImage(imageUrl = imageUrl, contentDescription = name)
         Spacer(modifier = modifier.width(14.dp))
         Column {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = "Welcome 👋",
                     style = MaterialTheme.typography.labelMedium.copy(fontSize = 14.sp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
             Text(
-                text = name, style = MaterialTheme.typography.labelLarge.copy(fontSize = 18.sp),
-                color = MaterialTheme.colorScheme.onBackground
+                text = name,
+                style = MaterialTheme.typography.labelLarge.copy(fontSize = 18.sp),
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
     }
@@ -82,10 +83,11 @@ fun CircularAsyncImage(
                 .size(size)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.onBackground),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             AsyncImage(
-                model = imageUrl, contentDescription = contentDescription,
+                model = imageUrl,
+                contentDescription = contentDescription,
                 modifier = Modifier
                     .size(size)
                     .padding(imagePadding),
@@ -100,7 +102,6 @@ fun CircularAsyncImage(
     }
 }
 
-
 @Preview
 @Composable
 private fun WelcomeCardPrev() {
@@ -109,7 +110,7 @@ private fun WelcomeCardPrev() {
             WelcomeCard(
                 imageUrl = "https://placebear.com/g/400/400",
                 name = "Salman",
-                onClick = {}
+                onClick = {},
             )
         }
     }

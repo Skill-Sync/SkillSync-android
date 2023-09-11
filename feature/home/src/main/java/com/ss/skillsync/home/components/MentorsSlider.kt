@@ -15,11 +15,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ss.skillsync.commonandroid.components.CircularAsyncImage
+import com.ss.skillsync.commonandroid.components.Section
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.home.R
 import com.ss.skillsync.model.Mentor
 
 /**
@@ -32,19 +35,27 @@ fun MentorsSlider(
     onMentorClicked: (Mentor) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyRow(
+    Section(
         modifier = modifier,
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        contentPadding = PaddingValues(0.dp),
+        header = stringResource(R.string.top_mentors),
+        headerStartPadding = 16.dp,
+        containerColor = MaterialTheme.colorScheme.background,
+        rounded = false
     ) {
-        items(mentorsList, key = { it.id }) { mentor ->
-            MentorHead(
-                mentor = mentor,
-                onMentorClicked = {
-                    onMentorClicked(mentor)
-                }
-            )
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            items(mentorsList, key = { it.id }) { mentor ->
+                MentorHead(
+                    mentor = mentor,
+                    onMentorClicked = {
+                        onMentorClicked(mentor)
+                    }
+                )
+            }
         }
     }
 }
@@ -57,15 +68,19 @@ fun MentorHead(mentor: Mentor, onMentorClicked: () -> Unit, modifier: Modifier =
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CircularAsyncImage(imageUrl = mentor.pictureUrl, contentDescription = mentor.name)
+        CircularAsyncImage(
+            imageUrl = mentor.pictureUrl,
+            contentDescription = mentor.name,
+            size = 64.dp,
+        )
         Text(
             text = mentor.name,
-            style = MaterialTheme.typography.labelLarge.copy(fontSize = 8.sp),
+            style = MaterialTheme.typography.labelLarge.copy(fontSize = 12.sp),
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
             text = mentor.field,
-            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 6.sp),
+            style = MaterialTheme.typography.bodyMedium.copy(fontSize = 8.sp),
             color = MaterialTheme.colorScheme.onBackground
         )
     }

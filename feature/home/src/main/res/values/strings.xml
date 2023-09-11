@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_mentors">Top Mentors</string>
+    <string name="session_scheduled">Session Scheduled</string>
+    <string name="lets_match">Let\'s\nMatch</string>
+    <string name="start">Start</string>
+</resources>

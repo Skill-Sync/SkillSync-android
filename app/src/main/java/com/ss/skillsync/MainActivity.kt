@@ -69,7 +69,7 @@ fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
                 },
                 bottomBar = {
                     SSBottomNavigation(navigator = navController)
-                }
+                },
             ) {
                 AppNavigation(
                     modifier = modifier

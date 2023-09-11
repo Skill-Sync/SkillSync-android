@@ -18,12 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ss.skillsync.commonandroid.components.CircularAsyncImage
 import com.ss.skillsync.commonandroid.components.Section
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.home.R
 import com.ss.skillsync.model.Session
 
 /**
@@ -36,18 +38,24 @@ fun SessionsScheduledList(
     onSessionClicked: (Session) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
+    Section(
         modifier = modifier,
-        contentPadding = PaddingValues(vertical = 20.dp, horizontal = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        contentPadding = PaddingValues(0.dp),
+        header = stringResource(R.string.session_scheduled)
     ) {
-        items(sessions, key = { it.sessionId }) {
-            SessionScheduledItem(
-                session = it,
-                onSessionClicked = {
-                    onSessionClicked(it)
-                },
-            )
+        LazyColumn(
+            contentPadding = PaddingValues(vertical = 20.dp, horizontal = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            items(sessions, key = { it.sessionId }) {
+                SessionScheduledItem(
+                    session = it,
+                    onSessionClicked = {
+                        onSessionClicked(it)
+                    },
+                )
+            }
         }
     }
 }
@@ -61,6 +69,10 @@ fun SessionScheduledItem(
     containerColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
 ) {
     val subTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+    val subTextStyle = MaterialTheme.typography.bodyMedium.copy(
+        color = subTextColor,
+        fontWeight = FontWeight.W600
+    )
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(containerColor = containerColor),
@@ -85,11 +97,10 @@ fun SessionScheduledItem(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
                 if (session.isSkillAvailable) {
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = session.skill,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = subTextColor
+                        style = subTextStyle,
                     )
                 }
             }
@@ -98,14 +109,12 @@ fun SessionScheduledItem(
             ) {
                 Text(
                     text = session.scheduledHour,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = subTextColor
+                    style = subTextStyle
                 )
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = session.scheduledDate,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = subTextColor
+                    style = subTextStyle
                 )
             }
         }
@@ -147,7 +156,7 @@ fun UserScheduledListPrev() {
     SkillSyncTheme {
         Section(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentPadding = 0.dp
+            contentPadding = PaddingValues(0.dp)
         ) {
             SessionsScheduledList(sessions = sessions, {})
         }

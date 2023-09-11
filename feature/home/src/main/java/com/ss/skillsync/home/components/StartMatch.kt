@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,11 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ss.skillsync.commonandroid.components.BrandButtonWithIcon
+import com.ss.skillsync.commonandroid.components.Section
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.home.R
 import com.ss.skillsync.commonandroid.R as commonRes
 
 /**
@@ -32,27 +32,23 @@ fun StartMatchSection(
     onMatchClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(modifier)
-            .background(color = MaterialTheme.colorScheme.primaryContainer)
+    Section(
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 20.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 20.dp)
         ) {
             Text(
-                text = "Let's\nMatch",
-                style = MaterialTheme.typography.headlineLarge,
+                text = stringResource(R.string.lets_match),
+                style = MaterialTheme.typography.headlineLarge.copy(fontSize = 24.sp),
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
                 minLines = 2,
                 maxLines = 2,
                 modifier = Modifier.weight(1f)
             )
             BrandButtonWithIcon(
-                text = "Start",
+                text = stringResource(R.string.start),
                 onClick = onMatchClicked,
                 iconPainter = painterResource(id = commonRes.drawable.ic_matching),
                 background = Brush.horizontalGradient(
