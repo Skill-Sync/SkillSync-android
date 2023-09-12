@@ -1,6 +1,5 @@
 package com.ss.skillsync.data.source.remote.mentors
 
-import com.ss.skillsync.model.Mentor
 import javax.inject.Inject
 
 /**
@@ -8,19 +7,25 @@ import javax.inject.Inject
  * @date 10/09/2023
  */
 class MentorRemoteSource @Inject constructor(
-    private val mentorApiService: MentorApiService
+    private val mentorApiService: MentorApiService,
 ) {
-    suspend fun getSuggestedMentors(): List<Mentor> {
-        if (mentorApiService.getSuggestedMentors().isSuccessful) {
-            return mentorApiService.getSuggestedMentors().body()!!.map {
-                Mentor(
-                    it.name,
-                    it.pictureUrl,
-                    it.field
-                )
-            }
-        } else {
-            throw Exception("Failed to get suggested mentors")
+
+    suspend fun acceptSession(sessionId: String): Result<Unit> {
+        return kotlin.runCatching {
+            mentorApiService.answerSessionRequest(sessionId, "accepted")
+        }
+    }
+
+    suspend fun rejectSession(sessionId: String): Result<Unit> {
+        return kotlin.runCatching {
+            mentorApiService.answerSessionRequest(sessionId, "rejected")
+        }
+    }
+
+    suspend fun setWorkingHours(from: String, to: String): Result<Unit> {
+        return kotlin.runCatching {
+            val workingHours = "$from-$to"
+            mentorApiService.setWorkingHours(workingHours)
         }
     }
 }

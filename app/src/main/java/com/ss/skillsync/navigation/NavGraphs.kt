@@ -8,10 +8,13 @@ import com.ss.skillsync.friends.destinations.FriendListScreenDestination
 import com.ss.skillsync.home.destinations.HomeScreenDestination
 import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
+import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
+import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
 import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
 import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
+import com.ss.skillsync.commonandroid.R as commonRes
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/7/2023.
@@ -31,7 +34,7 @@ class NavGraphs private constructor(
             get() = listOf(
                 welcome,
                 auth,
-                main
+                main,
             )
     }
 
@@ -40,7 +43,7 @@ class NavGraphs private constructor(
             get() = mapOf(
                 SignupScreenDestination.route to SignupScreenDestination,
                 SignInScreenDestination.route to SignInScreenDestination,
-                OnboardingScreenDestination.route to OnboardingScreenDestination
+                OnboardingScreenDestination.route to OnboardingScreenDestination,
             )
 
         override val route: String
@@ -54,7 +57,9 @@ class NavGraphs private constructor(
             get() = mapOf(
                 HomeScreenDestination.route to HomeScreenDestination,
                 SessionMakingScreenDestination.route to SessionMakingScreenDestination,
-                FriendListScreenDestination.route to FriendListScreenDestination
+                FriendListScreenDestination.route to FriendListScreenDestination,
+                MentorProfileScreenDestination.route to MentorProfileScreenDestination,
+                UserProfileScreenDestination.route to UserProfileScreenDestination,
             )
         override val route: String
             get() = "main"
@@ -76,8 +81,8 @@ class NavGraphs private constructor(
     fun getBottomNavRoutes(): List<Pair<Route, Int>> {
         return listOf(
             HomeScreenDestination to R.drawable.ic_home,
-            SessionMakingScreenDestination to R.drawable.ic_matching,
-            FriendListScreenDestination to R.drawable.ic_friends
+            SessionMakingScreenDestination to commonRes.drawable.ic_matching,
+            FriendListScreenDestination to R.drawable.ic_friends,
         )
     }
 

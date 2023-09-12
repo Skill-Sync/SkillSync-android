@@ -5,11 +5,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
+private var DarkColorScheme = darkColorScheme(
     primary = Purple,
     secondary = Yellow,
     tertiary = Blue,
@@ -21,13 +22,16 @@ private val DarkColorScheme = darkColorScheme(
     primaryContainer = LightBlue10,
     secondaryContainer = LightBlue20,
     onPrimaryContainer = RibbonBlue,
-    onSecondaryContainer = LightBlue
+    onSecondaryContainer = LightBlue,
 )
 
 @Composable
 fun SkillSyncTheme(
+    backgroundColor: Color = DarkColorScheme.background,
     content: @Composable () -> Unit,
 ) {
+    DarkColorScheme = DarkColorScheme.copy(background = backgroundColor)
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {

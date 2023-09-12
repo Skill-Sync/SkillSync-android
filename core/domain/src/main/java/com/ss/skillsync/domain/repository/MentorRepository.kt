@@ -8,5 +8,10 @@ import com.ss.skillsync.model.Mentor
  */
 interface MentorRepository {
 
-    suspend fun getSuggestedMentors(): List<Mentor>
+    var selectedMentor: Mentor?
+    suspend fun acceptSession(sessionId: String): Result<Unit>
+
+    suspend fun rejectSession(sessionId: String): Result<Unit>
+
+    suspend fun setWorkingHours(from: String, to: String): Result<Unit>
 }

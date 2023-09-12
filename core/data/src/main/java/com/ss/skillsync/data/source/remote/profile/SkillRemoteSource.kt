@@ -68,7 +68,7 @@ class SkillRemoteSource @Inject constructor(
             try {
                 val request = UpdateSkillsRequest(
                     skillsToLearn.map { it.id },
-                    skillsLearned.map { it.toSkillLearnedRequest() }
+                    skillsLearned.map { it.toSkillLearnedRequest() },
                 )
                 val response = skillApiService.setUserSkills(request)
                 if (response.isSuccessful) {

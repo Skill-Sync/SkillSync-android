@@ -7,5 +7,5 @@ package com.ss.skillsync.domain.payload
 data class SignInPayload(
     val email: String,
     val password: String,
-    val type: String
+    val type: String,
 )
