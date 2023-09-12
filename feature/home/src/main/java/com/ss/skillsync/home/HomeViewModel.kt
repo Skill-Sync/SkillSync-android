@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
     fun resetEvents() {
         _state.value = _state.value.copy(
             error = null,
-            navDestination = null
+            navDestination = null,
         )
     }
 
@@ -46,7 +46,9 @@ class HomeViewModel @Inject constructor(
                 navigateTo(HomeNavDestinations.MentorProfile)
             }
             is HomeEvent.OnSessionClicked -> {
-                navigateTo(HomeNavDestinations.SessionDetails(session = homeEvent.session))
+                _state.value = state.value.copy(
+                    selectedSession = homeEvent.session
+                )
             }
             HomeEvent.OnMatchClicked -> {
                 navigateTo(HomeNavDestinations.Match)
@@ -59,6 +61,11 @@ class HomeViewModel @Inject constructor(
             }
             HomeEvent.OnSettingsClicked -> {
                 navigateTo(HomeNavDestinations.Settings)
+            }
+            HomeEvent.OnSessionDismissed -> {
+                _state.value = state.value.copy(
+                    selectedSession = null
+                )
             }
         }
     }

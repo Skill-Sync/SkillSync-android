@@ -1,16 +1,26 @@
 package com.ss.skillsync.home
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -18,12 +28,14 @@ import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.Shark
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.home.components.MentorsSlider
+import com.ss.skillsync.home.components.SessionDetailsBottomSheet
 import com.ss.skillsync.home.components.SessionsScheduledList
 import com.ss.skillsync.home.components.StartMatchSection
 import com.ss.skillsync.home.components.TopHomeBar
 import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.Session
 import com.ss.skillsync.model.User
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 /**
@@ -50,16 +62,12 @@ fun HomeScreen(
     }
 
     LaunchedEffect(key1 = state.navDestination) {
-        when (val navDestination = state.navDestination) {
+        when (state.navDestination) {
             HomeNavDestinations.Profile -> navigator.navigateToProfile()
             HomeNavDestinations.Settings -> navigator.navigateToSettings()
             HomeNavDestinations.Match -> navigator.navigateToMatch()
             is HomeNavDestinations.MentorProfile -> {
                 navigator.navigateToMentorProfile()
-            }
-
-            is HomeNavDestinations.SessionDetails -> {
-                navigator.navigateToSessionDetails(session = navDestination.session)
             }
 
             null -> return@LaunchedEffect
@@ -72,56 +80,87 @@ fun HomeScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
     state: HomeState,
     onEvent: (HomeEvent) -> Unit,
 ) {
     val screenPadding = 16.dp
-    ScreenColumn(
-        isLoading = state.isLoading,
-        contentPadding = PaddingValues(0.dp),
-        screenColor = Shark
-    ) {
-        TopHomeBar(
-            state.activeUser,
-            modifier = Modifier.padding(
-                start = screenPadding,
-                end = screenPadding,
-                top = screenPadding,
-            ),
-            onProfileClicked = { onEvent(HomeEvent.OnProfileClicked) },
-            onSettingsClicked = { onEvent(HomeEvent.OnSettingsClicked) },
-        )
-        Spacer(modifier = Modifier.weight(0.3f))
-        StartMatchSection(
-            modifier = Modifier
-                .padding(
+    val sheetState =
+        rememberModalBottomSheetState()
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(enabled = sheetState.hasPartiallyExpandedState) {
+        coroutineScope.launch {
+            sheetState.hide()
+        }
+    }
+
+    LaunchedEffect(key1 = state.selectedSession) {
+        if (state.selectedSession != null) {
+            sheetState.expand()
+        } else {
+            sheetState.hide()
+        }
+    }
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopHomeBar(
+                state.activeUser,
+                modifier = Modifier.padding(
                     start = screenPadding,
                     end = screenPadding,
-                    bottom = screenPadding,
+                    top = screenPadding,
                 ),
-            onMatchClicked = {
-                onEvent(HomeEvent.OnMatchClicked)
-            })
-        Spacer(modifier = Modifier.weight(0.1f))
-        SessionsScheduledList(
-            modifier = Modifier
+                onProfileClicked = { onEvent(HomeEvent.OnProfileClicked) },
+                onSettingsClicked = { onEvent(HomeEvent.OnSettingsClicked) },
+            )
+        },
+    ) { contentPadding ->
+        ScreenColumn(
+            isLoading = state.isLoading,
+            contentPadding = contentPadding,
+            screenColor = Shark
+        ) {
+            StartMatchSection(
+                onMatchClicked = { onEvent(HomeEvent.OnMatchClicked) },
+                modifier = Modifier.spacePadding(screenPadding)
+            )
+            SessionsScheduledList(modifier = Modifier
                 .weight(3f)
-                .padding(horizontal = screenPadding),
-            sessions = state.scheduledSessions,
-            onSessionClicked = {
-                onEvent(HomeEvent.OnSessionClicked(it))
+                .spacePadding(screenPadding),
+                sessions = state.scheduledSessions,
+                onSessionClicked = {
+                    onEvent(HomeEvent.OnSessionClicked(it))
+                })
+            MentorsSlider(
+                mentorsList = state.suggestedMentors,
+                onMentorClicked = { mentor -> onEvent(HomeEvent.OnMentorClicked(mentor)) },
+                modifier = Modifier.padding(top = screenPadding),
+            )
+            AnimatedVisibility(visible = state.selectedSession != null) {
+                state.selectedSession?.let {
+                    SessionDetailsBottomSheet(
+                        session = it,
+                        onDismiss = { onEvent(HomeEvent.OnSessionDismissed) },
+                        sheetState = sheetState,
+                        modifier = Modifier.padding(
+                            WindowInsets.navigationBars.asPaddingValues(
+                                LocalDensity.current
+                            )
+                        )
+                    )
+                }
             }
-        )
-        Spacer(modifier = Modifier.weight(0.2f))
-        MentorsSlider(
-            mentorsList = state.suggestedMentors,
-            onMentorClicked = { mentor -> onEvent(HomeEvent.OnMentorClicked(mentor)) },
-        )
-        Spacer(modifier = Modifier.weight(0.3f))
+        }
     }
 }
+
+fun Modifier.spacePadding(space: Dp) = this.padding(top = space, start = space, end = space)
+
 
 @Preview
 @Composable

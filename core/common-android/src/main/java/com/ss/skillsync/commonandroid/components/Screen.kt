@@ -1,6 +1,6 @@
 package com.ss.skillsync.commonandroid.components
 
-import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,11 +10,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,13 +47,12 @@ private fun BasicScreen(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(contentPadding),
         ) {
-            AnimatedContent(targetState = isLoading, label = "") { isLoading ->
-                if (isLoading) {
-                    Dialog(onDismissRequest = { }) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
+            content()
+            AnimatedVisibility(isLoading) {
+                Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f)))
+                Dialog(onDismissRequest = { }) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
-                content()
             }
         }
     }
@@ -62,7 +67,18 @@ fun ScreenColumn(
     screenColor: Color = MaterialTheme.colorScheme.background,
     isScrollable: Boolean = false,
     onScrollState: (scrollState: ScrollState) -> Unit = {},
-    content: @Composable ColumnScope.() -> Unit,
+    screenLabel: String? = null,
+    isBackDisplayed: Boolean = false,
+    onBackClicked: () -> Unit = {},
+    content: @Composable ColumnScope.() -> Unit = {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(
+                text = "Not implemented yet.",
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
+    },
 ) {
     val scrollModifier = if (isScrollable) {
         val scrollState = rememberScrollState()
@@ -80,10 +96,37 @@ fun ScreenColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .then(scrollModifier),
-
-            content = content,
             verticalArrangement = arrangement,
             horizontalAlignment = Alignment.CenterHorizontally,
-        )
+        ) {
+            if(isBackDisplayed || screenLabel != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    if (isBackDisplayed) {
+                        IconButton(
+                            onClick = onBackClicked,
+                            modifier = Modifier.align(Alignment.CenterStart)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = MaterialTheme.colorScheme.onBackground,
+                            )
+                        }
+                    }
+                    screenLabel?.let {
+                        Text(
+                            text = screenLabel,
+                            style = MaterialTheme.typography.displayMedium,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+            }
+            content()
+        }
     }
 }
