@@ -12,6 +12,7 @@ import com.ss.skillsync.model.User
 
 interface UserRepository {
     suspend fun getActiveUser(): Result<User>
+    suspend fun getActiveUserAsMentor(): Result<Mentor>
     suspend fun signIn(signInPayload: SignInPayload): Result<User>
     suspend fun signUp(signUpPayload: SignUpPayload): Result<Unit>
     suspend fun signOut()
