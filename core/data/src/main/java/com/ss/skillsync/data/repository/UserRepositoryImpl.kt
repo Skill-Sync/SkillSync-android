@@ -40,6 +40,22 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getActiveUserAsMentor(): Result<Mentor> {
+        if (preferences.areTokensAvailable().not()) {
+            return Result.failure(Throwable("SignupResponseUser not found"))
+        }
+
+        if (activeUser == null) {
+            activeUser = userRemoteSource.getUserData()
+        }
+        return if (activeUser != null) {
+            Result.success(activeUser!!.toMentor())
+        } else {
+            signOut()
+            Result.failure(Throwable("SignupResponseUser not found"))
+        }
+    }
+
     override suspend fun signIn(signInPayload: SignInPayload): Result<User> {
         val response = userRemoteSource.signIn(signInPayload)
         return if (response.isSuccess) {

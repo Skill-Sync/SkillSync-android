@@ -14,4 +14,5 @@ sealed class HomeEvent {
     data object OnMatchClicked : HomeEvent()
     data object OnProfileClicked : HomeEvent()
     data object OnSettingsClicked : HomeEvent()
+    data object OnSessionDismissed : HomeEvent()
 }

@@ -11,6 +11,7 @@ import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
 import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
 import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
+import com.ss.skillsync.settings.destinations.SettingsScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
 import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
@@ -60,6 +61,7 @@ class NavGraphs private constructor(
                 FriendListScreenDestination.route to FriendListScreenDestination,
                 MentorProfileScreenDestination.route to MentorProfileScreenDestination,
                 UserProfileScreenDestination.route to UserProfileScreenDestination,
+                SettingsScreenDestination.route to SettingsScreenDestination,
             )
         override val route: String
             get() = "main"
