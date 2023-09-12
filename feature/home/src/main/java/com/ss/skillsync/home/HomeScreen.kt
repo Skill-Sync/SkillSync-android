@@ -24,6 +24,7 @@ import com.ss.skillsync.home.components.TopHomeBar
 import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.Session
 import com.ss.skillsync.model.User
+import java.util.Calendar
 
 /**
  * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
@@ -141,6 +142,7 @@ fun HomeScreenPreview() {
                 "https://picsum.photos/200/300",
                 "Software Engineer",
                 "3:00 PM",
+                dateCalendar = Calendar.getInstance(),
                 scheduledDate = "12/12/2021",
             )
         }

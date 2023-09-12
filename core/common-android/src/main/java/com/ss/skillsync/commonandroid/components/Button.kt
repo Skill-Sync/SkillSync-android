@@ -88,6 +88,34 @@ fun BrandButton(
 }
 
 @Composable
+fun PrimaryActionBrandButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    disabledBackgroud: Brush = Brush.linearGradient(colors = listOf(Scorpion, Scorpion)),
+    disabledTextColor: Color = DoveGray,
+    contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
+    enabled: Boolean = true,
+) {
+    BrandButton(
+        text = text, onClick = onClick,
+        modifier = modifier,
+        background = Brush.horizontalGradient(
+            listOf(
+                Orange,
+                Yellow,
+            ),
+        ),
+        disabledBackgroud = disabledBackgroud,
+        textColor = White,
+        disabledTextColor = disabledTextColor,
+        isUppercase = false,
+        contentPadding = contentPadding,
+        enabled = enabled,
+    )
+}
+
+@Composable
 fun BrandButtonWithIcon(
     text: String,
     onClick: () -> Unit,

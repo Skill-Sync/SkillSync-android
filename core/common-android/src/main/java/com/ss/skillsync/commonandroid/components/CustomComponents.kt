@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -102,6 +105,41 @@ fun CircularAsyncImage(
     }
 }
 
+@Composable
+fun RectangleAsyncImage(
+    imageUrl: String,
+    contentDescription: String,
+    modifier: Modifier = Modifier,
+) {
+    var imagePadding by remember {
+        mutableStateOf(25.dp)
+    }
+    val imageLoaded = imagePadding == 0.dp
+    Box(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.onBackground),
+        contentAlignment = Alignment.Center,
+    ) {
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = contentDescription,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(imagePadding),
+            placeholder = painterResource(id = R.drawable.ic_empty_image),
+            error = painterResource(id = R.drawable.ic_empty_image),
+            contentScale = if (imageLoaded) {
+                ContentScale.Crop
+            } else {
+                ContentScale.Fit
+            },
+            onSuccess = {
+                imagePadding = 0.dp
+            },
+        )
+    }
+}
+
 @Preview
 @Composable
 private fun WelcomeCardPrev() {
@@ -111,6 +149,15 @@ private fun WelcomeCardPrev() {
                 imageUrl = "https://placebear.com/g/400/400",
                 name = "Salman",
                 onClick = {},
+            )
+
+            RectangleAsyncImage(
+                imageUrl = "https://placebear.com/g/400/400",
+                contentDescription = "Hello",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.4f)
+                    .padding(16.dp),
             )
         }
     }

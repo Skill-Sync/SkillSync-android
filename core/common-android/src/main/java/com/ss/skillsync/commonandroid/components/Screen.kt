@@ -1,6 +1,7 @@
 package com.ss.skillsync.commonandroid.components
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -54,10 +57,20 @@ private fun BasicScreen(
 fun ScreenColumn(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    arrangement: Arrangement.Vertical = Arrangement.SpaceEvenly,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
+    isScrollable: Boolean = false,
+    onScrollState: (scrollState: ScrollState) -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val scrollModifier = if (isScrollable) {
+        val scrollState = rememberScrollState()
+        onScrollState(scrollState)
+        Modifier.verticalScroll(scrollState).then(modifier)
+    } else {
+        modifier
+    }
     BasicScreen(
         isLoading = isLoading,
         contentPadding = contentPadding,
@@ -66,9 +79,10 @@ fun ScreenColumn(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .then(modifier),
+                .then(scrollModifier),
+
             content = content,
-            verticalArrangement = Arrangement.SpaceEvenly,
+            verticalArrangement = arrangement,
             horizontalAlignment = Alignment.CenterHorizontally,
         )
     }

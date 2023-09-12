@@ -3,8 +3,10 @@ package com.ss.skillsync.profile.mentor
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ss.skillsync.domain.usecase.GetSelectedMentorUseCase
-import com.ss.skillsync.domain.usecase.session.GetMentorSessionsUseCase
+import com.ss.skillsync.domain.usecase.session.GetMentorSessionDaysUseCase
+import com.ss.skillsync.domain.usecase.session.ScheduleSessionUseCase
 import com.ss.skillsync.model.Mentor
+import com.ss.skillsync.model.SessionDays
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getSelectedMentorUseCase: GetSelectedMentorUseCase,
-    private val getMentorSessionsUseCase: GetMentorSessionsUseCase,
+    private val getSessionDaysUseCae: GetMentorSessionDaysUseCase,
+    private val scheduleSessionUseCase: ScheduleSessionUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileState())
@@ -29,8 +32,21 @@ class ProfileViewModel @Inject constructor(
 
     fun onEvent(profileEvent: ProfileEvent) {
         when (profileEvent) {
+            is ProfileEvent.OnDayClicked -> {
+                _state.value = _state.value.copy(
+                    selectedDay = profileEvent.day,
+                    selectedSession = null
+                )
+            }
+
             is ProfileEvent.OnSessionClicked -> {
-                // navigateTo(HomeNavDestinations.SessionDetails(session = homeEvent.session))
+                _state.value = _state.value.copy(
+                    selectedSession = profileEvent.session
+                )
+            }
+
+            is ProfileEvent.OnBookSessionClicked -> {
+                scheduleSession()
             }
 
             else -> {}
@@ -43,24 +59,49 @@ class ProfileViewModel @Inject constructor(
             failedToLoadSessions = false,
             isLoading = true
         )
-
-        val mentor = getSelectedMentorUseCase().getOrNull()
-        if (mentor == null) {
+        val mentor = getSelectedMentorUseCase().getOrElse {
             _state.value = _state.value.copy(
                 failedToLoadProfile = true
             )
             return@launch
         }
         setMentorState(mentor)
-        val sessions = getMentorSessionsUseCase(mentor).getOrNull()?.sessions
-        sessions?.let {
+        loadSessionDays(mentor)?.let {
+            setSessionDaysState(it)
+        } ?: return@launch
+    }
+
+    private suspend fun loadSessionDays(mentor: Mentor): SessionDays? {
+        _state.value = _state.value.copy(
+            failedToLoadSessions = false,
+            isLoading = true
+        )
+        return getSessionDaysUseCae(mentor).getOrElse {
             _state.value = _state.value.copy(
-                sessions = it
+                failedToLoadSessions = true,
+                isLoading = false
             )
-        } ?: run {
-            _state.value = _state.value.copy(
-                failedToLoadSessions = true
-            )
+            null
+        }
+    }
+
+    private fun scheduleSession() {
+        val session = _state.value.selectedSession ?: return
+        val mentor = getSelectedMentorUseCase().getOrNull() ?: return
+        toggleLoading(true)
+        viewModelScope.launch {
+            scheduleSessionUseCase(session.sessionId)
+                .onSuccess {
+                    _state.value = _state.value.copy(
+                        isSessionBookedSuccessfully = true,
+                    )
+                    loadSessionDays(mentor)
+                }.onFailure {
+                    _state.value = _state.value.copy(
+                        failedToBookSession = true
+                    )
+                }
+            toggleLoading(false)
         }
     }
 
@@ -69,7 +110,22 @@ class ProfileViewModel @Inject constructor(
             name = mentor.name,
             skill = mentor.field,
             imageUrl = mentor.pictureUrl,
+            about = mentor.about,
             isLoading = false
+        )
+    }
+
+    private fun setSessionDaysState(sessionDays: SessionDays) {
+        val sessionDaysUI = UISessionDays.from(sessionDays)
+        _state.value = _state.value.copy(
+            daySessions = sessionDaysUI,
+            isLoading = false
+        )
+    }
+
+    private fun toggleLoading(loading: Boolean) {
+        _state.value = _state.value.copy(
+            isLoading = loading
         )
     }
 }

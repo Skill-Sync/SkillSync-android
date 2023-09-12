@@ -46,6 +46,7 @@ import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.Blue
 import com.ss.skillsync.commonandroid.theme.DarkBlue
 import com.ss.skillsync.commonandroid.theme.Purple
+import com.ss.skillsync.commonandroid.theme.SemiBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 
 /**
@@ -106,7 +107,8 @@ private fun SignInContent(
     val scrollState = rememberScrollState()
     ScreenColumn(
         modifier = Modifier.verticalScroll(scrollState),
-        isLoading = state.isLoading
+        isLoading = state.isLoading,
+        screenColor = SemiBlack
     ) {
         HeaderSection()
         SignInForm(

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.TextUnit
 import com.ss.skillsync.commonandroid.theme.DoveGray
 
 /**
@@ -19,12 +20,14 @@ import com.ss.skillsync.commonandroid.theme.DoveGray
 fun HeaderLargeText(
     modifier: Modifier = Modifier,
     text: String,
+    fontSize: TextUnit = MaterialTheme.typography.headlineLarge.fontSize,
+    textAlign: TextAlign = TextAlign.Center,
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
         text = text,
-        textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.headlineLarge,
+        textAlign = textAlign,
+        style = MaterialTheme.typography.headlineLarge.copy(fontSize = fontSize),
         color = MaterialTheme.colorScheme.onBackground,
     )
 }
@@ -34,13 +37,14 @@ fun SubHeaderText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
+    textAlign: TextAlign = TextAlign.Center,
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
         text = text,
         style = style,
         color = DoveGray,
-        textAlign = TextAlign.Center,
+        textAlign = textAlign,
     )
 }
 

@@ -1,5 +1,6 @@
 package com.ss.skillsync.profile.mentor
 
+import com.ss.skillsync.model.Day
 import com.ss.skillsync.model.Session
 
 /**
@@ -9,11 +10,19 @@ data class ProfileState(
     val name: String = "",
     val skill: String = "",
     val imageUrl: String? = null,
-    val sessions: List<Session> = emptyList(),
+    val about: String = "",
+    val daySessions: UISessionDays? = null,
+    val selectedDay: Day? = null,
+    val selectedSession: Session? = null,
     val failedToLoadProfile: Boolean = false,
     val failedToLoadSessions: Boolean = false,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isSessionBookedSuccessfully: Boolean = false,
+    val failedToBookSession: Boolean = false,
 ) {
     val isProfileLoaded: Boolean
         get() = name.isNotEmpty() && skill.isNotEmpty() && imageUrl != null
+
+    val isBookSessionEnabled: Boolean
+        get() = selectedDay != null && selectedSession != null
 }

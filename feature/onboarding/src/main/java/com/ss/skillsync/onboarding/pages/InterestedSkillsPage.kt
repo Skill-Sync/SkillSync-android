@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ss.skillsync.commonandroid.components.ScreenColumn
+import com.ss.skillsync.commonandroid.theme.SemiBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.onboarding.OnboardingEvent
 import com.ss.skillsync.onboarding.OnboardingViewModel
@@ -37,7 +38,9 @@ fun InterestedSkillsPage(
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
-    ScreenColumn {
+    ScreenColumn(
+        screenColor = SemiBlack
+    ) {
         OnboardingTitle(
             header = stringResource(id = R.string.find_your_skills),
             subHeader = stringResource(
