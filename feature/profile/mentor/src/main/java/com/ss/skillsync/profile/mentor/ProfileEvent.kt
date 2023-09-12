@@ -11,6 +11,5 @@ sealed class ProfileEvent {
     data class OnSessionClicked(val session: Session) : ProfileEvent()
 
     data object OnBookSessionClicked : ProfileEvent()
-    data object OnSessionBookedSuccessfully : ProfileEvent()
     data object OnBackClicked : ProfileEvent()
 }

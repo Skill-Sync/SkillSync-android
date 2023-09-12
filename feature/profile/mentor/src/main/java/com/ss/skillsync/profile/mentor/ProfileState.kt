@@ -19,10 +19,15 @@ data class ProfileState(
     val isLoading: Boolean = false,
     val isSessionBookedSuccessfully: Boolean = false,
     val failedToBookSession: Boolean = false,
+    val navDestination: ProfileNavDestination? = null
 ) {
     val isProfileLoaded: Boolean
         get() = name.isNotEmpty() && skill.isNotEmpty() && imageUrl != null
 
     val isBookSessionEnabled: Boolean
         get() = selectedDay != null && selectedSession != null
+}
+
+sealed class ProfileNavDestination {
+    data object Back : ProfileNavDestination()
 }

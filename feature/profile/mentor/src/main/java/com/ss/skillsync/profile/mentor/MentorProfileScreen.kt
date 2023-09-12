@@ -19,20 +19,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ss.skillsync.commonandroid.BaseNavigator
 import com.ss.skillsync.commonandroid.components.PrimaryActionBrandButton
 import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.profile.mentor.component.InformationSection
 import com.ss.skillsync.profile.mentor.component.ProfileImage
 import com.ss.skillsync.profile.mentor.component.SessionDayPickerSection
 
-interface MentorProfileNavigator {
-    fun navigateUp()
-}
-
 @Destination
 @Composable
 fun MentorProfileScreen(
     snackbarHostState: SnackbarHostState,
+    navigator: BaseNavigator,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
@@ -43,6 +41,16 @@ fun MentorProfileScreen(
         }
         if (state.failedToBookSession) {
             snackbarHostState.showSnackbar("Failed to book session, please try again")
+        }
+    }
+
+    LaunchedEffect(key1 = state.navDestination) {
+        when (state.navDestination) {
+            ProfileNavDestination.Back -> {
+                navigator.popBackStack()
+            }
+
+            else -> { return@LaunchedEffect }
         }
     }
     MentorProfileContent(
@@ -60,7 +68,11 @@ private fun MentorProfileContent(
         isLoading = state.isLoading,
         contentPadding = PaddingValues(0.dp),
         arrangement = Arrangement.Top,
-        isScrollable = true
+        isScrollable = true,
+        isBackDisplayed = true,
+        onBackClicked = {
+            onEvent(ProfileEvent.OnBackClicked)
+        }
     ) {
         if (state.isProfileLoaded.not()) {
             onEvent(ProfileEvent.OnBackClicked)

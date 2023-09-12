@@ -38,18 +38,20 @@ class ProfileViewModel @Inject constructor(
                     selectedSession = null
                 )
             }
-
             is ProfileEvent.OnSessionClicked -> {
                 _state.value = _state.value.copy(
                     selectedSession = profileEvent.session
                 )
             }
-
             is ProfileEvent.OnBookSessionClicked -> {
                 scheduleSession()
             }
+            is ProfileEvent.OnBackClicked -> {
+                _state.value = _state.value.copy(
+                    navDestination = ProfileNavDestination.Back
+                )
+            }
 
-            else -> {}
         }
     }
 
