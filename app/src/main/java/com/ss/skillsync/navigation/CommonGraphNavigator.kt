@@ -9,6 +9,8 @@ import com.ss.skillsync.onboarding.OnboardingNavigator
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
 import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
+import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
+import com.ss.skillsync.settings.destinations.SettingsScreenDestination
 import com.ss.skillsync.signin.SignInNavigator
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.SignupNavigator
@@ -55,7 +57,7 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToSettings() {
-        TODO("Not yet implemented")
+        navController.navigate(SettingsScreenDestination)
     }
 
     override fun navigateToMentorProfile() {
@@ -67,6 +69,10 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToMatch() {
-        TODO("Not yet implemented")
+        navController.navigate(SessionMakingScreenDestination)
+    }
+
+    override fun popBackStack() {
+        navController.popBackStack()
     }
 }
