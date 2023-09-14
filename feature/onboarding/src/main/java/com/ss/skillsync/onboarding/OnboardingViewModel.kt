@@ -2,6 +2,7 @@ package com.ss.skillsync.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ss.skillsync.domain.usecase.auth.GetActiveUserUseCase
 import com.ss.skillsync.domain.usecase.skills.SaveSkillsUseCase
 import com.ss.skillsync.domain.usecase.skills.SearchSkillsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,16 +17,37 @@ import javax.inject.Inject
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val searchSkillsUseCase: SearchSkillsUseCase,
-    private val saveSkillsUseCase: SaveSkillsUseCase
+    private val saveSkillsUseCase: SaveSkillsUseCase,
+    private val getActiveUserUseCase: GetActiveUserUseCase,
 ) : ViewModel() {
 
     private var _state = MutableStateFlow(OnboardingState())
     val state = _state.asStateFlow()
 
+
+    init {
+        loadData()
+    }
+
     fun navigatedSuccessfully() {
         _state.value = _state.value.copy(
             onboardingDone = false
         )
+    }
+
+    private fun loadData() {
+        viewModelScope.launch {
+            getActiveUserUseCase().onSuccess {
+                _state.value = _state.value.copy(
+                    selectedInterests = it.interestedSkills.toMutableSet(),
+                    selectedStrengths = it.strengths.toMutableSet(),
+                )
+            }.onFailure {
+                _state.value = _state.value.copy(
+                    error = it
+                )
+            }
+        }
     }
 
     fun onEvent(onboardingEvent: OnboardingEvent) {

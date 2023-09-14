@@ -1,30 +1,17 @@
 package com.ss.skillsync.onboarding.pages
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.SemiBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.onboarding.OnboardingEvent
-import com.ss.skillsync.onboarding.OnboardingViewModel
+import com.ss.skillsync.onboarding.OnboardingState
 import com.ss.skillsync.onboarding.R
 import com.ss.skillsync.onboarding.components.OnboardingButton
 import com.ss.skillsync.onboarding.components.OnboardingSection
@@ -38,37 +25,37 @@ import com.ss.skillsync.onboarding.components.SelectedStrengths
  */
 @Composable
 fun StrengthsPage(
-    viewModel: OnboardingViewModel = hiltViewModel(),
+    state: OnboardingState,
+    onEvent: (OnboardingEvent) -> Unit,
 ) {
-    val state by viewModel.state.collectAsState()
-
     ScreenColumn(
-        screenColor = SemiBlack
+        screenColor = SemiBlack,
+        isBackDisplayed = state.isBackVisible,
+        onBackClicked = { onEvent(OnboardingEvent.BackClicked) }
     ) {
         OnboardingTitle(
             header = stringResource(id = R.string.find_your_skills),
             subHeader = stringResource(id = R.string.select_your_strengths)
         )
-
         OnboardingSection(title = stringResource(R.string.search_for_a_skill)) {
             SearchTextField(
                 value = state.searchQuery,
                 onValueChange = {
-                    viewModel.onEvent(
+                    onEvent(
                         OnboardingEvent.SearchQueryChanged(it)
                     )
                 },
                 suggestions = state.queryResult,
-                onSkillChose = { viewModel.onEvent(OnboardingEvent.SkillSelected(it)) },
+                onSkillChose = { onEvent(OnboardingEvent.SkillSelected(it)) },
             )
         }
 
         OnboardingSection(title = stringResource(R.string.selected_skills)) {
             SelectedStrengths(
                 skillsList = state.selectedStrengths.toList(),
-                onSkillRemoved = { viewModel.onEvent(OnboardingEvent.SkillRemoved(it)) },
+                onSkillRemoved = { onEvent(OnboardingEvent.SkillRemoved(it)) },
                 onLevelChange = { skill, skillLevel ->
-                    viewModel.onEvent(OnboardingEvent.SkillLevelUpdated(skill, skillLevel))
+                    onEvent(OnboardingEvent.SkillLevelUpdated(skill, skillLevel))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -78,7 +65,7 @@ fun StrengthsPage(
 
         OnboardingButton(
             text = stringResource(R.string.done),
-            onClick = { viewModel.onEvent(OnboardingEvent.DoneClicked) },
+            onClick = { onEvent(OnboardingEvent.DoneClicked) },
             enabled = state.isDoneEnabled
         )
     }
@@ -88,24 +75,11 @@ fun StrengthsPage(
 @Composable
 fun StrengthsPreview() {
     SkillSyncTheme {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            StrengthsPage()
-            IconButton(
-                onClick = { },
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 16.dp, start = 16.dp)
-            ) {
-                Icon(
-                    Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
-            }
-        }
+        StrengthsPage(
+            state = OnboardingState(
+                currentPageIndex = 1,
+            ),
+            onEvent = { }
+        )
     }
 }

@@ -48,6 +48,7 @@ import com.ss.skillsync.commonandroid.theme.DarkBlue
 import com.ss.skillsync.commonandroid.theme.Purple
 import com.ss.skillsync.commonandroid.theme.SemiBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.commonandroid.R as comRes
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 8/30/2023.
@@ -68,7 +69,7 @@ fun SignInScreen(
 ) {
     val state by viewModel.state.collectAsState()
     if (state.isSignInFailed()) {
-        val text = state.error ?: stringResource(R.string.something_went_wrong)
+        val text = state.error ?: stringResource(comRes.string.something_went_wrong)
         LaunchedEffect(Unit) {
             snackbarHostState.showSnackbar(
                 message = text,
