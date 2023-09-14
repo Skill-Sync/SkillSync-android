@@ -19,8 +19,8 @@ import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.model.MatchResult
 import com.ss.skillsync.model.Skill
 import com.ss.skillsync.session.making.R
-import com.ss.skillsync.session.making.SessionMakingEvent
 import com.ss.skillsync.session.making.SessionMakingState
+import com.ss.skillsync.session.making.SessionMakingUIEvent
 import com.ss.skillsync.session.making.component.ActionButtons
 
 /**
@@ -29,10 +29,10 @@ import com.ss.skillsync.session.making.component.ActionButtons
 @Composable
 fun MatchSearchingScreen(
     state: SessionMakingState,
-    onEvent: (SessionMakingEvent) -> Unit,
+    onEvent: (SessionMakingUIEvent) -> Unit,
 ) {
     BackHandler(true) {
-        onEvent(SessionMakingEvent.OnStopSearchingClicked)
+        onEvent(SessionMakingUIEvent.OnStopSearchingClicked)
     }
 
     ScreenColumn {
@@ -49,7 +49,7 @@ fun MatchSearchingScreen(
             ActionButtons(
                 positiveButtonText = null,
                 negativeButtonText = stringResource(id = R.string.cancel),
-                onNegativeClicked = { onEvent(SessionMakingEvent.OnStopSearchingClicked) }
+                onNegativeClicked = { onEvent(SessionMakingUIEvent.OnStopSearchingClicked) }
             )
             Spacer(modifier = Modifier.weight(0.1f))
         }

@@ -21,8 +21,8 @@ import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.model.MatchResult
 import com.ss.skillsync.model.Skill
 import com.ss.skillsync.session.making.R
-import com.ss.skillsync.session.making.SessionMakingEvent
 import com.ss.skillsync.session.making.SessionMakingState
+import com.ss.skillsync.session.making.SessionMakingUIEvent
 import com.ss.skillsync.session.making.component.ActionButtons
 import com.ss.skillsync.session.making.component.MatchDetails
 
@@ -32,7 +32,7 @@ import com.ss.skillsync.session.making.component.MatchDetails
 @Composable
 fun MatchFoundScreen(
     state: SessionMakingState,
-    onEvent: (SessionMakingEvent) -> Unit,
+    onEvent: (SessionMakingUIEvent) -> Unit,
 ) {
     ScreenColumn(
         arrangement = Arrangement.Top,
@@ -57,8 +57,8 @@ fun MatchFoundScreen(
             }
         }
         ActionsSection(
-            onAccept = { onEvent(SessionMakingEvent.OnAcceptMatchClicked) },
-            onReject = { onEvent(SessionMakingEvent.OnRejectMatchClicked) },
+            onAccept = { onEvent(SessionMakingUIEvent.OnAcceptMatchClicked) },
+            onReject = { onEvent(SessionMakingUIEvent.OnRejectMatchClicked) },
         )
         Spacer(modifier = Modifier.weight(0.1f))
     }

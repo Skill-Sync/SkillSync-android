@@ -14,8 +14,8 @@ import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.model.Skill
 import com.ss.skillsync.session.making.R
-import com.ss.skillsync.session.making.SessionMakingEvent
 import com.ss.skillsync.session.making.SessionMakingState
+import com.ss.skillsync.session.making.SessionMakingUIEvent
 import com.ss.skillsync.session.making.component.ActionButtons
 import com.ss.skillsync.session.making.component.MatchDetails
 
@@ -26,7 +26,7 @@ import com.ss.skillsync.session.making.component.MatchDetails
 @Composable
 fun AfterSessionScreen(
     state: SessionMakingState,
-    onEvent: (SessionMakingEvent) -> Unit,
+    onEvent: (SessionMakingUIEvent) -> Unit,
 ) {
     ScreenColumn(
         arrangement = Arrangement.Top,
@@ -53,8 +53,8 @@ fun AfterSessionScreen(
         ActionButtons(
             positiveButtonText = stringResource(R.string.add_to_friends),
             negativeButtonText = stringResource(R.string.cancel),
-            onPositiveClicked = { onEvent(SessionMakingEvent.OnAddToFriendsClicked) },
-            onNegativeClicked = { onEvent(SessionMakingEvent.OnLeaveSessionMaking) },
+            onPositiveClicked = { onEvent(SessionMakingUIEvent.OnAddToFriendsClicked) },
+            onNegativeClicked = { onEvent(SessionMakingUIEvent.OnLeaveSessionMaking) },
         )
         Spacer(modifier = Modifier.weight(0.1f))
     }

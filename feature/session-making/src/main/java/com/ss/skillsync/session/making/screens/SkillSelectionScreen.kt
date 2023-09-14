@@ -35,8 +35,8 @@ import com.ss.skillsync.commonandroid.theme.LightBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.model.Skill
 import com.ss.skillsync.session.making.R
-import com.ss.skillsync.session.making.SessionMakingEvent
 import com.ss.skillsync.session.making.SessionMakingState
+import com.ss.skillsync.session.making.SessionMakingUIEvent
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/14/2023.
@@ -46,7 +46,7 @@ import com.ss.skillsync.session.making.SessionMakingState
 fun SkillSelectionScreen(
     modifier: Modifier = Modifier,
     state: SessionMakingState,
-    onEvent: (SessionMakingEvent) -> Unit,
+    onEvent: (SessionMakingUIEvent) -> Unit,
 ) {
     ScreenColumn(
         modifier = modifier,
@@ -59,10 +59,10 @@ fun SkillSelectionScreen(
         ) {
             SearchBarSection(
                 searchQuery = state.searchQuery,
-                onSearchQueryChanged = { onEvent(SessionMakingEvent.OnSearchQueryChanged(it)) },
+                onSearchQueryChanged = { onEvent(SessionMakingUIEvent.OnSearchQueryChanged(it)) },
                 suggestions = state.searchResult,
                 selectedSkill = state.selectedSkill,
-                onSkillSelected = { onEvent(SessionMakingEvent.OnSkillSelected(it)) }
+                onSkillSelected = { onEvent(SessionMakingUIEvent.OnSkillSelected(it)) }
             )
         }
         Box(
@@ -72,7 +72,7 @@ fun SkillSelectionScreen(
             SecondaryActionBrandButton(
                 text = stringResource(R.string.start_search),
                 onClick = {
-                    onEvent(SessionMakingEvent.OnStartSearchingClicked)
+                    onEvent(SessionMakingUIEvent.OnStartSearchingClicked)
                 },
                 enabled = state.canStartSearching,
             )

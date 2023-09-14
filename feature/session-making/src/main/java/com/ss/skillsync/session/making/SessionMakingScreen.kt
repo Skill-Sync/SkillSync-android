@@ -31,7 +31,7 @@ fun SessionMakingScreen(
 @Composable
 private fun SessionMakingContent(
     state: SessionMakingState,
-    onEvent: (SessionMakingEvent) -> Unit = {},
+    onEvent: (SessionMakingUIEvent) -> Unit = {},
 ) {
     AnimatedContent(
         targetState = state.currentDestination,

@@ -64,7 +64,7 @@ object DataModule {
             .registerTypeAdapter(UsersData::class.java, UsersDataDeserializer())
             .registerTypeAdapter(SessionsResponse::class.java, SessionsResponseDeserializer())
             .create()
-        val url = "https://skill-sync-backup.onrender.com/"
+        val url = "https://skill-sync.onrender.com/"
         val postfix = "api/v1/"
         Retrofit.Builder()
             .baseUrl(url + postfix)

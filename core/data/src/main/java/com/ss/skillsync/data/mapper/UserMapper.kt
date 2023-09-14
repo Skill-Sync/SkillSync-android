@@ -16,6 +16,7 @@ fun UserData.toDomain(): User {
         StringUtil.getRandomImageUrl()
     }
     return User(
+        id = id ?: "",
         name = name ?: "",
         email = email ?: "",
         about = about ?: "",

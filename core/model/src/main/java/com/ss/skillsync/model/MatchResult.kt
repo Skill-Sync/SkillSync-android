@@ -6,6 +6,7 @@ package com.ss.skillsync.model
 data class MatchResult(
     val userId: String,
     val name: String,
+    val meetingName: String? = null,
     val profilePictureUrl: String,
     val matchedSkill: Skill,
 )
