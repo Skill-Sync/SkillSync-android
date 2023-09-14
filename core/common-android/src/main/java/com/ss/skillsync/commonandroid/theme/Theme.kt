@@ -11,10 +11,10 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private var DarkColorScheme = darkColorScheme(
-    primary = Purple,
+    primary = Blue,
     secondary = Yellow,
     tertiary = Blue,
-    background = SemiBlack,
+    background = Shark,
     onBackground = White,
     outline = Scorpion,
     surface = LightBlack,

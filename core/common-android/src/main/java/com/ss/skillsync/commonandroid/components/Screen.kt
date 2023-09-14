@@ -1,6 +1,7 @@
 package com.ss.skillsync.commonandroid.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -59,8 +62,11 @@ private fun BasicScreen(
 fun ScreenColumn(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    arrangement: Arrangement.Vertical = Arrangement.SpaceEvenly,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
+    isScrollable: Boolean = false,
+    onScrollState: (scrollState: ScrollState) -> Unit = {},
     screenLabel: String? = null,
     isBackDisplayed: Boolean = false,
     onBackClicked: () -> Unit = {},
@@ -74,6 +80,13 @@ fun ScreenColumn(
         }
     },
 ) {
+    val scrollModifier = if (isScrollable) {
+        val scrollState = rememberScrollState()
+        onScrollState(scrollState)
+        Modifier.verticalScroll(scrollState).then(modifier)
+    } else {
+        modifier
+    }
     BasicScreen(
         isLoading = isLoading,
         contentPadding = contentPadding,
@@ -82,8 +95,8 @@ fun ScreenColumn(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .then(modifier),
-            verticalArrangement = Arrangement.SpaceEvenly,
+                .then(scrollModifier),
+            verticalArrangement = arrangement,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if(isBackDisplayed || screenLabel != null) {

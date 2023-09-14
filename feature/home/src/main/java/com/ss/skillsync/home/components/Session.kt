@@ -27,6 +27,7 @@ import com.ss.skillsync.commonandroid.components.Section
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.home.R
 import com.ss.skillsync.model.Session
+import java.util.Calendar
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/10/2023.
@@ -132,6 +133,7 @@ fun ScheduledSessionPrev() {
             "https://picsum.photos/200",
             "Software Engineer",
             "3:00 PM",
+            dateCalendar = Calendar.getInstance(),
             scheduledDate = "12/12/2021",
         )
 
@@ -149,6 +151,7 @@ fun UserScheduledListPrev() {
             "https://picsum.photos/200",
             "Software Engineer",
             "3:00 PM",
+            dateCalendar = Calendar.getInstance(),
             scheduledDate = "12/12/2021",
         )
     }

@@ -36,6 +36,7 @@ import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.Session
 import com.ss.skillsync.model.User
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 /**
  * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
@@ -74,7 +75,8 @@ fun HomeScreen(
         viewModel.resetEvents()
     }
     HomeContent(
-        state = state, onEvent = viewModel::onEvent
+        state = state,
+        onEvent = viewModel::onEvent
     )
 }
 
@@ -179,14 +181,18 @@ fun HomeScreenPreview() {
                 "https://picsum.photos/200/300",
                 "Software Engineer",
                 "3:00 PM",
+                dateCalendar = Calendar.getInstance(),
                 scheduledDate = "12/12/2021",
             )
         }
-        HomeContent(HomeState(
-            isLoading = false,
-            activeUser = User(name = "Mohannad El-Sayeh"),
-            scheduledSessions = sessions,
-            suggestedMentors = mentors,
-        ), {})
+        HomeContent(
+            HomeState(
+                isLoading = false,
+                activeUser = User(name = "Mohannad El-Sayeh"),
+                scheduledSessions = sessions,
+                suggestedMentors = mentors,
+            ),
+            {}
+        )
     }
 }
