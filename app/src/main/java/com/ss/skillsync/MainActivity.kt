@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -17,10 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ss.skillsync.commonandroid.DefaultSnackbarHost
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.navigation.AppNavigation
+import com.ss.skillsync.navigation.NavGraphs
+import com.ss.skillsync.navigation.component.SSBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,6 +52,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
     SkillSyncTheme {
@@ -56,9 +61,14 @@ fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
             color = MaterialTheme.colorScheme.background,
         ) {
             val snackbarHostState = remember { SnackbarHostState() }
+            val navController = rememberAnimatedNavController()
+            NavGraphs.create(navigationParams)
             Scaffold(
                 snackbarHost = {
                     DefaultSnackbarHost(state = snackbarHostState)
+                },
+                bottomBar = {
+                    SSBottomNavigation(navigator = navController)
                 },
             ) {
                 AppNavigation(
@@ -66,7 +76,7 @@ fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
                         .fillMaxSize()
                         .padding(it),
                     snackbarHostState = snackbarHostState,
-                    navigationParams = navigationParams,
+                    navController = navController,
                 )
             }
         }

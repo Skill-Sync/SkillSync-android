@@ -14,5 +14,4 @@ interface SkillRepository {
         interestedSkills: List<Skill>,
         strengthSkills: List<Skill>,
     ): Result<Unit>
-
 }

@@ -55,7 +55,7 @@ class AuthInterceptor @Inject constructor(
         return response
     }
 
-    private fun extractTokensFromHeader(authHeader: String) : Pair<String, String>? {
+    private fun extractTokensFromHeader(authHeader: String): Pair<String, String>? {
         val tokens = authHeader.split(" ")
         if (tokens.isEmpty()) return null
         if (tokens[0] != "Bearer") return null

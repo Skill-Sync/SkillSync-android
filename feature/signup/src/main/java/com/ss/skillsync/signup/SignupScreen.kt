@@ -34,6 +34,7 @@ import com.ss.skillsync.commonandroid.components.RoundedTextFieldWithTitle
 import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.components.SubHeaderText
 import com.ss.skillsync.commonandroid.theme.Orange
+import com.ss.skillsync.commonandroid.theme.SemiBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.commonandroid.theme.Yellow
 
@@ -96,7 +97,11 @@ private fun SignupContent(
     onSignInClicked: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
-    ScreenColumn(modifier = Modifier.verticalScroll(scrollState)) {
+    ScreenColumn(
+        modifier = Modifier.verticalScroll(scrollState),
+        isLoading = state.isLoading,
+        screenColor = SemiBlack,
+    ) {
         HeaderSection()
         SignupForm(
             state = state,

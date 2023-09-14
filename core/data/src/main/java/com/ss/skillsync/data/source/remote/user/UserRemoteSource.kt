@@ -24,7 +24,8 @@ class UserRemoteSource @Inject constructor(
                 name = payload.name,
                 email = payload.email,
                 pass = payload.password,
-                passConfirm = payload.password)
+                passConfirm = payload.password,
+            )
             val response = apiService.signUp(request)
             if (response.isSuccessful) {
                 Result.success(Unit)
@@ -43,7 +44,8 @@ class UserRemoteSource @Inject constructor(
             val request = SignInRequest(
                 email = payload.email,
                 pass = payload.password,
-                type = payload.type)
+                type = payload.type,
+            )
             val response = apiService.signIn(request)
             if (response.isSuccessful) {
                 Result.success(response.body()!!)
@@ -59,19 +61,29 @@ class UserRemoteSource @Inject constructor(
     suspend fun getUserData(): UserData? {
         return try {
             val response = apiService.getUserData()
-            if (response.isSuccessful) {
-                response.body()!!
-            } else {
-                null
+            response.body().also {
+                println(it)
             }
         } catch (e: Exception) {
             null
         }
     }
 
+    suspend fun getRelevantMentors(): List<UserData>? {
+        return try {
+            val response = apiService.getRelevantMentors()
+            response.body()!!.users.also {
+                println(it)
+            }
+        } catch (e: Exception) {
+            println(e)
+            null
+        }
+    }
+
     private fun handleSignInError(code: Int): Exception {
         val inactivatedEmailCode = 401
-        return if (code ==  inactivatedEmailCode) {
+        return if (code == inactivatedEmailCode) {
             EmailNotActivatedException()
         } else {
             UnknownErrorException()

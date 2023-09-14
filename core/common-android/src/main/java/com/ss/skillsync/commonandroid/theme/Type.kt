@@ -38,7 +38,6 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
         lineHeight = 18.sp,
-        letterSpacing = 0.6.sp,
     ),
     labelMedium = TextStyle(
         fontFamily = DMSansFontFamily,
@@ -85,4 +84,10 @@ val Typography = Typography(
         fontSize = 18.sp,
         lineHeight = 24.sp,
     ),
+    displayMedium = TextStyle(
+        fontFamily = DMSansFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+        lineHeight = 20.sp,
+    )
 )

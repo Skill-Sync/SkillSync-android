@@ -1,6 +1,7 @@
 package com.ss.skillsync.data.source.remote.user
 
 import com.ss.skillsync.data.source.remote.interceptor.Authenticated
+import com.ss.skillsync.data.source.remote.model.UsersData
 import com.ss.skillsync.data.source.remote.model.auth.UserData
 import com.ss.skillsync.data.source.remote.model.auth.signin.SignInRequest
 import com.ss.skillsync.data.source.remote.model.auth.signup.SignupRequest
@@ -23,4 +24,8 @@ interface UserApiService {
     @GET("users/Me")
     @Authenticated
     suspend fun getUserData(): Response<UserData>
+
+    @Authenticated
+    @GET("users/relevantMentors")
+    suspend fun getRelevantMentors(): Response<UsersData>
 }

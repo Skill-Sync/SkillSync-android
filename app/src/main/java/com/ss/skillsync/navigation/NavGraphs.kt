@@ -3,12 +3,19 @@ package com.ss.skillsync.navigation
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route
+import com.ss.skillsync.R
+import com.ss.skillsync.friends.destinations.FriendListScreenDestination
 import com.ss.skillsync.home.destinations.HomeScreenDestination
 import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
+import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
+import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
+import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
+import com.ss.skillsync.settings.destinations.SettingsScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
 import com.ss.skillsync.welcome.destinations.WelcomeScreenDestination
+import com.ss.skillsync.commonandroid.R as commonRes
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/7/2023.
@@ -28,7 +35,7 @@ class NavGraphs private constructor(
             get() = listOf(
                 welcome,
                 auth,
-                main
+                main,
             )
     }
 
@@ -37,7 +44,6 @@ class NavGraphs private constructor(
             get() = mapOf(
                 SignupScreenDestination.route to SignupScreenDestination,
                 SignInScreenDestination.route to SignInScreenDestination,
-                OnboardingScreenDestination.route to OnboardingScreenDestination
             )
 
         override val route: String
@@ -46,10 +52,27 @@ class NavGraphs private constructor(
             get() = SignInScreenDestination
     }
 
+    val onboarding = object : NavGraphSpec {
+        override val destinationsByRoute: Map<String, DestinationSpec<*>>
+            get() = mapOf(
+                OnboardingScreenDestination.route to OnboardingScreenDestination,
+            )
+
+        override val route: String
+            get() = "onboarding"
+        override val startRoute: Route
+            get() = OnboardingScreenDestination
+    }
+
     val main = object : NavGraphSpec {
         override val destinationsByRoute: Map<String, DestinationSpec<*>>
             get() = mapOf(
                 HomeScreenDestination.route to HomeScreenDestination,
+                SessionMakingScreenDestination.route to SessionMakingScreenDestination,
+                FriendListScreenDestination.route to FriendListScreenDestination,
+                MentorProfileScreenDestination.route to MentorProfileScreenDestination,
+                UserProfileScreenDestination.route to UserProfileScreenDestination,
+                SettingsScreenDestination.route to SettingsScreenDestination,
             )
         override val route: String
             get() = "main"
@@ -68,14 +91,27 @@ class NavGraphs private constructor(
             get() = WelcomeScreenDestination
     }
 
+    fun getBottomNavRoutes(): List<Pair<Route, Int>> {
+        return listOf(
+            HomeScreenDestination to R.drawable.ic_home,
+            SessionMakingScreenDestination to commonRes.drawable.ic_matching,
+            FriendListScreenDestination to R.drawable.ic_friends,
+        )
+    }
+
     private fun getRootStartRoute(): Route {
         val isFirstOpen = navigationParams.isFirstTime
         val isUserActive = navigationParams.isUserActive
+        val isUserOnboardingDone = navigationParams.isOnboardingComplete
         return if (isFirstOpen) {
             welcome
         } else {
             if (isUserActive) {
-                main
+                if (isUserOnboardingDone) {
+                    main
+                } else {
+                    onboarding
+                }
             } else {
                 auth
             }

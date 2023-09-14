@@ -30,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -47,7 +46,9 @@ import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.Blue
 import com.ss.skillsync.commonandroid.theme.DarkBlue
 import com.ss.skillsync.commonandroid.theme.Purple
+import com.ss.skillsync.commonandroid.theme.SemiBlack
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.commonandroid.R as comRes
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 8/30/2023.
@@ -68,7 +69,7 @@ fun SignInScreen(
 ) {
     val state by viewModel.state.collectAsState()
     if (state.isSignInFailed()) {
-        val text = state.error ?: stringResource(R.string.something_went_wrong)
+        val text = state.error ?: stringResource(comRes.string.something_went_wrong)
         LaunchedEffect(Unit) {
             snackbarHostState.showSnackbar(
                 message = text,
@@ -105,7 +106,11 @@ private fun SignInContent(
     onSignupClicked: () -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
-    ScreenColumn(modifier = Modifier.verticalScroll(scrollState)) {
+    ScreenColumn(
+        modifier = Modifier.verticalScroll(scrollState),
+        isLoading = state.isLoading,
+        screenColor = SemiBlack
+    ) {
         HeaderSection()
         SignInForm(
             state = state,

@@ -21,6 +21,6 @@ interface SkillApiService {
     @Authenticated
     @PATCH("users/updatePersonalData/")
     suspend fun setUserSkills(
-        @Body request: UpdateSkillsRequest
+        @Body request: UpdateSkillsRequest,
     ): Response<UserData>
 }

@@ -17,7 +17,7 @@ fun SkillLearned.toSkill(): Skill {
     return Skill(
         id = _id,
         name = skill.name,
-        level = skillLevel
+        level = skillLevel,
     )
 }
 
@@ -25,13 +25,13 @@ fun SkillData.toSkill(): Skill {
     return Skill(
         id = _id,
         name = name,
-        level = SkillLevel.NOCHOICE
+        level = SkillLevel.NOCHOICE,
     )
 }
 
 fun Skill.toSkillLearnedRequest(): SkillLearnedRequest {
     return SkillLearnedRequest(
         skill = id,
-        level = level.name.lowercase()
+        level = level.name.lowercase(),
     )
 }

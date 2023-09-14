@@ -8,5 +8,5 @@ data class SignupRequest(
     val email: String,
     val pass: String,
     val passConfirm: String,
-    val type: String = "user"
+    val type: String = "user",
 )
