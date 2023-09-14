@@ -97,7 +97,9 @@ class ProfileViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isSessionBookedSuccessfully = true,
                     )
-                    loadSessionDays(mentor)
+                    loadSessionDays(mentor)?.let {
+                        setSessionDaysState(it)
+                    }
                 }.onFailure {
                     _state.value = _state.value.copy(
                         failedToBookSession = true
@@ -120,7 +122,9 @@ class ProfileViewModel @Inject constructor(
     private fun setSessionDaysState(sessionDays: SessionDays) {
         val sessionDaysUI = UISessionDays.from(sessionDays)
         _state.value = _state.value.copy(
-            daySessions = sessionDaysUI,
+            daySessions = sessionDaysUI.takeIf { it.days.isNotEmpty() },
+            selectedDay = null,
+            selectedSession = null,
             isLoading = false
         )
     }
