@@ -68,7 +68,7 @@ fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
                     DefaultSnackbarHost(state = snackbarHostState)
                 },
                 bottomBar = {
-                    SSBottomNavigation(navigator = navController)
+                    SSBottomNavigation(navigator = navController, navigationParams = navigationParams)
                 },
             ) {
                 AppNavigation(

@@ -35,3 +35,17 @@ fun Skill.toSkillLearnedRequest(): SkillLearnedRequest {
         level = level.name.lowercase(),
     )
 }
+
+fun Skill.toSkillData(): SkillData =
+    SkillData(
+        _id = id,
+        name = name,
+    )
+
+fun Skill.toSkillLearned(): SkillLearned =
+    SkillLearned(
+        _id = id,
+        skill = toSkillData(),
+        id = id,
+        level = level.name.lowercase(),
+    )

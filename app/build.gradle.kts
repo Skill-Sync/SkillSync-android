@@ -57,6 +57,7 @@ dependencies {
     implementation(projects.feature.signin)
     implementation(projects.feature.signup)
     implementation(projects.feature.welcome)
+    implementation(projects.feature.editprofile)
 
     implementation(libs.activity.compose)
     testImplementation(libs.junit)

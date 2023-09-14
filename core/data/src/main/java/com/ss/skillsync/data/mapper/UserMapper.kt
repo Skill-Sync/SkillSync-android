@@ -39,3 +39,31 @@ fun UserData.toMentor(): Mentor {
         )
     }
 }
+
+fun User.toUserData(): UserData {
+    val skillsToLearn = this.interestedSkills.map {
+        it.toSkillData()
+    }
+    val skillsLearned = this.strengths.map {
+        it.toSkillLearned()
+    }
+
+    return UserData(
+        id = null,
+        _id = null,
+        email = email,
+        name = name,
+        about = about,
+        skillsToLearn = skillsToLearn,
+        skillsLearned = skillsLearned,
+        active = null,
+        isEmployed = null,
+        onboardingCompleted = null,
+        role = null,
+        skill = null,
+        accessJWT = null,
+        refreshJWT = null,
+        photo = null,
+    )
+}
+

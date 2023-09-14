@@ -4,6 +4,7 @@ import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
 import com.ramcosta.composedestinations.spec.Route
 import com.ss.skillsync.R
+import com.ss.skillsync.editprofile.destinations.EditProfileScreenDestination
 import com.ss.skillsync.friends.destinations.FriendListScreenDestination
 import com.ss.skillsync.home.destinations.HomeScreenDestination
 import com.ss.skillsync.model.NavigationParams
@@ -11,6 +12,7 @@ import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
 import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
 import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
+import com.ss.skillsync.settings.destinations.PrivacyPolicyScreenDestination
 import com.ss.skillsync.settings.destinations.SettingsScreenDestination
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.destinations.SignupScreenDestination
@@ -36,6 +38,8 @@ class NavGraphs private constructor(
                 welcome,
                 auth,
                 main,
+                onboarding,
+                settings,
             )
     }
 
@@ -72,7 +76,6 @@ class NavGraphs private constructor(
                 FriendListScreenDestination.route to FriendListScreenDestination,
                 MentorProfileScreenDestination.route to MentorProfileScreenDestination,
                 UserProfileScreenDestination.route to UserProfileScreenDestination,
-                SettingsScreenDestination.route to SettingsScreenDestination,
             )
         override val route: String
             get() = "main"
@@ -91,11 +94,25 @@ class NavGraphs private constructor(
             get() = WelcomeScreenDestination
     }
 
+    val settings = object : NavGraphSpec {
+        override val destinationsByRoute: Map<String, DestinationSpec<*>>
+            get() = mapOf(
+                SettingsScreenDestination.route to SettingsScreenDestination,
+                EditProfileScreenDestination.route to EditProfileScreenDestination,
+                PrivacyPolicyScreenDestination.route to PrivacyPolicyScreenDestination,
+            )
+        override val route: String
+            get() = "settings"
+        override val startRoute: Route
+            get() = SettingsScreenDestination
+    }
+
     fun getBottomNavRoutes(): List<Pair<Route, Int>> {
         return listOf(
             HomeScreenDestination to R.drawable.ic_home,
             SessionMakingScreenDestination to commonRes.drawable.ic_matching,
             FriendListScreenDestination to R.drawable.ic_friends,
+//            SettingsScreenDestination to -1,
         )
     }
 
