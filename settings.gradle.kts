@@ -17,7 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "SkillSync"
 include(":app")
 include(":core:data")
-include(":core:navigation")
 include(":core:notifications")
 include(":core:domain")
 include(":core:model")
@@ -37,3 +36,4 @@ include(":feature:friends")
 include(":feature:chat")
 include(":feature:session-making")
 include(":core:common-android")
+include(":feature:mentorhome")

@@ -2,8 +2,10 @@
 plugins {
     id("ss.android.library")
     id("ss.android.compose")
+    id("ss.android.testing")
+    id("ss.testing")
 }
 
 android {
-    namespace = "com.ss.skillsync.commonAndroid"
+    namespace = "com.ss.skillsync.commonandroid"
 }

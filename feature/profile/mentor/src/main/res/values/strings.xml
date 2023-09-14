@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about">About</string>
+    <string name="pick_session_day">Pick Session Day</string>
+    <string name="from_to">From %1$s To %2$s</string>
+    <string name="pick_session_hour">Pick Session Hour</string>
+    <string name="book_session">Book Session</string>
+</resources>

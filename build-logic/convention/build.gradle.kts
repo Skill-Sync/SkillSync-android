@@ -24,6 +24,8 @@ dependencies {
     implementation(libs.detekt.gradle)
 
     implementation(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
+    implementation(project(":task"))
+    compileOnly(libs.ksp.gradlePlugin)
 }
 
 gradlePlugin {
@@ -55,6 +57,22 @@ gradlePlugin {
         register("skillSyncAndroidCompose") {
             id = "ss.android.compose"
             implementationClass = "AndroidComposePlugin"
+        }
+        register("skillSyncUnitTesting") {
+            id = "ss.testing"
+            implementationClass = "UnitTestingPlugin"
+        }
+        register("skillSyncAndroidTesting") {
+            id = "ss.android.testing"
+            implementationClass = "AndroidTestingPlugin"
+        }
+        register("skillSyncNetworking") {
+            id = "ss.networking"
+            implementationClass = "NetworkingPlugin"
+        }
+        register("skillSyncCoil") {
+            id = "ss.coil"
+            implementationClass = "CoilPlugin"
         }
     }
 }

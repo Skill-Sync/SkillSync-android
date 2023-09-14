@@ -8,12 +8,13 @@ class AndroidLibraryPlugin: Plugin<Project> {
             pluginManager.apply {
                 apply("com.android.library")
                 apply("kotlin-android")
+                apply("ss.testing")
+                apply("ss.lint")
             }
-            @Suppress("UnstableApiUsage")
+
             extensions.configure(BaseExtension::class.java) {
                 commonAndroid(project)
             }
-
         }
     }
 }

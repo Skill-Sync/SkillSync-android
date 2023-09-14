@@ -3,39 +3,42 @@ package com.ss.skillsync
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedContentScope
+import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
-import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
+import com.ss.skillsync.commonandroid.DefaultSnackbarHost
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
-import com.ss.skillsync.presentation.authentication.NavGraphs
+import com.ss.skillsync.model.NavigationParams
+import com.ss.skillsync.navigation.AppNavigation
+import com.ss.skillsync.navigation.NavGraphs
+import com.ss.skillsync.navigation.component.SSBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         splashScreenSetup()
 
         super.onCreate(savedInstanceState)
         setContent {
-            SkillSyncTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    App(Modifier.fillMaxSize())
-                }
+            val navParams by viewModel.navigationParams.collectAsState()
+            if (navParams != null) {
+                App(navigationParams = navParams!!)
             }
         }
     }
@@ -43,38 +46,47 @@ class MainActivity : ComponentActivity() {
     private fun splashScreenSetup() {
         installSplashScreen().apply {
             setKeepOnScreenCondition {
-                // TODO: Add Auth Checking And Navigate to correct navGraph
-                Thread.sleep(1000)
-                false
+                viewModel.isAppReady.not()
             }
         }
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun App(modifier: Modifier = Modifier) {
-    val navController = rememberAnimatedNavController()
-    val navHostEngine = rememberAnimatedNavHostEngine(
-        navHostContentAlignment = Alignment.TopCenter,
-        rootDefaultAnimations = RootNavGraphDefaultAnimations(
-            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
-            exitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Right) },
-        )
-    )
-
-    DestinationsNavHost(
-        modifier = modifier,
-        navGraph = NavGraphs.auth,
-        engine = navHostEngine,
-        navController = navController
-    )
+fun App(modifier: Modifier = Modifier, navigationParams: NavigationParams) {
+    SkillSyncTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background,
+        ) {
+            val snackbarHostState = remember { SnackbarHostState() }
+            val navController = rememberAnimatedNavController()
+            NavGraphs.create(navigationParams)
+            Scaffold(
+                snackbarHost = {
+                    DefaultSnackbarHost(state = snackbarHostState)
+                },
+                bottomBar = {
+                    SSBottomNavigation(navigator = navController)
+                },
+            ) {
+                AppNavigation(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(it),
+                    snackbarHostState = snackbarHostState,
+                    navController = navController,
+                )
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AppPreview() {
     SkillSyncTheme {
-        App(Modifier.fillMaxSize())
+        App(Modifier.fillMaxSize(), NavigationParams())
     }
 }
