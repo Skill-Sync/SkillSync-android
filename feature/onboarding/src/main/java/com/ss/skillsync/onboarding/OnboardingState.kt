@@ -13,6 +13,7 @@ data class OnboardingState(
     val selectedInterests: Set<Skill> = emptySet(),
     val selectedStrengths: Set<Skill> = emptySet(),
     val onboardingDone: Boolean = false,
+    val error: Throwable? = null,
 ) {
     val isNextEnabled: Boolean
         get() = selectedInterests.isNotEmpty()

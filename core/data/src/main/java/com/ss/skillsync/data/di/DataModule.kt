@@ -3,6 +3,7 @@ package com.ss.skillsync.data.di
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.ss.skillsync.data.BuildConfig
+import com.ss.skillsync.data.preferences.SettingsPreferences
 import com.ss.skillsync.data.preferences.UserPreferences
 import com.ss.skillsync.data.source.deserializer.SessionsResponseDeserializer
 import com.ss.skillsync.data.source.deserializer.UserDataDeserializer
@@ -97,4 +98,10 @@ object DataModule {
     fun provideUserPreferences(
         @ApplicationContext context: Context,
     ): UserPreferences = UserPreferences(context)
+
+    @Provides
+    @Singleton
+    fun provideSettingsPreferences(
+        @ApplicationContext context: Context,
+    ): SettingsPreferences = SettingsPreferences(context)
 }

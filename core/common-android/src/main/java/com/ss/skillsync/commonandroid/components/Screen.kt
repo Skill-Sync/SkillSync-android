@@ -20,6 +20,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,20 +39,58 @@ private fun BasicScreen(
     isLoading: Boolean,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
+    isBackDisplayed: Boolean,
+    screenLabel: String?,
+    onBackClicked: () -> Unit,
     content: @Composable BoxScope.() -> Unit,
 ) {
     SkillSyncTheme(backgroundColor = screenColor) {
-        Box(
+        Scaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(contentPadding),
-        ) {
-            content()
-            AnimatedVisibility(isLoading) {
-                Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f)))
-                Dialog(onDismissRequest = { }) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                .fillMaxSize(),
+            containerColor = MaterialTheme.colorScheme.background,
+            topBar = {
+                if(isBackDisplayed || screenLabel != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, top = 20.dp, end = 16.dp)
+                    ) {
+                        if (isBackDisplayed) {
+                            IconButton(
+                                onClick = onBackClicked,
+                                modifier = Modifier.align(Alignment.CenterStart)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "Back",
+                                    tint = MaterialTheme.colorScheme.onBackground,
+                                )
+                            }
+                        }
+                        screenLabel?.let {
+                            Text(
+                                text = screenLabel,
+                                style = MaterialTheme.typography.displayMedium,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    }
+                }
+            }
+        ) { scaffoldPadding ->
+            Box(modifier = Modifier.padding(scaffoldPadding).padding(contentPadding)) {
+                content()
+                AnimatedVisibility(isLoading) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
+                    )
+                    Dialog(onDismissRequest = { }) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    }
                 }
             }
         }
@@ -83,7 +122,9 @@ fun ScreenColumn(
     val scrollModifier = if (isScrollable) {
         val scrollState = rememberScrollState()
         onScrollState(scrollState)
-        Modifier.verticalScroll(scrollState).then(modifier)
+        Modifier
+            .verticalScroll(scrollState)
+            .then(modifier)
     } else {
         modifier
     }
@@ -91,6 +132,9 @@ fun ScreenColumn(
         isLoading = isLoading,
         contentPadding = contentPadding,
         screenColor = screenColor,
+        isBackDisplayed = isBackDisplayed,
+        screenLabel = screenLabel,
+        onBackClicked = onBackClicked,
     ) {
         Column(
             modifier = Modifier
@@ -99,33 +143,6 @@ fun ScreenColumn(
             verticalArrangement = arrangement,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if(isBackDisplayed || screenLabel != null) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    if (isBackDisplayed) {
-                        IconButton(
-                            onClick = onBackClicked,
-                            modifier = Modifier.align(Alignment.CenterStart)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ArrowBack,
-                                contentDescription = "Back",
-                                tint = MaterialTheme.colorScheme.onBackground,
-                            )
-                        }
-                    }
-                    screenLabel?.let {
-                        Text(
-                            text = screenLabel,
-                            style = MaterialTheme.typography.displayMedium,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                }
-            }
             content()
         }
     }

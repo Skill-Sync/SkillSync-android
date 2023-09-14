@@ -44,13 +44,24 @@ class NavGraphs private constructor(
             get() = mapOf(
                 SignupScreenDestination.route to SignupScreenDestination,
                 SignInScreenDestination.route to SignInScreenDestination,
-                OnboardingScreenDestination.route to OnboardingScreenDestination,
             )
 
         override val route: String
             get() = "auth"
         override val startRoute: Route
             get() = SignInScreenDestination
+    }
+
+    val onboarding = object : NavGraphSpec {
+        override val destinationsByRoute: Map<String, DestinationSpec<*>>
+            get() = mapOf(
+                OnboardingScreenDestination.route to OnboardingScreenDestination,
+            )
+
+        override val route: String
+            get() = "onboarding"
+        override val startRoute: Route
+            get() = OnboardingScreenDestination
     }
 
     val main = object : NavGraphSpec {
@@ -91,11 +102,16 @@ class NavGraphs private constructor(
     private fun getRootStartRoute(): Route {
         val isFirstOpen = navigationParams.isFirstTime
         val isUserActive = navigationParams.isUserActive
+        val isUserOnboardingDone = navigationParams.isOnboardingComplete
         return if (isFirstOpen) {
             welcome
         } else {
             if (isUserActive) {
-                main
+                if (isUserOnboardingDone) {
+                    main
+                } else {
+                    onboarding
+                }
             } else {
                 auth
             }

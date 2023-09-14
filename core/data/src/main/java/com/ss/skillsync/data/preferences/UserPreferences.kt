@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.first
  * @date 08/09/2023
  */
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
 class UserPreferences(context: Context) {
-    private val dataStore = context.dataStore
+    private val dataStore = context.userDataStore
 
     companion object Keys {
         private val accessTokenKey = stringPreferencesKey("access_token")
