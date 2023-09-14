@@ -1,5 +1,6 @@
 package com.ss.skillsync.commonandroid.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -64,7 +66,7 @@ fun BrandButton(
         enabled = enabled,
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .background(
                     if (enabled) {
                         background
@@ -72,8 +74,7 @@ fun BrandButton(
                         disabledBackgroud
                     },
                 )
-                .padding(contentPadding)
-                .then(modifier),
+                .padding(contentPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -211,6 +212,37 @@ fun BrandButtonWithIcon(
                 color = if (enabled) textColor else disabledTextColor,
                 textAlign = TextAlign.Center,
                 fontSize = fontSize,
+            )
+        }
+    }
+}
+
+@Composable
+fun BrandOutlinedButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    enabled: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
+    onClick: () -> Unit,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        shape = MaterialTheme.shapes.small,
+        contentPadding = PaddingValues(0.dp),
+        border = BorderStroke(1.dp, if (enabled) MaterialTheme.colorScheme.primary else DoveGray),
+        enabled = enabled,
+    ) {
+        Row(
+            modifier = modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(contentPadding),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelLarge,
+                textAlign = TextAlign.Center,
             )
         }
     }

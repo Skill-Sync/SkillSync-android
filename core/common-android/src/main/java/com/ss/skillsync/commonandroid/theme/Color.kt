@@ -12,7 +12,6 @@ val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
 val SemiBlack = Color(0xFF131313)
 val DoveGray = Color(0xFF6C6C6C)
-// color for this hex #FF898989
 val LightGray = Color(0xFF898989)
 val Scorpion = Color(0xFF5C5C5C)
 val LightBlack = Color(0xFF1D1D1D)

@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SessionMakingViewModel @Inject constructor(
     private val searchInterestedSkillsUseCase: SearchInterestedSkillsUseCase,
-): ViewModel() {
+) : ViewModel() {
 
     private val _state = MutableStateFlow(SessionMakingState())
     val state = _state.asStateFlow()
@@ -23,20 +23,32 @@ class SessionMakingViewModel @Inject constructor(
     fun onEvent(event: SessionMakingEvent) {
         when (event) {
             is SessionMakingEvent.OnSearchQueryChanged -> {
-                _state.value = _state.value.copy(searchQuery = event.query)
+                val query = event.query
+                val selectedSkill = _state.value.selectedSkill
+                if (selectedSkill != null && query == selectedSkill.name) return
+
+                _state.value = _state.value.copy(searchQuery = query, selectedSkill = null)
                 searchSkills(event.query)
             }
+
             is SessionMakingEvent.OnSkillSelected -> {
-                _state.value = _state.value.copy(selectedSkill = event.skill)
+                _state.value = _state.value.copy(
+                    selectedSkill = event.skill,
+                    searchQuery = event.skill.name,
+                    searchResult = emptyList()
+                )
             }
+
             is SessionMakingEvent.OnStartSearchingClicked -> {
                 _state.value = _state.value.copy(isSearching = true)
                 startSearching()
             }
+
             is SessionMakingEvent.OnStopSearchingClicked -> {
                 _state.value = _state.value.copy(isSearching = false)
                 stopSearching()
             }
+            else -> {}
         }
     }
 
