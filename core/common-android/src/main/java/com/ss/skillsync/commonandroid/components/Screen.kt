@@ -1,6 +1,8 @@
 package com.ss.skillsync.commonandroid.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +38,7 @@ import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 @Composable
 private fun BasicScreen(
     isLoading: Boolean,
+    isPausedWhileLoading: Boolean,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
     isBackDisplayed: Boolean,
@@ -85,17 +88,26 @@ private fun BasicScreen(
                     .padding(contentPadding)
             ) {
                 content()
-                AnimatedVisibility(isLoading) {
+                AnimatedVisibility(isLoading, enter = fadeIn(), exit = fadeOut()) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
-                    )
-                    Dialog(onDismissRequest = { }) {
-                        LoadingIndicator(
-                            isVisible = isLoading,
-                            modifier = Modifier.fillMaxSize(0.4f)
-                        )
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (isPausedWhileLoading) {
+                            Dialog(onDismissRequest = { }) {
+                                LoadingIndicator(
+                                    isVisible = isLoading,
+                                    modifier = Modifier.fillMaxSize(0.4f)
+                                )
+                            }
+                        } else {
+                            LoadingIndicator(
+                                isVisible = isLoading,
+                                modifier = Modifier.fillMaxSize(0.4f)
+                            )
+                        }
                     }
                 }
             }
@@ -107,6 +119,7 @@ private fun BasicScreen(
 fun ScreenColumn(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    isPausedWhileLoading: Boolean = true,
     arrangement: Arrangement.Vertical = Arrangement.SpaceEvenly,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
@@ -136,6 +149,7 @@ fun ScreenColumn(
     }
     BasicScreen(
         isLoading = isLoading,
+        isPausedWhileLoading = isPausedWhileLoading,
         contentPadding = contentPadding,
         screenColor = screenColor,
         isBackDisplayed = isBackDisplayed,
