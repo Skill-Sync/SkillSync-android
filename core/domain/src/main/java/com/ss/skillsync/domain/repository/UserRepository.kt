@@ -16,8 +16,7 @@ interface UserRepository {
     suspend fun signIn(signInPayload: SignInPayload): Result<User>
     suspend fun signUp(signUpPayload: SignUpPayload): Result<Unit>
     suspend fun signOut()
-
     suspend fun isFirstOpen(): Boolean
-
     suspend fun getRecommendedMentors(): List<Mentor>
+    suspend fun updatePersonalData(user: User): Result<Unit>
 }

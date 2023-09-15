@@ -9,11 +9,13 @@ import com.ss.skillsync.model.User
  * @date 14/09/2023
  */
 data class SettingsState(
+    val settingsList: List<Setting> = emptyList(),
     val activeUser: User = User(),
     val settings: Settings = Settings(),
     val navigationDestination: SettingsDestinations? = null,
     val navigatedUp: Boolean = false,
     val error: Throwable? = null,
+    val isLoading: Boolean = true,
 )
 
 sealed class SettingsDestinations {

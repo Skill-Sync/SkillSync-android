@@ -23,6 +23,7 @@ private var DarkColorScheme = darkColorScheme(
     secondaryContainer = LightBlue20,
     onPrimaryContainer = RibbonBlue,
     onSecondaryContainer = LightBlue,
+    error = ErrorRed
 )
 
 @Composable

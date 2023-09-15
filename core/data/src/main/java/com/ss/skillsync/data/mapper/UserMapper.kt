@@ -42,3 +42,24 @@ fun UserData.toMentor(): Mentor {
         )
     }
 }
+
+fun User.toUserData(): UserData {
+    return UserData(
+        id = null,
+        _id = null,
+        email = email,
+        name = name,
+        about = about,
+        skillsToLearn = null,
+        skillsLearned = null,
+        active = null,
+        isEmployed = null,
+        onboardingCompleted = null,
+        role = null,
+        skill = null,
+        accessJWT = null,
+        refreshJWT = null,
+        photo = null,
+    )
+}
+

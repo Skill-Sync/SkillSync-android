@@ -1,6 +1,8 @@
 package com.ss.skillsync.commonandroid.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +18,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +38,7 @@ import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 @Composable
 private fun BasicScreen(
     isLoading: Boolean,
+    isPausedWhileLoading: Boolean,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
     isBackDisplayed: Boolean,
@@ -50,7 +52,7 @@ private fun BasicScreen(
                 .fillMaxSize(),
             containerColor = MaterialTheme.colorScheme.background,
             topBar = {
-                if(isBackDisplayed || screenLabel != null) {
+                if (isBackDisplayed || screenLabel != null) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -80,16 +82,32 @@ private fun BasicScreen(
                 }
             }
         ) { scaffoldPadding ->
-            Box(modifier = Modifier.padding(scaffoldPadding).padding(contentPadding)) {
+            Box(
+                modifier = Modifier
+                    .padding(scaffoldPadding)
+                    .padding(contentPadding)
+            ) {
                 content()
-                AnimatedVisibility(isLoading) {
+                AnimatedVisibility(isLoading, enter = fadeIn(), exit = fadeOut()) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
-                    )
-                    Dialog(onDismissRequest = { }) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (isPausedWhileLoading) {
+                            Dialog(onDismissRequest = { }) {
+                                LoadingIndicator(
+                                    isVisible = isLoading,
+                                    modifier = Modifier.fillMaxSize(0.4f)
+                                )
+                            }
+                        } else {
+                            LoadingIndicator(
+                                isVisible = isLoading,
+                                modifier = Modifier.fillMaxSize(0.4f)
+                            )
+                        }
                     }
                 }
             }
@@ -101,6 +119,7 @@ private fun BasicScreen(
 fun ScreenColumn(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    isPausedWhileLoading: Boolean = true,
     arrangement: Arrangement.Vertical = Arrangement.SpaceEvenly,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     screenColor: Color = MaterialTheme.colorScheme.background,
@@ -130,6 +149,7 @@ fun ScreenColumn(
     }
     BasicScreen(
         isLoading = isLoading,
+        isPausedWhileLoading = isPausedWhileLoading,
         contentPadding = contentPadding,
         screenColor = screenColor,
         isBackDisplayed = isBackDisplayed,

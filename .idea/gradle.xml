@@ -39,6 +39,7 @@
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/chat" />
+            <option value="$PROJECT_DIR$/feature/editprofile" />
             <option value="$PROJECT_DIR$/feature/forgetpassword" />
             <option value="$PROJECT_DIR$/feature/friends" />
             <option value="$PROJECT_DIR$/feature/home" />

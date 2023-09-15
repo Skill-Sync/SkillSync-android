@@ -5,6 +5,6 @@ package com.ss.skillsync.model
  * @date 14/09/2023
  */
 data class Settings(
-    val darkMode: Boolean = true,
-    val notificationsEnabled: Boolean = false,
+    val darkMode: Boolean? = null,
+    val notificationsEnabled: Boolean? = null,
 )
