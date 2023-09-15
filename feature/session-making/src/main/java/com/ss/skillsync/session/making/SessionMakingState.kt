@@ -14,13 +14,14 @@ data class SessionMakingState(
     val userProfileImage: String? = null,
     val matchResult: MatchResult? = null,
     val isMatchApproved: Boolean = false,
+    val hasJoinedSession: Boolean = false,
     val unknownError: Boolean = false,
 ) {
     val canStartSearching: Boolean
         get() = searchQuery.isNotBlank() && !isSearching
 
     val shouldJoinSession: Boolean
-        get() = matchResult != null && isMatchApproved
+        get() = matchResult != null && isMatchApproved && !hasJoinedSession
 
     private val isMatchFound: Boolean
         get() = matchResult != null
@@ -34,11 +35,15 @@ data class SessionMakingState(
     private val isMatchFoundDisplayed: Boolean
         get() = isMatchFound && !isSearching
 
+    private val isAfterSessionDisplayed: Boolean
+        get() = hasJoinedSession
+
     val currentDestination: SessionMakingDestinations
         get() = when {
             isSkillSelectionDisplayed -> SessionMakingDestinations.SkillSelection
             isSearchingDisplayed -> SessionMakingDestinations.MatchSearching
             isMatchFoundDisplayed -> SessionMakingDestinations.MatchFoundScreen
+            isAfterSessionDisplayed -> SessionMakingDestinations.AfterSessionScreen
             else -> throw IllegalStateException("Invalid state")
         }
 }

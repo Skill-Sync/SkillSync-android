@@ -15,6 +15,8 @@ sealed class SessionMakingUIEvent {
 
     data object OnRejectMatchClicked : SessionMakingUIEvent()
 
+    data object OnSessionStarted : SessionMakingUIEvent()
+
     data object OnAddToFriendsClicked : SessionMakingUIEvent()
 
     data object OnLeaveSessionMaking : SessionMakingUIEvent()

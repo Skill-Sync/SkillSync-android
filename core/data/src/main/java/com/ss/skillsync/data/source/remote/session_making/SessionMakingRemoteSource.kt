@@ -6,7 +6,6 @@ import com.ss.skillsync.data.source.remote.session_making.response.MatchFoundRes
 import com.ss.skillsync.data.source.remote.session_making.response.ServerApprovalResponse
 import io.socket.client.IO
 import io.socket.client.Socket
-import org.json.JSONObject
 import javax.inject.Inject
 
 /**
@@ -20,6 +19,7 @@ class SessionMakingRemoteSource @Inject constructor() {
 
     private var socket: Socket? = null
     private var socketId: String? = null
+    private val gson = Gson()
 
     fun connect(): Result<Unit> {
         if (socket != null) {
@@ -39,8 +39,8 @@ class SessionMakingRemoteSource @Inject constructor() {
     }
 
     fun sendMessage(message: Message) = kotlin.runCatching {
-        val messageJson = JSONObject(message.toString())
-        messageJson.put("userSocketId", socketId)
+        val messageJson = gson.toJsonTree(message).asJsonObject
+        messageJson.addProperty("userSocketId", socketId)
         socket?.emit(message.name, messageJson)
     }
 
@@ -48,7 +48,6 @@ class SessionMakingRemoteSource @Inject constructor() {
         currentUserId: String,
         onEvent: (Event) -> Unit,
     ) {
-        val gson = Gson()
         socket?.on("match-found") { args ->
             val eventArgs = args[0].toString()
             val matchFoundResponse = gson.fromJson(eventArgs, MatchFoundResponse::class.java)

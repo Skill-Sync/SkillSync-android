@@ -5,10 +5,12 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ss.skillsync.commonandroid.composition.LocalMeetingManager
 import com.ss.skillsync.session.making.screens.AfterSessionScreen
 import com.ss.skillsync.session.making.screens.MatchFoundScreen
 import com.ss.skillsync.session.making.screens.MatchSearchingScreen
@@ -21,6 +23,14 @@ fun SessionMakingScreen(
     viewModel: SessionMakingViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
+
+    val meetingManager = LocalMeetingManager.current
+    LaunchedEffect(key1 = state.shouldJoinSession) {
+        if (state.shouldJoinSession) {
+            val meetingId = state.matchResult!!.meetingId!!
+            meetingManager.joinMeeting(meetingId)
+        }
+    }
 
     SessionMakingContent(
         state,
@@ -38,15 +48,16 @@ private fun SessionMakingContent(
         label = "SessionMakingContent",
         transitionSpec = {
             slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
                 tween(500),
                 initialOffset = { fullWidth -> fullWidth}
             ) togetherWith slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
                 tween(500),
                 targetOffset = { fullWidth -> -fullWidth }
             )
         },
+        contentKey = { it }
     ) {
         when (it) {
             SessionMakingDestinations.SkillSelection -> SkillSelectionScreen(

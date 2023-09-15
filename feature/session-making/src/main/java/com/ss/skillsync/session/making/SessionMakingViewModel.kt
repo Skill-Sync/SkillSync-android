@@ -81,6 +81,13 @@ class SessionMakingViewModel @Inject constructor(
                     rejectMatchUseCase()
                 }
             }
+
+            is SessionMakingUIEvent.OnSessionStarted -> {
+                _state.value = _state.value.copy(
+                    isSearching = false,
+                    isMatchApproved = true,
+                )
+            }
             // After Session Events
             is SessionMakingUIEvent.OnAddToFriendsClicked -> {
                 workOnIO {
@@ -129,8 +136,10 @@ class SessionMakingViewModel @Inject constructor(
                 }
 
                 is SessionMakingEvent.MatchApproved -> {
+                   val matchResult = _state.value.matchResult ?: return@collect
                     _state.value = _state.value.copy(
                         isSearching = false,
+                        matchResult = matchResult.copy(meetingId = event.sessionToken),
                         isMatchApproved = true,
                     )
                 }
@@ -161,19 +170,18 @@ class SessionMakingViewModel @Inject constructor(
         _state.value = _state.value.copy(
             isSearching = true,
             matchResult = null,
-            unknownError = true
         )
         val skill = _state.value.selectedSkill ?: return@workOnIO
         startSearchingUseCase(skill)
     }
 
     private fun stopSearching() = workOnIO {
-    _state.value = _state.value.copy(
-        isSearching = false,
-        matchResult = null,
-        searchQuery = _state.value.selectedSkill?.name ?: "",
-        searchResult = emptyList(),
-    )
+        _state.value = _state.value.copy(
+            isSearching = false,
+            matchResult = null,
+            searchQuery = _state.value.selectedSkill?.name ?: "",
+            searchResult = emptyList(),
+        )
         stopSearchingUseCase()
     }
 
