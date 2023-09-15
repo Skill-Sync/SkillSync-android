@@ -17,3 +17,9 @@ dependencies {
     implementation(libs.datastore)
     coreLibraryDesugaring(libs.desugarJdkLibs)
 }
+
+dependencies {
+    implementation(projects.core.domain)
+    implementation(projects.core.model)
+    implementation(libs.datastore)
+}

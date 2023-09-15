@@ -32,6 +32,9 @@
             <option value="$PROJECT_DIR$/core/common-android" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/domain" />
+            <option value="$PROJECT_DIR$/core/meeting" />
+            <option value="$PROJECT_DIR$/core/meeting/api" />
+            <option value="$PROJECT_DIR$/core/meeting/impl" />
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/feature" />
