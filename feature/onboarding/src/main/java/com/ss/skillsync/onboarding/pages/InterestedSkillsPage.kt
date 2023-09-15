@@ -47,11 +47,14 @@ fun InterestedSkillsPage(
             )
         )
 
+
+
         OnboardingSection(
             title = stringResource(R.string.search_for_a_skill),
             modifier = Modifier.fillMaxWidth()
         ) {
             SearchTextField(
+                modifier = Modifier.heightIn(min = 70.dp, max = 200.dp),
                 value = state.searchQuery,
                 onValueChange = { onEvent(OnboardingEvent.SearchQueryChanged(it)) },
                 suggestions = state.queryResult,
@@ -68,7 +71,7 @@ fun InterestedSkillsPage(
                 onSkillRemoved = { onEvent(OnboardingEvent.SkillRemoved(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 250.dp, max = 500.dp)
+                    .heightIn(min = 250.dp, max = 400.dp)
                     .border(
                         1.dp,
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.2f),

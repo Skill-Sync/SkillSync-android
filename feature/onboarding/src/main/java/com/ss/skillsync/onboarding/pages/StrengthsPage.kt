@@ -39,6 +39,7 @@ fun StrengthsPage(
         )
         OnboardingSection(title = stringResource(R.string.search_for_a_skill)) {
             SearchTextField(
+                modifier = Modifier.heightIn(min = 70.dp, max = 200.dp),
                 value = state.searchQuery,
                 onValueChange = {
                     onEvent(
@@ -59,7 +60,7 @@ fun StrengthsPage(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 250.dp, max = 500.dp)
+                    .heightIn(min = 250.dp, max = 400.dp)
             )
         }
 

@@ -8,6 +8,7 @@ import com.ss.skillsync.data.preferences.UserPreferences
 import com.ss.skillsync.data.source.deserializer.SessionsResponseDeserializer
 import com.ss.skillsync.data.source.deserializer.UserDataDeserializer
 import com.ss.skillsync.data.source.deserializer.UsersDataDeserializer
+import com.ss.skillsync.data.source.remote.friends.FriendsApiService
 import com.ss.skillsync.data.source.remote.interceptor.AuthInterceptor
 import com.ss.skillsync.data.source.remote.mentors.MentorApiService
 import com.ss.skillsync.data.source.remote.model.UsersData
@@ -92,6 +93,11 @@ object DataModule {
     @Singleton
     fun provideMentorApiService(retrofit: Retrofit): MentorApiService =
         retrofit.create(MentorApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideFriendsApiService(retrofit: Retrofit): FriendsApiService =
+        retrofit.create(FriendsApiService::class.java)
 
     @Provides
     @Singleton
