@@ -9,3 +9,7 @@ plugins {
 android {
     namespace = "com.ss.skillsync.commonandroid"
 }
+
+dependencies {
+    implementation(libs.lottie)
+}

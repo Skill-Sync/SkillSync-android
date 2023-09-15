@@ -16,7 +16,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,7 +49,7 @@ private fun BasicScreen(
                 .fillMaxSize(),
             containerColor = MaterialTheme.colorScheme.background,
             topBar = {
-                if(isBackDisplayed || screenLabel != null) {
+                if (isBackDisplayed || screenLabel != null) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -80,7 +79,11 @@ private fun BasicScreen(
                 }
             }
         ) { scaffoldPadding ->
-            Box(modifier = Modifier.padding(scaffoldPadding).padding(contentPadding)) {
+            Box(
+                modifier = Modifier
+                    .padding(scaffoldPadding)
+                    .padding(contentPadding)
+            ) {
                 content()
                 AnimatedVisibility(isLoading) {
                     Box(
@@ -89,7 +92,10 @@ private fun BasicScreen(
                             .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f))
                     )
                     Dialog(onDismissRequest = { }) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        LoadingIndicator(
+                            isVisible = isLoading,
+                            modifier = Modifier.fillMaxSize(0.4f)
+                        )
                     }
                 }
             }
