@@ -1,16 +1,15 @@
 package com.ss.skillsync.meeting.impl
 
-import android.app.Activity
 import android.content.Context
+import androidx.activity.ComponentActivity
+import com.ss.skillsync.meeting.api.MeetingEvent
 import com.ss.skillsync.meeting.api.MeetingManager
 import dagger.hilt.android.qualifiers.ActivityContext
+import dyte.io.uikit.DyteUIKit
+import dyte.io.uikit.DyteUIKitBuilder
+import dyte.io.uikit.DyteUIKitInfo
+import io.dyte.core.models.DyteMeetingInfoV2
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import org.jitsi.meet.sdk.JitsiMeet
-import org.jitsi.meet.sdk.JitsiMeetActivity
-import org.jitsi.meet.sdk.JitsiMeetActivityDelegate
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
-import java.net.URL
 import javax.inject.Inject
 
 /**
@@ -19,57 +18,35 @@ import javax.inject.Inject
 class MeetingManagerImpl @Inject constructor(
     @ActivityContext private val context: Context,
 ) : MeetingManager {
+    private val eventListener = MeetingEventListener()
+    override val eventsFlow: Flow<MeetingEvent?> = eventListener.events
 
-    private val _messagesFlow = MutableStateFlow<String?>(null)
-    override val messagesFlow: Flow<String?> = _messagesFlow
-
-    init {
-        val defaultOptions = getMeetingOptions()
-        JitsiMeet.setDefaultConferenceOptions(defaultOptions)
-    }
+    private var meetingStartTime: Long = 0L
+    private var meetingEndTime: Long = 0L
 
     override fun joinMeeting(meetingName: String) {
-        JitsiMeetConferenceOptions.Builder()
-            .setRoom(meetingName)
-            .build()
-            .let {
-                JitsiMeetActivity.launch(context, it)
-            }
+        val meetingInfo = DyteMeetingInfoV2(
+            authToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdJZCI6ImNhOWJiNzczLWZhYTMtNDk4My1hN2E0LWQwY2RkZDA3ODE4ZCIsIm1lZXRpbmdJZCI6ImJiYjQ1OGI0LTRiYzItNGVmZS05YzUyLWFiMzY2ZDY0OWVhMSIsInBhcnRpY2lwYW50SWQiOiJhYWFlNDNkNi02Y2M3LTQ1MmUtYmQ0Yy0zOWI0MzM2ZmRmZWMiLCJwcmVzZXRJZCI6ImM2NGFjMWIwLWI2ZjctNGU5MS1hOTRlLTFlOGYxZWQ2ZGQ0NyIsImlhdCI6MTY5NDc2NzU3NiwiZXhwIjoxNzAzNDA3NTc2fQ.TnUUPdHg1HxRwluZFuzr3Ao6Oe6yCeLPcvu61RR19SOYGQDEqZVPIrg0xyKjYISbbqDsK9GpQ53Jhmw-aIcMNTXfqg4AeqVcGB3UNYJ7RhTGc2yYkCXt11S6px0SWA_QANX1mgbWUmmrCusKS9StAJMoi2DheMhe1AhvYtgIUoiO9fy9-c303XBTrWai6ZSG8CP6pZIxpUcCiJDbxe66UFb76n5Wxdv1HFtg4B5G4blWS4GSN3AKSSUECJq-Uh-QvZmoJl0u_ddmF_v7998uF-8V0up43MVs7DWMjlfGUg-XFOeOQXk97kdkJDQoQHde0ty5qvQLQuKa4Z2FjEjOUw"
+        )
+        initSDK(meetingInfo).apply {
+            startMeeting()
+            meeting.addMeetingRoomEventsListener(eventListener)
+        }
+    }
 
+    override fun getMeetingDuration(): Long {
+        TODO("Not yet implemented")
     }
 
     override fun leaveMeeting() {
-        JitsiMeetActivityDelegate.onHostDestroy(context as? Activity)
+        TODO("Not yet implemented")
     }
 
-    private fun getMeetingOptions(): JitsiMeetConferenceOptions {
-        return JitsiMeetConferenceOptions.Builder()
-            .setServerURL(URL("https://meet.jit.si"))
-            .setFeatureFlag("chat.enabled", true)
-            .setFeatureFlag("filmstrip.enabled", false)
-            .setFeatureFlag("android.screensharing.enabled", false)
-            .setFeatureFlag("video-mute.enabled", true)
-            .setFeatureFlag("invite.enabled", false)
-            .setFeatureFlag("pip.enabled", true)
-            .setFeatureFlag("welcomepage.enabled", false)
-            .setFeatureFlag("add-people.enabled", false)
-            .setFeatureFlag("calendar.enabled", false)
-            .setFeatureFlag("call-integration.enabled", false)
-            .setFeatureFlag("close-captions.enabled", false)
-            .setFeatureFlag("conference-timer.enabled", true)
-            .setFeatureFlag("help.enabled", false)
-            .setFeatureFlag("kick-out.enabled", false)
-            .setFeatureFlag("live-streaming.enabled", false)
-            .setFeatureFlag("meeting-name.enabled", false)
-            .setFeatureFlag("lobby-mode.enabled", false)
-            .setFeatureFlag("meeting-password.enabled", false)
-            .setFeatureFlag("raise-hand.enabled", false)
-            .setFeatureFlag("prejoinpage.hideDisplayName", true)
-            .setFeatureFlag("recording.enabled", false)
-            .setFeatureFlag("security-options.enabled", false)
-            .setFeatureFlag("settings.enabled", false)
-            .setFeatureFlag("reactions.enabled", false)
-            .setFeatureFlag("video-share.enabled", false)
-            .build()
+    private fun initSDK(meetingInfoV2: DyteMeetingInfoV2): DyteUIKit {
+        val dyteUIKitInfo = DyteUIKitInfo(
+            activity = context as ComponentActivity,
+            dyteMeetingInfo = meetingInfoV2,
+        )
+        return DyteUIKitBuilder.build(dyteUIKitInfo)
     }
 }

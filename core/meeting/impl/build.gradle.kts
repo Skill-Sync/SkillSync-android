@@ -6,6 +6,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.jitsi)
+    implementation(libs.dyte)
     implementation(projects.core.meeting.api)
 }

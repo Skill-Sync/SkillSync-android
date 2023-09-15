@@ -73,7 +73,7 @@ composeDestinations = { module = "io.github.raamcosta.compose-destinations:anima
 composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "compose-destinations" }
 okhttp3 = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
-jitsi = { module = "org.jitsi.react:jitsi-meet-sdk", version = "8.2.2" }
+dyte = { module = "io.dyte:uikit", version = "1.13.0" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

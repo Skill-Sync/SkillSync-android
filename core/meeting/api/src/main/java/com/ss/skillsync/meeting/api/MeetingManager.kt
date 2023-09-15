@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
  */
 interface MeetingManager {
 
-    val messagesFlow: Flow<String?>
+    val eventsFlow: Flow<MeetingEvent?>
     fun joinMeeting(meetingName: String)
+    fun getMeetingDuration(): Long
     fun leaveMeeting()
 }
