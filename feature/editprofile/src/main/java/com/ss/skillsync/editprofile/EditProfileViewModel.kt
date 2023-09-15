@@ -62,10 +62,10 @@ class EditProfileViewModel @Inject constructor(
             }
 
             EditProfileEvent.SaveProfile -> {
+                _state.value = _state.value.copy(
+                    isLoading = true,
+                )
                 viewModelScope.launch {
-                    _state.value = _state.value.copy(
-                        isLoading = true,
-                    )
                     updateProfileUseCase(_state.value.updatedUser).onFailure {
                         _state.value = _state.value.copy(
                             error = it,
@@ -73,8 +73,8 @@ class EditProfileViewModel @Inject constructor(
                         )
                     }.onSuccess {
                         _state.value = _state.value.copy(
-                            navigationDestination = EditProfileDestination.Onboarding,
                             isLoading = false,
+                            backPressed = true,
                         )
                     }
                 }
@@ -96,6 +96,7 @@ class EditProfileViewModel @Inject constructor(
                             ?: _state.value.updatedUser.interestedSkills,
                         strengths = event.updatableUser.strengths
                             ?: _state.value.updatedUser.strengths,
+                        profilePictureUrl = _state.value.updatedUser.profilePictureUrl,
                     ),
                 )
             }

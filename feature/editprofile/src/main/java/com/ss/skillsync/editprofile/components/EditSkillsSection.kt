@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,6 +51,7 @@ fun EditSkillsSection(
         )
         Row(
             modifier = Modifier
+                .clip(shape = RoundedCornerShape(8.dp))
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
@@ -57,10 +59,9 @@ fun EditSkillsSection(
                             Color(0xFFFFBE0B),
                         )
                     ),
-                    shape = RoundedCornerShape(8.dp),
                 )
-                .padding(horizontal = 6.dp, vertical = 8.dp)
-                .clickable(onClick = onEditSkills),
+                .clickable(onClick = onEditSkills)
+                .padding(horizontal = 6.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(

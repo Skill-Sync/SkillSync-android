@@ -103,6 +103,12 @@ fun CircularAsyncImage(
                 onSuccess = {
                     imagePadding = 0.dp
                 },
+                onLoading = {
+                    imagePadding = placeholderPadding
+                },
+                onError = {
+                    imagePadding = placeholderPadding
+                }
             )
         }
     }

@@ -89,6 +89,9 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updatePersonalData(user: User): Result<Unit> {
-        return userRemoteSource.updateUserData(user.toUserData())
+        val response = userRemoteSource.updateUserData(user.toUserData()).onSuccess {
+            activeUser = user.toUserData()
+        }
+        return response
     }
 }
