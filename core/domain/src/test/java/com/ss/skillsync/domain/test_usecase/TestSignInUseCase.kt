@@ -1,7 +1,7 @@
 package com.ss.skillsync.domain.test_usecase
 
 import com.ss.skillsync.domain.fake.FakeUserRepository
-import com.ss.skillsync.domain.usecase.SignInUseCase
+import com.ss.skillsync.domain.usecase.auth.SignInUseCase
 import com.ss.skillsync.model.exception.EmailInvalidException
 import com.ss.skillsync.model.exception.PasswordEmptyException
 import kotlinx.coroutines.runBlocking

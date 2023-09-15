@@ -2,6 +2,15 @@ package com.ss.skillsync.navigation
 
 import androidx.navigation.NavController
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ss.skillsync.home.HomeNavigator
+import com.ss.skillsync.home.destinations.HomeScreenDestination
+import com.ss.skillsync.model.Session
+import com.ss.skillsync.onboarding.OnboardingNavigator
+import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
+import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
+import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
+import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
+import com.ss.skillsync.settings.destinations.SettingsScreenDestination
 import com.ss.skillsync.signin.SignInNavigator
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
 import com.ss.skillsync.signup.SignupNavigator
@@ -15,7 +24,9 @@ class CommonGraphNavigator(
     private val navController: NavController,
 ) : WelcomeNavigator,
     SignInNavigator,
-    SignupNavigator {
+    SignupNavigator,
+    OnboardingNavigator,
+    HomeNavigator {
 
     override fun leaveWelcomeScreen() {
         navController.navigate(SignupScreenDestination)
@@ -30,10 +41,38 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToHome() {
+        navController.navigate(HomeScreenDestination)
     }
 
     override fun navigateToOnboarding() {
-        // TODO change to onboarding screen
-        navController.navigate(SignInScreenDestination)
+        navController.navigate(OnboardingScreenDestination)
+    }
+
+    fun navigate(route: String) {
+        navController.navigate(route)
+    }
+
+    override fun navigateToProfile() {
+        navController.navigate(UserProfileScreenDestination)
+    }
+
+    override fun navigateToSettings() {
+        navController.navigate(SettingsScreenDestination)
+    }
+
+    override fun navigateToMentorProfile() {
+        navController.navigate(MentorProfileScreenDestination)
+    }
+
+    override fun navigateToSessionDetails(session: Session) {
+        TODO("Not yet implemented")
+    }
+
+    override fun navigateToMatch() {
+        navController.navigate(SessionMakingScreenDestination)
+    }
+
+    override fun popBackStack() {
+        navController.popBackStack()
     }
 }

@@ -1,12 +1,17 @@
 package com.ss.skillsync.commonandroid.components
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -17,9 +22,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -32,10 +41,11 @@ import com.ss.skillsync.commonandroid.R
 
 @Composable
 fun RoundedTextFieldWithTitle(
-    modifier: Modifier = Modifier,
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         TextFieldTitle(title = title)
@@ -50,16 +60,18 @@ fun RoundedTextFieldWithTitle(
             ),
             singleLine = true,
             shape = MaterialTheme.shapes.small,
+            keyboardOptions = KeyboardOptions(imeAction = imeAction),
         )
     }
 }
 
 @Composable
 fun RoundedPasswordTextField(
-    modifier: Modifier = Modifier,
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     var isPasswordVisible by remember {
         mutableStateOf(false)
@@ -74,20 +86,32 @@ fun RoundedPasswordTextField(
                 focusedBorderColor = MaterialTheme.colorScheme.tertiary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
             ),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = imeAction,
+            ),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
-                val iconRes =
-                    if (isPasswordVisible) R.drawable.ic_eye_invisible else R.drawable.ic_eye_visible
                 IconButton(
                     onClick = {
                         isPasswordVisible = !isPasswordVisible
                     },
                 ) {
-                    Image(
-                        painter = painterResource(id = iconRes),
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_eye_visible),
                         contentDescription = "Toggle password visibility",
+                        tint = MaterialTheme.colorScheme.onBackground,
                     )
+                    AnimatedVisibility(isPasswordVisible, enter = expandIn(expandFrom = Alignment.TopEnd), exit = shrinkOut(shrinkTowards = Alignment.TopEnd)) {
+                        Canvas(modifier = Modifier.fillMaxSize()) {
+                            drawLine(
+                                color = Color.White,
+                                start = Offset(size.width, 0f),
+                                end = Offset(0f, size.height),
+                                strokeWidth = 2.dp.toPx(),
+                            )
+                        }
+                    }
                 }
             },
             singleLine = true,

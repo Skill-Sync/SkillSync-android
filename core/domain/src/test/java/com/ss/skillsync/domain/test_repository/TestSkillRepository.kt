@@ -68,5 +68,4 @@ class TestSkillRepository {
         assert(userInterestedSkills.contains(skill))
         assert(!updatedUserInterestedSkills.contains(skill))
     }
-
 }

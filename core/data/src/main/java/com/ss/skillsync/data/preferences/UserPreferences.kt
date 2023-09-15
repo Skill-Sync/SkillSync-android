@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.ss.skillsync.data.model.UserDTO
+import com.ss.skillsync.data.source.remote.model.auth.UserData
 import kotlinx.coroutines.flow.first
 
 /**
@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.first
  * @date 08/09/2023
  */
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
+val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "user_preferences")
 
 class UserPreferences(context: Context) {
-    private val dataStore = context.dataStore
+    private val dataStore = context.userDataStore
 
     companion object Keys {
         private val accessTokenKey = stringPreferencesKey("access_token")
@@ -26,8 +26,10 @@ class UserPreferences(context: Context) {
         private val isFirstOpenKey = booleanPreferencesKey("is_first_open")
     }
 
-    suspend fun saveUserTokens(userDTO: UserDTO) {
-        saveUserTokens(userDTO.accessToken, userDTO.refreshToken)
+    suspend fun saveUserTokens(user: UserData) {
+        if (user.tokensAvailable()) {
+            saveUserTokens(user.accessJWT!!, user.refreshJWT!!)
+        }
     }
 
     suspend fun saveUserTokens(accessToken: String, refreshToken: String) {

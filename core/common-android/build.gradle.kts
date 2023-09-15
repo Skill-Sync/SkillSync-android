@@ -9,7 +9,3 @@ plugins {
 android {
     namespace = "com.ss.skillsync.commonandroid"
 }
-
-dependencies {
-    implementation(projects.core.meeting.api)
-}

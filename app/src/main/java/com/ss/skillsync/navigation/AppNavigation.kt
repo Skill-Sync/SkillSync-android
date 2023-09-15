@@ -1,14 +1,14 @@
 package com.ss.skillsync.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.NavHostController
 import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
+import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import com.ramcosta.composedestinations.navigation.DependenciesContainerBuilder
 import com.ramcosta.composedestinations.navigation.dependency
-import com.ss.skillsync.model.NavigationParams
 
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/6/2023.
@@ -19,19 +19,16 @@ private fun DependenciesContainerBuilder<*>.currentNavigator(): CommonGraphNavig
     )
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun AppNavigation(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
-    navigationParams: NavigationParams,
+    navController: NavHostController,
+    navGraph: NavGraphs = NavGraphs.get(),
 ) {
-    val navGraph = NavGraphs.create(navigationParams).root
-    val navController = rememberAnimatedNavController()
-
     DestinationsNavHost(
         modifier = modifier,
-        navGraph = navGraph,
+        navGraph = navGraph.root,
         navController = navController,
         dependenciesContainerBuilder = {
             dependency(currentNavigator())

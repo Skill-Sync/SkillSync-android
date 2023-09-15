@@ -1,27 +1,37 @@
 package com.ss.skillsync.data.mapper
 
-import com.ss.skillsync.data.model.SkillDTO
+import com.ss.skillsync.data.source.remote.model.skill.SkillData
+import com.ss.skillsync.data.source.remote.model.skill.SkillLearned
+import com.ss.skillsync.data.source.remote.model.skill.SkillLearnedRequest
 import com.ss.skillsync.model.Skill
 import com.ss.skillsync.model.SkillLevel
 
 /**
- * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/8/2023.
- * TODO update mappers when schema is finalized
+ * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/10/2023.
  */
-fun SkillDTO.toDomainModel(): Skill {
-    val level = SkillLevel.valueOf(level.uppercase())
+fun SkillLearned.toSkill(): Skill {
+    val skillLevel = kotlin.runCatching {
+        SkillLevel.valueOf(level.uppercase())
+    }.getOrDefault(SkillLevel.NOCHOICE)
+
     return Skill(
-        id = id,
-        name = name,
-        level = level,
+        id = _id,
+        name = skill.name,
+        level = skillLevel,
     )
 }
 
-fun Skill.toDTOModel(): SkillDTO {
-    val level = level.name.lowercase()
-    return SkillDTO(
-        id = id,
+fun SkillData.toSkill(): Skill {
+    return Skill(
+        id = _id,
         name = name,
-        level = level,
+        level = SkillLevel.NOCHOICE,
+    )
+}
+
+fun Skill.toSkillLearnedRequest(): SkillLearnedRequest {
+    return SkillLearnedRequest(
+        skill = id,
+        level = level.name.lowercase(),
     )
 }
