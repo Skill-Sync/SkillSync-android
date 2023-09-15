@@ -1,11 +1,15 @@
 package com.ss.skillsync.data.di
 
+import com.ss.skillsync.data.repository.FriendRepositoryImpl
 import com.ss.skillsync.data.repository.MentorRepositoryImpl
+import com.ss.skillsync.data.repository.SessionMakingRepositoryImpl
 import com.ss.skillsync.data.repository.SessionRepositoryImpl
 import com.ss.skillsync.data.repository.SettingsRepositoryImpl
 import com.ss.skillsync.data.repository.SkillRepositoryImpl
 import com.ss.skillsync.data.repository.UserRepositoryImpl
+import com.ss.skillsync.domain.repository.FriendsRepository
 import com.ss.skillsync.domain.repository.MentorRepository
+import com.ss.skillsync.domain.repository.SessionMakingRepository
 import com.ss.skillsync.domain.repository.SessionRepository
 import com.ss.skillsync.domain.repository.SettingsRepository
 import com.ss.skillsync.domain.repository.SkillRepository
@@ -53,4 +57,17 @@ abstract class RepositoryModule {
     abstract fun bindSettingsRepository(
         settingsRepositoryImpl: SettingsRepositoryImpl,
     ): SettingsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindFriendsRepository(
+        friendRepositoryImpl: FriendRepositoryImpl,
+    ): FriendsRepository
+
+
+    @Binds
+    @Singleton
+    abstract fun bindSessionMakingRepository(
+        sessionMakingRepository: SessionMakingRepositoryImpl
+    ) : SessionMakingRepository
 }

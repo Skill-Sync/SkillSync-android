@@ -12,9 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,6 +23,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ss.skillsync.commonandroid.DefaultSnackbarHost
 import com.ss.skillsync.commonandroid.composition.LocalMeetingManager
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
+import com.ss.skillsync.meeting.api.MeetingManager
 import com.ss.skillsync.model.NavigationParams
 import com.ss.skillsync.navigation.AppNavigation
 import com.ss.skillsync.navigation.NavGraphs
