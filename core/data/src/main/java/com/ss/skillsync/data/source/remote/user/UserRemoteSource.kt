@@ -81,6 +81,19 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
+    suspend fun updateUserData(userData: UserData): Result<Unit> {
+        return try {
+            val response = apiService.updatePersonalData(userData)
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Throwable(response.errorBody()?.string()))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     private fun handleSignInError(code: Int): Exception {
         val inactivatedEmailCode = 401
         return if (code == inactivatedEmailCode) {

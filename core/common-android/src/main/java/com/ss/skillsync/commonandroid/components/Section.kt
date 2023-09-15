@@ -1,5 +1,6 @@
 package com.ss.skillsync.commonandroid.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -57,7 +58,10 @@ fun Section(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            Column(modifier = Modifier.padding(contentPadding)) {
+            Column(
+                modifier = Modifier.padding(contentPadding),
+                verticalArrangement = Arrangement.Center
+            ) {
                 content()
             }
         }

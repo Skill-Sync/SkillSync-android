@@ -37,6 +37,7 @@ datastore = "1.0.0"
 desugarJdkLibs = "2.0.3"
 appcompat = "1.6.1"
 material = "1.9.0"
+lottie = "6.1.0"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -77,6 +78,7 @@ composeDestinations-ksp = { module = "io.github.raamcosta.compose-destinations:k
 okhttp3 = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp3" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
+lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 dyte = { module = "io.dyte:uikit", version = "1.13.0" }
 
 # Dependencies of the included build-logic

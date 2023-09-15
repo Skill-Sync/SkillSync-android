@@ -18,6 +18,7 @@ fun SkillLearned.toSkill(): Skill {
         id = _id,
         name = skill.name,
         level = skillLevel,
+        skillId = skill._id,
     )
 }
 
