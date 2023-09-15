@@ -11,6 +11,6 @@ class StopSearchingUseCase @Inject constructor(
 ){
 
     suspend operator fun invoke(): Result<Unit> {
-        return sessionMakingRepository.stopSearching()
+        return Result.success(sessionMakingRepository.stopSearching())
     }
 }

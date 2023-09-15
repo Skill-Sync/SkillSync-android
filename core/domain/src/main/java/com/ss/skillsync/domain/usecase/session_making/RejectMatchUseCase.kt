@@ -11,6 +11,6 @@ class RejectMatchUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Result<Unit> {
-        return sessionMakingRepository.rejectMatch()
+        return Result.success(sessionMakingRepository.rejectMatch())
     }
 }

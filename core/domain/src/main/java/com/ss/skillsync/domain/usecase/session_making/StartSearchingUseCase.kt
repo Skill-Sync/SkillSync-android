@@ -8,7 +8,7 @@ import javax.inject.Inject
 /**
  * Created by Muhammed Salman email(mahmadslman@gmail.com) on 9/14/2023.
  */
-class StartSearchingUseCase @Inject constructor (
+class StartSearchingUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val sessionMakingRepository: SessionMakingRepository,
 ) {
@@ -19,6 +19,9 @@ class StartSearchingUseCase @Inject constructor (
                 return Result.failure(it)
             }.getOrNull()!!
 
-        return sessionMakingRepository.startSearching(activeUser, skill)
+        sessionMakingRepository.connect(activeUser)
+        return Result.success(
+            sessionMakingRepository.startSearching(activeUser, skill)
+        )
     }
 }

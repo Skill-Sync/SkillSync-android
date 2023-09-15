@@ -10,6 +10,7 @@ class ApproveMatchUseCase @Inject constructor(
     private val sessionMakingRepository: SessionMakingRepository,
 ) {
     suspend operator fun invoke(): Result<Unit> {
-        return sessionMakingRepository.approveMatch()
+        sessionMakingRepository.approveMatch()
+        return Result.success(Unit)
     }
 }

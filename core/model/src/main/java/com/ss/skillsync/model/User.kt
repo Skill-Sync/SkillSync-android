@@ -10,6 +10,7 @@ data class User(
     val name: String = "",
     val email: String = "",
     val about: String = "",
+    val authToken: String = "",
     val profilePictureUrl: String = "",
     val onboardingCompleted: Boolean = false,
     val interestedSkills: List<Skill> = emptyList(),

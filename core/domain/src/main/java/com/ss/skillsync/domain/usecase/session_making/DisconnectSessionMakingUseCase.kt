@@ -10,6 +10,6 @@ class DisconnectSessionMakingUseCase @Inject constructor(
     private val sessionMakingRepository: SessionMakingRepository,
 ) {
     suspend operator fun invoke(): Result<Unit> {
-        return sessionMakingRepository.disconnect()
+        return Result.success(sessionMakingRepository.disconnect())
     }
 }

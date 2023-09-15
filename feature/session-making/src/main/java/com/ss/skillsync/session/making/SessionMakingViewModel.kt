@@ -132,7 +132,6 @@ class SessionMakingViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isSearching = false,
                         isMatchApproved = true,
-                        matchResult = event.matchResult,
                     )
                 }
 
