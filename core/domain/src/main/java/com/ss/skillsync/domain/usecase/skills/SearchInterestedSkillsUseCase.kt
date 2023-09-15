@@ -12,6 +12,10 @@ class SearchInterestedSkillsUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
 
+    companion object {
+        private const val MAX_RESULT = 4
+    }
+
     suspend operator fun invoke(query: String): Result<List<Skill>> {
         val userSkills = userRepository
             .getActiveUser()
@@ -21,6 +25,8 @@ class SearchInterestedSkillsUseCase @Inject constructor(
             return Result.success(emptyList())
         }
         val filteredSkills = userSkills.filter { it.name.contains(query, ignoreCase = true) }
+            .take(MAX_RESULT)
+
         return Result.success(filteredSkills)
     }
 }
