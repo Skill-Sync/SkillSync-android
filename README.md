@@ -28,6 +28,7 @@ The SkillSync Mobile application was executed with an unwavering commitment to t
 | Retrofit             | A proficient HTTP Request client simplifying REST API integration.                | <img src="https://github.com/Skill-Sync/SkillSync-android/assets/84887514/8a893856-be0b-488f-894b-79c2dfe17959" alt="A Sample Image" width="50" height="50"> |
 | Socket IO            | Enables WebSocket connections for real-time communication with the server.       | <img src="https://github.com/Skill-Sync/SkillSync-android/assets/84887514/182a91da-eb17-453d-835a-48df220ee7a6" alt="A Sample Image" width="50" height="50"> |
 | Dyte SDK             | A customizable Video Conference SDK for Live-Session meetings integration.        | <img src="https://github.com/Skill-Sync/SkillSync-android/assets/84887514/afd88ee9-9e10-4bc5-8da6-a966f3805117" alt="A Sample Image" width="50" height="50"> |
+| Firebase Crashlytics | Keeping track of crashes or warning occurred in the production | <img src="https://github.com/Skill-Sync/SkillSync-android/assets/84887514/bed3e03a-ac31-4dd3-af9a-a951006a1cf8" alt="A Sample Image" width="50" height="50"> |
 
 In conclusion, our Android development journey has been defined by a commitment to architectural excellence and the integration of state-of-the-art technologies. This approach not only enhances efficiency but also positions our project at the forefront of innovation within the Android ecosystem.
 
