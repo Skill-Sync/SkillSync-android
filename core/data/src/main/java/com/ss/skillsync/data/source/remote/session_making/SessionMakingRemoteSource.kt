@@ -17,6 +17,7 @@ class SessionMakingRemoteSource @Inject constructor() {
 
     companion object {
         private const val BASE_URL = "https://skill-sync-backup.onrender.com/"
+        private const val TAG = "SessionMakingRemoteSource"
     }
 
     private var socket: Socket? = null
@@ -31,12 +32,17 @@ class SessionMakingRemoteSource @Inject constructor() {
         return kotlin.runCatching {
             socket = IO.socket(BASE_URL).connectAwait()
             socketId = socket?.id()
+        }.onFailure {
+            com.timers.stopwatch.core.log.error(TAG, it)
         }
     }
 
     fun disconnect(): Result<Unit> {
         return kotlin.runCatching {
             socket?.disconnect()
+            Unit
+        }.onFailure {
+            com.timers.stopwatch.core.log.error(TAG, it)
         }
     }
 
@@ -45,6 +51,8 @@ class SessionMakingRemoteSource @Inject constructor() {
         messageJson.put("userSocketId", socketId)
         println(messageJson)
         socket?.emit(message.name, messageJson)
+    }.onFailure {
+        com.timers.stopwatch.core.log.error(TAG, it)
     }
 
     fun listenForEvents(
