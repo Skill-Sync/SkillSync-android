@@ -11,11 +11,9 @@ import com.ss.skillsync.domain.usecase.session_making.StartSearchingUseCase
 import com.ss.skillsync.domain.usecase.session_making.StopSearchingUseCase
 import com.ss.skillsync.domain.usecase.skills.SearchInterestedSkillsUseCase
 import com.ss.skillsync.meeting.api.MeetingManager
-import com.ss.skillsync.model.MatchResult
 import com.ss.skillsync.model.SessionMakingEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -40,7 +38,7 @@ class SessionMakingViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        // handleSessionMakingEvents()
+        handleSessionMakingEvents()
     }
 
     fun onEvent(event: SessionMakingUIEvent) {
@@ -59,7 +57,7 @@ class SessionMakingViewModel @Inject constructor(
                 _state.value = _state.value.copy(
                     selectedSkill = event.skill,
                     searchQuery = event.skill.name,
-                    searchResult = emptyList(),
+                    searchResult = emptyList()
                 )
             }
 
@@ -76,23 +74,22 @@ class SessionMakingViewModel @Inject constructor(
             is SessionMakingUIEvent.OnAcceptMatchClicked -> {
                 workOnIO {
                     _state.value = _state.value.copy(acceptMatchEnabled = false)
-                    // acceptMatchUseCase()
-                    val matchResult = _state.value.matchResult ?: return@workOnIO
-                    _state.value = _state.value.copy(
-                        isSearching = false,
-                        matchResult = matchResult.copy(meetingId = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdJZCI6ImNhOWJiNzczLWZhYTMtNDk4My1hN2E0LWQwY2RkZDA3ODE4ZCIsIm1lZXRpbmdJZCI6ImJiYmRjOWUwLWVmY2YtNDYwOC04MWMzLTkxZDM5NDZkNDcyOSIsInBhcnRpY2lwYW50SWQiOiJhYWFmZjE2MS0xNjI5LTQ3ZjctYWMyNC1mMTRhMzQ3YjQ0ZWIiLCJwcmVzZXRJZCI6ImM2NGFjMWIwLWI2ZjctNGU5MS1hOTRlLTFlOGYxZWQ2ZGQ0NyIsImlhdCI6MTY5NDg1Nzc1NiwiZXhwIjoxNzAzNDk3NzU2fQ.Awk5ZKm-RtmmIfJKzWh2wQzAOyFkAvcRFZdrIFLdXqn7nm1gDLexg7LqrtxKFf1QWahHTbtdMq_e4NG8M-7twBMM2bFo-7aoZ8oijvOtaNnY-p82HOgsziLlEJFwi_qf1b87KeYyiQlI1zKSDCL8sHaFSJJQMQV7WT5RBoxFqv6cQVErDMQeXSLHEcfv-TGNP-GGORT7q_drnewNAiN_nU5ni2EMPO4vF8h1kLGSakKY8o9o_pQPbQKKyAf-Zt3ByVvyTqQvqsEB07iGqMTBlquh7yPfsdG9NKmaVluQ-jy7Z3hoiws2Fuja5JIAt0YBdW6mmFZ1tyZhWcjEgeQ3Nw"),
-                        isMatchApproved = true,
-                    )
+                    acceptMatchUseCase()
                 }
             }
 
             is SessionMakingUIEvent.OnRejectMatchClicked -> {
                 workOnIO {
-                    // rejectMatchUseCase()
+                    rejectMatchUseCase()
                 }
             }
 
             is SessionMakingUIEvent.OnSessionStarted -> {
+                _state.value = _state.value.copy(
+                    isSearching = false,
+                    isMatchApproved = true,
+                    hasJoinedSession = true,
+                )
                 joinSession(event.manager)
             }
             // After Session Events
@@ -105,20 +102,15 @@ class SessionMakingViewModel @Inject constructor(
 
             is SessionMakingUIEvent.OnLeaveSessionMaking -> {
                 workOnIO {
-                    _state.value = _state.value.copy(
-                        isSearching = false,
-                        matchResult = null,
-                        isMatchApproved = false,
-                        hasJoinedSession = false,
-                    )
-                    // disconnectSessionMakingUseCase()
+                    _state.value = SessionMakingState()
+                    disconnectSessionMakingUseCase()
                 }
             }
 
             // General Event
             is SessionMakingUIEvent.OnDisconnect -> {
                 workOnIO {
-                    // disconnectSessionMakingUseCase()
+                    disconnectSessionMakingUseCase()
                 }
             }
         }
@@ -132,7 +124,7 @@ class SessionMakingViewModel @Inject constructor(
         }
     }
 
-    private fun handleSessionMakingEvents() = workOnIO {
+    private fun handleSessionMakingEvents() = viewModelScope.launch(Dispatchers.IO) {
         getEventsFlowUseCase().collect { event ->
             when (event) {
                 is SessionMakingEvent.Idle -> {
@@ -150,7 +142,7 @@ class SessionMakingViewModel @Inject constructor(
                 }
 
                 is SessionMakingEvent.MatchApproved -> {
-                   val matchResult = _state.value.matchResult ?: return@collect
+                    val matchResult = _state.value.matchResult ?: return@collect
                     _state.value = _state.value.copy(
                         isSearching = false,
                         matchResult = matchResult.copy(meetingId = event.sessionToken),
@@ -185,14 +177,8 @@ class SessionMakingViewModel @Inject constructor(
             isSearching = true,
             matchResult = null,
         )
-        delay(3000)
         val skill = _state.value.selectedSkill ?: return@workOnIO
-        // startSearchingUseCase(skill)
-        _state.value = _state.value.copy(
-            isSearching = false,
-            matchResult = fakeMatchResult,
-            userProfileImage = fakeMatchResult.profilePictureUrl,
-        )
+        startSearchingUseCase(skill)
     }
 
     private fun stopSearching() = workOnIO {
@@ -202,17 +188,11 @@ class SessionMakingViewModel @Inject constructor(
             searchQuery = _state.value.selectedSkill?.name ?: "",
             searchResult = emptyList(),
         )
-        // stopSearchingUseCase()
+        stopSearchingUseCase()
     }
 
     private fun joinSession(manager: MeetingManager) {
-        viewModelScope.launch {
-            _state.value = _state.value.copy(
-                isSearching = false,
-                hasJoinedSession = true,
-            )
-            manager.joinMeeting(_state.value.matchResult!!.meetingId!!)
-        }
+        manager.joinMeeting(_state.value.matchResult!!.meetingId!!)
     }
 
     private fun workOnIO(block: suspend () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
@@ -220,13 +200,3 @@ class SessionMakingViewModel @Inject constructor(
     }
 
 }
-
-val fakeMatchResult = MatchResult(
-    userId = "1asdqw",
-    name = "Muhammed Salman",
-    profilePictureUrl = "https://avatars.githubusercontent.com/u/17090794?v=4",
-    matchedSkill = com.ss.skillsync.model.Skill(
-        id = "1gfg",
-        name = "Android",
-    )
-)
