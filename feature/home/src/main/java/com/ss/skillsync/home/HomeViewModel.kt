@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 /**
  * @author Mohannad El-Sayeh email(eng.mohannadelsayeh@gmail.com)
  * @date 10/09/2023
@@ -40,28 +41,34 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onEvent(homeEvent: HomeEvent) {
-        when(homeEvent) {
+        when (homeEvent) {
             is HomeEvent.OnMentorClicked -> {
                 selectMentorUseCase(homeEvent.mentor)
                 navigateTo(HomeNavDestinations.MentorProfile)
             }
+
             is HomeEvent.OnSessionClicked -> {
                 _state.value = state.value.copy(
                     selectedSession = homeEvent.session
                 )
             }
+
             HomeEvent.OnMatchClicked -> {
                 navigateTo(HomeNavDestinations.Match)
             }
+
             HomeEvent.OnProfileClicked -> {
                 navigateTo(HomeNavDestinations.Profile)
             }
+
             HomeEvent.OnRefresh -> {
                 loadData()
             }
+
             HomeEvent.OnSettingsClicked -> {
                 navigateTo(HomeNavDestinations.Settings)
             }
+
             HomeEvent.OnSessionDismissed -> {
                 _state.value = state.value.copy(
                     selectedSession = null

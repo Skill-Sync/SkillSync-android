@@ -12,7 +12,7 @@ class UpdateSettingsUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository,
 ) {
     suspend operator fun invoke(settings: Settings) {
-        settingsRepository.setDarkMode(settings.darkMode)
-        settingsRepository.setNotificationsEnabled(settings.notificationsEnabled)
+        settings.darkMode?.let { settingsRepository.setDarkMode(it) }
+        settings.notificationsEnabled?.let { settingsRepository.setNotificationsEnabled(it) }
     }
 }

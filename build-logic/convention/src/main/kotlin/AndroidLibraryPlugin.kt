@@ -10,10 +10,15 @@ class AndroidLibraryPlugin: Plugin<Project> {
                 apply("kotlin-android")
                 apply("ss.testing")
                 apply("ss.lint")
+                apply("ss.hilt")
             }
 
             extensions.configure(BaseExtension::class.java) {
                 commonAndroid(project)
+            }
+
+            dependencies.apply {
+                add("implementation", libs.kotlinx.coroutines.android)
             }
         }
     }

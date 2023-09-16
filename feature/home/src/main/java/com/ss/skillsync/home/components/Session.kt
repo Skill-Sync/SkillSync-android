@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ss.skillsync.commonandroid.components.CircularAsyncImage
 import com.ss.skillsync.commonandroid.components.Section
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
@@ -47,15 +50,31 @@ fun SessionsScheduledList(
     ) {
         LazyColumn(
             contentPadding = PaddingValues(vertical = 20.dp, horizontal = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement =
+            if (sessions.isEmpty()) Arrangement.Center
+            else Arrangement.spacedBy(16.dp),
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(sessions, key = { it.sessionId }) {
-                SessionScheduledItem(
-                    session = it,
-                    onSessionClicked = {
-                        onSessionClicked(it)
-                    },
-                )
+            if (sessions.isEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(R.string.no_sessions),
+                        style = MaterialTheme.typography.displayMedium.copy(fontSize = 14.sp),
+                        modifier = Modifier.padding(16.dp),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                }
+            } else {
+                items(sessions, key = { it.sessionId }) {
+                    SessionScheduledItem(
+                        session = it,
+                        onSessionClicked = {
+                            onSessionClicked(it)
+                        },
+                    )
+                }
             }
         }
     }

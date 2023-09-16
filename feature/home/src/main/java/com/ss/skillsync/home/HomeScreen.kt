@@ -129,13 +129,15 @@ fun HomeContent(
                 onMatchClicked = { onEvent(HomeEvent.OnMatchClicked) },
                 modifier = Modifier.spacePadding(screenPadding)
             )
-            SessionsScheduledList(modifier = Modifier
-                .weight(3f)
-                .spacePadding(screenPadding),
+            SessionsScheduledList(
+                modifier = Modifier
+                    .weight(3f)
+                    .spacePadding(screenPadding),
                 sessions = state.scheduledSessions,
                 onSessionClicked = {
                     onEvent(HomeEvent.OnSessionClicked(it))
-                })
+                }
+            )
             MentorsSlider(
                 mentorsList = state.suggestedMentors,
                 onMentorClicked = { mentor -> onEvent(HomeEvent.OnMentorClicked(mentor)) },

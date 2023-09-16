@@ -9,6 +9,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven {
+            url = uri("https://github.com/jitsi/jitsi-maven-repository/raw/master/releases")
+        }
         google()
         mavenCentral()
     }
@@ -18,6 +21,8 @@ rootProject.name = "SkillSync"
 include(":app")
 include(":core:data")
 include(":core:notifications")
+include(":core:meeting:api")
+include(":core:meeting:impl")
 include(":core:domain")
 include(":core:model")
 include(":feature:signin")
@@ -37,3 +42,4 @@ include(":feature:chat")
 include(":feature:session-making")
 include(":core:common-android")
 include(":feature:mentorhome")
+include(":feature:editprofile")

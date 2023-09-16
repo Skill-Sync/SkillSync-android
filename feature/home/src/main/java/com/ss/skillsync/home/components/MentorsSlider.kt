@@ -35,6 +35,9 @@ fun MentorsSlider(
     onMentorClicked: (Mentor) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    if (mentorsList.isEmpty()) {
+        return
+    }
     Section(
         modifier = modifier,
         contentPadding = PaddingValues(0.dp),

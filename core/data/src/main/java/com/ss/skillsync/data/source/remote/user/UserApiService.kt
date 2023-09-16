@@ -8,6 +8,7 @@ import com.ss.skillsync.data.source.remote.model.auth.signup.SignupRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 /**
@@ -28,4 +29,8 @@ interface UserApiService {
     @Authenticated
     @GET("users/relevantMentors")
     suspend fun getRelevantMentors(): Response<UsersData>
+
+    @Authenticated
+    @PATCH("users/updatePersonalData")
+    suspend fun updatePersonalData(@Body userData: UserData): Response<UserData>
 }

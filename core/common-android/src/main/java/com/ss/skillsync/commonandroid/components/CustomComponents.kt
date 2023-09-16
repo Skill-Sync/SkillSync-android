@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,13 +72,15 @@ fun WelcomeCard(
 
 @Composable
 fun CircularAsyncImage(
-    imageUrl: String,
-    contentDescription: String,
+    imageUrl: String?,
+    contentDescription: String?,
     modifier: Modifier = Modifier,
+    placeholder: Painter = painterResource(id = R.drawable.ic_empty_image),
     size: Dp = 50.dp,
+    placeholderPadding: Dp = 12.dp,
 ) {
     var imagePadding by remember {
-        mutableStateOf(12.dp)
+        mutableStateOf(placeholderPadding)
     }
 
     Box(modifier = modifier) {
@@ -92,14 +95,20 @@ fun CircularAsyncImage(
                 model = imageUrl,
                 contentDescription = contentDescription,
                 modifier = Modifier
-                    .size(size)
+                    .fillMaxSize()
                     .padding(imagePadding),
-                placeholder = painterResource(id = R.drawable.ic_empty_image),
-                error = painterResource(id = R.drawable.ic_empty_image),
+                placeholder = placeholder,
+                error = placeholder,
                 contentScale = ContentScale.Crop,
                 onSuccess = {
                     imagePadding = 0.dp
                 },
+                onLoading = {
+                    imagePadding = placeholderPadding
+                },
+                onError = {
+                    imagePadding = placeholderPadding
+                }
             )
         }
     }

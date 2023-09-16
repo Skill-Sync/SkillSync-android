@@ -47,6 +47,8 @@ fun InterestedSkillsPage(
             )
         )
 
+
+
         OnboardingSection(
             title = stringResource(R.string.search_for_a_skill),
             modifier = Modifier.fillMaxWidth()

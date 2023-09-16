@@ -7,4 +7,5 @@ data class NavigationParams(
     val isFirstTime: Boolean = false,
     val isUserActive: Boolean = false,
     val isOnboardingComplete: Boolean = false,
+    val userImage: String? = null,
 )

@@ -15,11 +15,14 @@ fun UserData.toDomain(): User {
     } else {
         StringUtil.getRandomImageUrl()
     }
+    val authToken = "Bearer $accessJWT $refreshJWT"
     return User(
+        id = id ?: "",
         name = name ?: "",
         email = email ?: "",
         about = about ?: "",
         profilePictureUrl = image,
+        authToken = authToken,
         onboardingCompleted = onboardingCompleted ?: false,
         interestedSkills = skillsToLearn?.map { it.toSkill() } ?: emptyList(),
         strengths = skillsLearned?.map { it.toSkill() } ?: emptyList(),
@@ -39,3 +42,24 @@ fun UserData.toMentor(): Mentor {
         )
     }
 }
+
+fun User.toUserData(): UserData {
+    return UserData(
+        id = null,
+        _id = null,
+        email = email,
+        name = name,
+        about = about,
+        skillsToLearn = null,
+        skillsLearned = null,
+        active = null,
+        isEmployed = null,
+        onboardingCompleted = null,
+        role = null,
+        skill = null,
+        accessJWT = null,
+        refreshJWT = null,
+        photo = null,
+    )
+}
+

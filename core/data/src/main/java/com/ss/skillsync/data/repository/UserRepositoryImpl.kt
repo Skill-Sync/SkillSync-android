@@ -2,6 +2,7 @@ package com.ss.skillsync.data.repository
 
 import com.ss.skillsync.data.mapper.toDomain
 import com.ss.skillsync.data.mapper.toMentor
+import com.ss.skillsync.data.mapper.toUserData
 import com.ss.skillsync.data.preferences.UserPreferences
 import com.ss.skillsync.data.source.remote.model.auth.UserData
 import com.ss.skillsync.data.source.remote.user.UserRemoteSource
@@ -85,5 +86,12 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getRecommendedMentors(): List<Mentor> {
         return userRemoteSource.getRelevantMentors()?.map { it.toMentor() } ?: emptyList()
+    }
+
+    override suspend fun updatePersonalData(user: User): Result<Unit> {
+        val response = userRemoteSource.updateUserData(user.toUserData()).onSuccess {
+            activeUser = user.toUserData()
+        }
+        return response
     }
 }

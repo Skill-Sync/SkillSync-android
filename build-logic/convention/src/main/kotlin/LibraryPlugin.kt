@@ -7,5 +7,8 @@ class LibraryPlugin : Plugin<Project> {
             apply("kotlin")
             apply("ss.lint")
         }
+        project.dependencies.apply {
+            add("implementation", project.libs.kotlinx.coroutines.core)
+        }
     }
 }

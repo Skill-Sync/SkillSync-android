@@ -42,6 +42,8 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.notifications)
+    implementation(projects.core.meeting.api)
+    implementation(projects.core.meeting.impl)
 
     implementation(projects.feature.home)
     implementation(projects.feature.forgetpassword)
@@ -57,6 +59,7 @@ dependencies {
     implementation(projects.feature.signin)
     implementation(projects.feature.signup)
     implementation(projects.feature.welcome)
+    implementation(projects.feature.editprofile)
 
     implementation(libs.activity.compose)
     testImplementation(libs.junit)
