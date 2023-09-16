@@ -19,6 +19,10 @@ import javax.inject.Inject
 class SkillRemoteSource @Inject constructor(
     private val skillApiService: SkillApiService,
 ) {
+
+    companion object {
+        private const val TAG = "SkillRemoteSource"
+    }
     // caching skills in memory
     private var staticSkillSet: List<SkillData>? = null
 
@@ -34,7 +38,7 @@ class SkillRemoteSource @Inject constructor(
                 it.name.contains(query, ignoreCase = true)
             } ?: emptyList()
         } catch (e: Exception) {
-            e.printStackTrace()
+            com.timers.stopwatch.core.log.error(TAG, e)
             emptyList()
         }
     }
@@ -55,6 +59,7 @@ class SkillRemoteSource @Inject constructor(
                     emptyList()
                 }
             } catch (e: Exception) {
+                com.timers.stopwatch.core.log.error(TAG, e)
                 emptyList()
             }
         }
@@ -77,6 +82,7 @@ class SkillRemoteSource @Inject constructor(
                     Result.failure(Throwable(response.message()))
                 }
             } catch (e: Exception) {
+                com.timers.stopwatch.core.log.error(TAG, e)
                 Result.failure(e)
             }
         }

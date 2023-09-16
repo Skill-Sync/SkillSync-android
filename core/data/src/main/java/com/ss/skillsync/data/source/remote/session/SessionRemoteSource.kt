@@ -10,6 +10,10 @@ class SessionRemoteSource @Inject constructor(
     private val sessionApiService: SessionApiService,
 ) {
 
+    companion object {
+        private const val TAG = "SessionRemoteSource"
+    }
+
     suspend fun getUserScheduledSessions(): Result<SessionsResponse> {
         return kotlin.runCatching {
             val response = sessionApiService.getScheduledSessions()
@@ -18,6 +22,8 @@ class SessionRemoteSource @Inject constructor(
             } else {
                 throw Throwable(response.errorBody()?.string())
             }
+        }.onFailure {
+            com.timers.stopwatch.core.log.error(TAG, it)
         }
     }
 
@@ -29,12 +35,16 @@ class SessionRemoteSource @Inject constructor(
             } else {
                 throw Throwable(response.errorBody()?.string())
             }
+        }.onFailure {
+            com.timers.stopwatch.core.log.error(TAG, it)
         }
     }
 
     suspend fun scheduleSession(sessionId: String): Result<Unit> {
         return kotlin.runCatching {
             sessionApiService.scheduleSession(sessionId)
+        }.onFailure {
+            com.timers.stopwatch.core.log.error(TAG, it)
         }
     }
 }

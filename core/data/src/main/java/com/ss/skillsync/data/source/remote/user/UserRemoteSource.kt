@@ -16,6 +16,10 @@ class UserRemoteSource @Inject constructor(
     private val apiService: UserApiService,
 ) {
 
+    companion object {
+        private const val TAG = "UserRemoteSource"
+    }
+
     suspend fun signUp(
         payload: SignUpPayload,
     ): Result<Unit> {
@@ -33,6 +37,7 @@ class UserRemoteSource @Inject constructor(
                 Result.failure(Throwable(response.errorBody()?.string()))
             }
         } catch (e: Exception) {
+            com.timers.stopwatch.core.log.error(TAG, e)
             Result.failure(e)
         }
     }
@@ -54,6 +59,7 @@ class UserRemoteSource @Inject constructor(
                 Result.failure(handleSignInError(errorCode))
             }
         } catch (e: Exception) {
+            com.timers.stopwatch.core.log.error(TAG, e)
             Result.failure(e)
         }
     }
@@ -76,7 +82,7 @@ class UserRemoteSource @Inject constructor(
                 println(it)
             }
         } catch (e: Exception) {
-            println(e)
+            com.timers.stopwatch.core.log.error(TAG, e)
             null
         }
     }

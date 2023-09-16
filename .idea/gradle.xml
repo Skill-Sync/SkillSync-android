@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/core/common-android" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/domain" />
+            <option value="$PROJECT_DIR$/core/logging" />
             <option value="$PROJECT_DIR$/core/meeting" />
             <option value="$PROJECT_DIR$/core/meeting/api" />
             <option value="$PROJECT_DIR$/core/meeting/impl" />
