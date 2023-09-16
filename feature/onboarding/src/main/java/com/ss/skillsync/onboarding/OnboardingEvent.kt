@@ -8,6 +8,8 @@ import com.ss.skillsync.model.SkillLevel
  * @date 09/09/2023
  */
 sealed class OnboardingEvent {
+
+    data object FromEditProfile : OnboardingEvent()
     data class SearchQueryChanged(val query: String) : OnboardingEvent()
     data class SkillSelected(val skill: Skill) : OnboardingEvent()
     data class SkillRemoved(val skill: Skill) : OnboardingEvent()

@@ -38,6 +38,10 @@ fun OnboardingScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
+    if (fromEditProfile) {
+        viewModel.onEvent(OnboardingEvent.FromEditProfile)
+    }
+
     val pagerState = rememberPagerState(pageCount = { 2 })
     LaunchedEffect(key1 = state.currentPageIndex) {
         pagerState.animateScrollToPage(state.currentPageIndex)
@@ -55,7 +59,7 @@ fun OnboardingScreen(
 
     LaunchedEffect(state.onboardingDone) {
         if (state.onboardingDone) {
-            if (fromEditProfile)
+            if (state.fromEditProfile)
                 navigator.popBackToEditProfile()
             else
                 navigator.navigateToHome()
