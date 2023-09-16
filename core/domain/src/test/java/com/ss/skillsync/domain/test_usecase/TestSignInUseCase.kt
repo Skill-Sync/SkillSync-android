@@ -30,7 +30,7 @@ class SignInUseCaseTest {
         val email = "fakeuser@example.com"
         val password = "password"
 
-        val result = signInUseCase(email, password)
+        val result = signInUseCase(email, password, "user")
 
         assert(result.isSuccess)
         val user = result.getOrNull()
@@ -44,7 +44,7 @@ class SignInUseCaseTest {
         val email = "invalid-email"
         val password = "password"
 
-        val result = signInUseCase(email, password)
+        val result = signInUseCase(email, password, "user")
 
         assert(result.isFailure)
         assertTrue(result.exceptionOrNull() is EmailInvalidException)
@@ -55,7 +55,7 @@ class SignInUseCaseTest {
         val email = "user@example.com"
         val password = ""
 
-        val result = signInUseCase(email, password)
+        val result = signInUseCase(email, password, "user")
 
         assert(result.isFailure)
         assertTrue(result.exceptionOrNull() is PasswordEmptyException)
@@ -66,7 +66,7 @@ class SignInUseCaseTest {
         val email = "user@example.com"
         val password = " "
 
-        val result = signInUseCase(email, password)
+        val result = signInUseCase(email, password, "user")
         assert(result.isFailure)
     }
 }

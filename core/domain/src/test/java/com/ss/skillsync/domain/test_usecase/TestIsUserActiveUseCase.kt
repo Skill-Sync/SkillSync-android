@@ -23,7 +23,7 @@ class IsUserActiveUseCaseTest {
 
     @Test
     fun `invoke when user is active`() = runBlocking {
-        userRepository.signIn(SignInPayload("user@example.com", "password"))
+        userRepository.signIn(SignInPayload("user@example.com", "password", "user"))
 
         val result = isUserActiveUseCase()
 
