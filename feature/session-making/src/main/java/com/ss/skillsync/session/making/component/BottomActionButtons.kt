@@ -18,6 +18,8 @@ fun ActionButtons(
     modifier: Modifier = Modifier,
     positiveButtonText: String? = null,
     negativeButtonText: String? = null,
+    positiveButtonEnabled: Boolean = true,
+    negativeButtonEnabled: Boolean = true,
     onPositiveClicked: () -> Unit = {},
     onNegativeClicked: () -> Unit = {},
 ) {
@@ -31,7 +33,8 @@ fun ActionButtons(
             ) {
                 SecondaryActionBrandButton(
                     text = positiveButtonText, onClick = onPositiveClicked,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = positiveButtonEnabled,
                 )
             }
 
@@ -45,7 +48,7 @@ fun ActionButtons(
                 BrandOutlinedButton(
                     text = negativeButtonText, onClick = onNegativeClicked,
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = true
+                    enabled = negativeButtonEnabled,
                 )
             }
     }

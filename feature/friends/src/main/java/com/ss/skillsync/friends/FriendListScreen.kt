@@ -1,5 +1,6 @@
 package com.ss.skillsync.friends
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,7 +36,8 @@ private fun FriendLisContent(
             end = 16.dp,
             top = 35.dp,
             bottom = 16.dp,
-        )
+        ),
+        arrangement = Arrangement.Top,
     ) {
         FriendsList(friends = state.friends)
     }

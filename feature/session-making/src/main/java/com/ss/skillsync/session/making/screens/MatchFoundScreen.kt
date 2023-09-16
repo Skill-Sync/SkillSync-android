@@ -61,6 +61,7 @@ fun MatchFoundScreen(
             }
         }
         ActionsSection(
+            enableAccept = state.acceptMatchEnabled,
             onAccept = { onEvent(SessionMakingUIEvent.OnAcceptMatchClicked) },
             onReject = { onEvent(SessionMakingUIEvent.OnRejectMatchClicked) },
         )
@@ -112,6 +113,7 @@ private fun MatchedUserDetails(
 @Composable
 private fun ActionsSection(
     modifier: Modifier = Modifier,
+    enableAccept: Boolean,
     onAccept: () -> Unit,
     onReject: () -> Unit,
 ) {
@@ -119,6 +121,7 @@ private fun ActionsSection(
         modifier = modifier,
         positiveButtonText = stringResource(id = R.string.accept),
         negativeButtonText = stringResource(id = R.string.reject),
+        positiveButtonEnabled = enableAccept,
         onPositiveClicked = onAccept,
         onNegativeClicked = onReject,
     )

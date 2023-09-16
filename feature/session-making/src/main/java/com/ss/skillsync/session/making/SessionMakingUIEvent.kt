@@ -1,5 +1,6 @@
 package com.ss.skillsync.session.making
 
+import com.ss.skillsync.meeting.api.MeetingManager
 import com.ss.skillsync.model.Skill
 
 /**
@@ -15,7 +16,7 @@ sealed class SessionMakingUIEvent {
 
     data object OnRejectMatchClicked : SessionMakingUIEvent()
 
-    data object OnSessionStarted : SessionMakingUIEvent()
+    data class OnSessionStarted(val manager: MeetingManager) : SessionMakingUIEvent()
 
     data object OnAddToFriendsClicked : SessionMakingUIEvent()
 

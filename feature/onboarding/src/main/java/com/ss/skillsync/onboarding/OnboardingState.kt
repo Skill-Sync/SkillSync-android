@@ -12,6 +12,7 @@ data class OnboardingState(
     val queryResult: Set<Skill> = emptySet(),
     val selectedInterests: Set<Skill> = emptySet(),
     val selectedStrengths: Set<Skill> = emptySet(),
+    val isUpdating: Boolean = false,
     val onboardingDone: Boolean = false,
     val error: Throwable? = null,
 ) {

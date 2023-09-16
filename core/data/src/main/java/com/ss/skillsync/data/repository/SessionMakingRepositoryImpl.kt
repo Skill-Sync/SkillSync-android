@@ -46,7 +46,7 @@ class SessionMakingRepositoryImpl @Inject constructor(
                         profilePictureUrl = matchedUser.profilePictureUrl,
                         matchedSkill = selectedSkill!!
                     )
-                    _eventsFlow.value = SessionMakingEvent.MatchFound(matchResult)
+                    _eventsFlow.value = SessionMakingEvent.MatchFound(currentUser!!, matchResult)
                 }
 
                 is SessionMakingRemoteSource.Event.ServerApproval -> {
@@ -121,6 +121,11 @@ class SessionMakingRepositoryImpl @Inject constructor(
     }
 
     override suspend fun disconnect() {
+        sessionMakingRemoteSource.sendMessage(
+            SessionMakingRemoteSource.Message.CancelSearch(
+                currentUser!!.id
+            )
+        )
         sessionMakingRemoteSource.disconnect()
             .onFailure {
                 emitError()

@@ -1,6 +1,7 @@
 package com.ss.skillsync.data.source.remote.friends
 
-import com.ss.skillsync.data.source.remote.model.UsersData
+import com.ss.skillsync.data.source.remote.interceptor.Authenticated
+import com.ss.skillsync.data.source.remote.model.FriendsData
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -9,6 +10,7 @@ import retrofit2.http.GET
  */
 interface FriendsApiService {
 
+    @Authenticated
     @GET("friends")
-    suspend fun getAllFriends(): Response<UsersData>
+    suspend fun getAllFriends(): Response<FriendsData>
 }

@@ -127,11 +127,15 @@ class OnboardingViewModel @Inject constructor(
 
     private fun saveSkills() {
         viewModelScope.launch {
+            _state.value = _state.value.copy(
+                isUpdating = true
+            )
             val interestedSkills = _state.value.selectedInterests.toList()
             val strengthSkills = _state.value.selectedStrengths.toList()
             saveSkillsUseCase(interestedSkills, strengthSkills).onSuccess {
                 _state.value = _state.value.copy(
-                    onboardingDone = true
+                    onboardingDone = true,
+                    isUpdating = false
                 )
             }
         }

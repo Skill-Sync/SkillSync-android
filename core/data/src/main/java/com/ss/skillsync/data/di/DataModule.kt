@@ -5,12 +5,14 @@ import com.google.gson.GsonBuilder
 import com.ss.skillsync.data.BuildConfig
 import com.ss.skillsync.data.preferences.SettingsPreferences
 import com.ss.skillsync.data.preferences.UserPreferences
+import com.ss.skillsync.data.source.deserializer.FriendsDataDeserializer
 import com.ss.skillsync.data.source.deserializer.SessionsResponseDeserializer
 import com.ss.skillsync.data.source.deserializer.UserDataDeserializer
 import com.ss.skillsync.data.source.deserializer.UsersDataDeserializer
 import com.ss.skillsync.data.source.remote.friends.FriendsApiService
 import com.ss.skillsync.data.source.remote.interceptor.AuthInterceptor
 import com.ss.skillsync.data.source.remote.mentors.MentorApiService
+import com.ss.skillsync.data.source.remote.model.FriendsData
 import com.ss.skillsync.data.source.remote.model.UsersData
 import com.ss.skillsync.data.source.remote.model.auth.UserData
 import com.ss.skillsync.data.source.remote.model.session.SessionsResponse
@@ -64,6 +66,7 @@ object DataModule {
             .registerTypeAdapter(UserData::class.java, UserDataDeserializer())
             .registerTypeAdapter(UsersData::class.java, UsersDataDeserializer())
             .registerTypeAdapter(SessionsResponse::class.java, SessionsResponseDeserializer())
+            .registerTypeAdapter(FriendsData::class.java, FriendsDataDeserializer())
             .create()
         val url = "https://skill-sync.onrender.com/"
         val postfix = "api/v1/"

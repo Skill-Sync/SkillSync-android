@@ -15,6 +15,7 @@ data class SessionMakingState(
     val matchResult: MatchResult? = null,
     val isMatchApproved: Boolean = false,
     val hasJoinedSession: Boolean = false,
+    val acceptMatchEnabled: Boolean = true,
     val unknownError: Boolean = false,
 ) {
     val canStartSearching: Boolean

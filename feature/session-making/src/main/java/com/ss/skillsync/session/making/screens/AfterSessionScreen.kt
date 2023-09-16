@@ -1,5 +1,6 @@
 package com.ss.skillsync.session.making.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,9 @@ fun AfterSessionScreen(
     state: SessionMakingState,
     onEvent: (SessionMakingUIEvent) -> Unit,
 ) {
+    BackHandler {
+        onEvent(SessionMakingUIEvent.OnLeaveSessionMaking)
+    }
     ScreenColumn(
         arrangement = Arrangement.Top,
     ) {

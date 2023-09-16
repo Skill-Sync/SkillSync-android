@@ -27,8 +27,7 @@ fun SessionMakingScreen(
     val meetingManager = LocalMeetingManager.current
     LaunchedEffect(key1 = state.shouldJoinSession) {
         if (state.shouldJoinSession) {
-            val meetingId = state.matchResult!!.meetingId!!
-            meetingManager.joinMeeting(meetingId)
+            viewModel.onEvent(SessionMakingUIEvent.OnSessionStarted(meetingManager))
         }
     }
 

@@ -10,6 +10,9 @@ import com.ss.skillsync.domain.usecase.session_making.RejectMatchUseCase
 import com.ss.skillsync.domain.usecase.session_making.StartSearchingUseCase
 import com.ss.skillsync.domain.usecase.session_making.StopSearchingUseCase
 import com.ss.skillsync.domain.usecase.skills.SearchInterestedSkillsUseCase
+import com.ss.skillsync.meeting.api.MeetingEvent
+import com.ss.skillsync.meeting.api.MeetingManager
+import com.ss.skillsync.model.MatchResult
 import com.ss.skillsync.model.SessionMakingEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -72,6 +75,7 @@ class SessionMakingViewModel @Inject constructor(
             // Match Found Events
             is SessionMakingUIEvent.OnAcceptMatchClicked -> {
                 workOnIO {
+                    _state.value = _state.value.copy(acceptMatchEnabled = false)
                     acceptMatchUseCase()
                 }
             }
@@ -86,7 +90,9 @@ class SessionMakingViewModel @Inject constructor(
                 _state.value = _state.value.copy(
                     isSearching = false,
                     isMatchApproved = true,
+                    hasJoinedSession = true,
                 )
+                // joinSession(event.manager)
             }
             // After Session Events
             is SessionMakingUIEvent.OnAddToFriendsClicked -> {
@@ -98,6 +104,7 @@ class SessionMakingViewModel @Inject constructor(
 
             is SessionMakingUIEvent.OnLeaveSessionMaking -> {
                 workOnIO {
+                    _state.value = SessionMakingState()
                     disconnectSessionMakingUseCase()
                 }
             }
@@ -132,6 +139,7 @@ class SessionMakingViewModel @Inject constructor(
                     _state.value = _state.value.copy(
                         isSearching = false,
                         matchResult = event.matchResult,
+                        userProfileImage = event.currentUser.profilePictureUrl,
                     )
                 }
 
@@ -185,8 +193,32 @@ class SessionMakingViewModel @Inject constructor(
         stopSearchingUseCase()
     }
 
+    private fun joinSession(manager: MeetingManager) {
+        manager.joinMeeting(_state.value.matchResult!!.meetingId!!)
+        viewModelScope.launch {
+            manager.eventsFlow.collect { event ->
+                when (event) {
+                    MeetingEvent.USER_DISCONNECTED, MeetingEvent.MEETING_ENDED -> {
+                        _state.value = _state.value.copy(hasJoinedSession = true)
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
     private fun workOnIO(block: suspend () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         block()
     }
 
 }
+
+val fakeMatchResult = MatchResult(
+    userId = "1asdqw",
+    name = "Muhammed Salman",
+    profilePictureUrl = "https://avatars.githubusercontent.com/u/17090794?v=4",
+    matchedSkill = com.ss.skillsync.model.Skill(
+        id = "1",
+        name = "Android",
+    )
+)

@@ -11,6 +11,8 @@ class FriendsRemoteSource @Inject constructor(
 
     suspend fun getAllFriends() = kotlin.runCatching {
         val response = friendsApiService.getAllFriends()
-        response.body()?.users ?: emptyList()
+        response.body()?.friends ?: emptyList()
+    }.onFailure {
+        it.printStackTrace()
     }
 }

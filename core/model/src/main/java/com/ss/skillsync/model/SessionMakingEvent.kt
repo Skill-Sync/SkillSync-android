@@ -6,7 +6,7 @@ package com.ss.skillsync.model
 sealed class SessionMakingEvent {
 
     data object Idle : SessionMakingEvent()
-    data class MatchFound(val matchResult: MatchResult) : SessionMakingEvent()
+    data class MatchFound(val currentUser: User, val matchResult: MatchResult) : SessionMakingEvent()
     data class MatchApproved(val sessionToken: String) : SessionMakingEvent()
     data object MatchRejected : SessionMakingEvent()
     data object Disconnected : SessionMakingEvent()

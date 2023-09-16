@@ -96,16 +96,17 @@ class ProfileViewModel @Inject constructor(
                 .onSuccess {
                     _state.value = _state.value.copy(
                         isSessionBookedSuccessfully = true,
+                        isLoading = false
                     )
                     loadSessionDays(mentor)?.let {
                         setSessionDaysState(it)
                     }
                 }.onFailure {
                     _state.value = _state.value.copy(
-                        failedToBookSession = true
+                        failedToBookSession = true,
+                        isLoading = false
                     )
                 }
-            toggleLoading(false)
         }
     }
 
