@@ -35,7 +35,10 @@ fun MatchSearchingScreen(
         onEvent(SessionMakingUIEvent.OnStopSearchingClicked)
     }
 
-    ScreenColumn {
+    ScreenColumn(
+        isPausedWhileLoading = false,
+        isLoading = state.isSearching
+    ) {
         Spacer(modifier = Modifier.weight(0.3f))
         Column(
             Modifier.weight(1f),

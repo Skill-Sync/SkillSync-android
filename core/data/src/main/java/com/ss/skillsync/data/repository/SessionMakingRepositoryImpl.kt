@@ -33,8 +33,9 @@ class SessionMakingRepositoryImpl @Inject constructor(
     private var selectedSkill: Skill? = null
 
 
-    override suspend fun connect(user: User) {
-        sessionMakingRemoteSource.connect()
+    override suspend fun connect(user: User): Result<Unit> {
+        val result = sessionMakingRemoteSource.connect()
+        currentUser = user
         sessionMakingRemoteSource.listenForEvents(user.id) { event ->
             when (event) {
                 is SessionMakingRemoteSource.Event.MatchFound -> {
@@ -51,11 +52,14 @@ class SessionMakingRepositoryImpl @Inject constructor(
                 is SessionMakingRemoteSource.Event.ServerApproval -> {
                     _eventsFlow.value = SessionMakingEvent.MatchApproved(event.authToken)
                 }
+
                 is SessionMakingRemoteSource.Event.ServerRejection -> {
+                    matchFoundEvent = null
                     _eventsFlow.value = SessionMakingEvent.MatchRejected
                 }
             }
         }
+        return result
     }
 
     override suspend fun startSearching(user: User, skill: Skill) {
@@ -72,6 +76,12 @@ class SessionMakingRepositoryImpl @Inject constructor(
     }
 
     override suspend fun stopSearching() {
+        val currentUserId = currentUser?.id ?: kotlin.run { emitError(); return }
+        sessionMakingRemoteSource.sendMessage(
+            SessionMakingRemoteSource.Message.CancelSearch(
+                currentUserId
+            )
+        )
         sessionMakingRemoteSource.disconnect()
             .onFailure {
                 emitError()

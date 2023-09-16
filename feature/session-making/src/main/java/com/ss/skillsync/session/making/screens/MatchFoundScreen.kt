@@ -1,5 +1,6 @@
 package com.ss.skillsync.session.making.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +35,9 @@ fun MatchFoundScreen(
     state: SessionMakingState,
     onEvent: (SessionMakingUIEvent) -> Unit,
 ) {
+    BackHandler(true) {
+        onEvent(SessionMakingUIEvent.OnRejectMatchClicked)
+    }
     ScreenColumn(
         arrangement = Arrangement.Top,
     ) {

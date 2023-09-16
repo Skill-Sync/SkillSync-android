@@ -18,7 +18,7 @@ data class SessionMakingState(
     val unknownError: Boolean = false,
 ) {
     val canStartSearching: Boolean
-        get() = searchQuery.isNotBlank() && !isSearching
+        get() = searchQuery.isNotBlank() && !isSearching && selectedSkill != null
 
     val shouldJoinSession: Boolean
         get() = matchResult != null && isMatchApproved && !hasJoinedSession

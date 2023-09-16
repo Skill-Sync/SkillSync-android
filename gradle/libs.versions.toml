@@ -81,6 +81,7 @@ desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = 
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 dyte = { module = "io.dyte:uikit", version = "1.13.0" }
 socketIO = { module = "io.socket:socket.io-client", version = "2.1.0" }
+socketIO-coroutines = { module = "com.tfowl.socketio:socket-io-coroutines", version = "1.0.1" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

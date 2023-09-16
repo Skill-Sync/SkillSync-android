@@ -4,8 +4,10 @@ import com.google.gson.Gson
 import com.ss.skillsync.data.source.remote.model.auth.UserData
 import com.ss.skillsync.data.source.remote.session_making.response.MatchFoundResponse
 import com.ss.skillsync.data.source.remote.session_making.response.ServerApprovalResponse
+import com.tfowl.socketio.connectAwait
 import io.socket.client.IO
 import io.socket.client.Socket
+import org.json.JSONObject
 import javax.inject.Inject
 
 /**
@@ -14,20 +16,20 @@ import javax.inject.Inject
 class SessionMakingRemoteSource @Inject constructor() {
 
     companion object {
-        private const val BASE_URL = "https://skill-sync.onrender.com/"
+        private const val BASE_URL = "https://skill-sync-backup.onrender.com/"
     }
 
     private var socket: Socket? = null
     private var socketId: String? = null
     private val gson = Gson()
 
-    fun connect(): Result<Unit> {
-        if (socket != null) {
+    suspend fun connect(): Result<Unit> {
+        if (socket?.connected() == true) {
             return Result.success(Unit)
         }
 
         return kotlin.runCatching {
-            socket = IO.socket(BASE_URL).connect()
+            socket = IO.socket(BASE_URL).connectAwait()
             socketId = socket?.id()
         }
     }
@@ -39,8 +41,9 @@ class SessionMakingRemoteSource @Inject constructor() {
     }
 
     fun sendMessage(message: Message) = kotlin.runCatching {
-        val messageJson = gson.toJsonTree(message).asJsonObject
-        messageJson.addProperty("userSocketId", socketId)
+        val messageJson = message.toJson()
+        messageJson.put("userSocketId", socketId)
+        println(messageJson)
         socket?.emit(message.name, messageJson)
     }
 
@@ -69,17 +72,50 @@ class SessionMakingRemoteSource @Inject constructor() {
         data class StartSearching(
             val userId: String,
             val wantedInnerSkill: String,
-        ) : Message("start-searching")
+        ) : Message("start-searching") {
+            override fun toJson(): JSONObject {
+                val jsonObject = JSONObject()
+                jsonObject.put("userId", userId)
+                jsonObject.put("wantedInnerSkill", wantedInnerSkill)
+                return jsonObject
+            }
+        }
 
         data class Approve(
             val userId: String,
             val MatchedUserId: String,
-        ) : Message("client-approval")
+        ) : Message("client-approval") {
+            override fun toJson(): JSONObject {
+                val jsonObject = JSONObject()
+                jsonObject.put("userId", userId)
+                jsonObject.put("MatchedUserId", MatchedUserId)
+                return jsonObject
+            }
+        }
 
         data class Reject(
             val userId: String,
             val MatchedUserId: String,
-        ) : Message("client-rejection")
+        ) : Message("client-rejection") {
+            override fun toJson(): JSONObject {
+                val jsonObject = JSONObject()
+                jsonObject.put("userId", userId)
+                jsonObject.put("MatchedUserId", MatchedUserId)
+                return jsonObject
+            }
+        }
+
+        data class CancelSearch(
+            val userId: String,
+        ) : Message("cancel-search") {
+            override fun toJson(): JSONObject {
+                val jsonObject = JSONObject()
+                jsonObject.put("userId", userId)
+                return jsonObject
+            }
+        }
+
+        abstract fun toJson(): JSONObject
     }
 
     sealed class Event {

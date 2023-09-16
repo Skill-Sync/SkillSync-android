@@ -7,5 +7,5 @@ import com.ss.skillsync.commonandroid.BaseNavigator
  * @date 14/09/2023
  */
 interface EditProfileNavigator: BaseNavigator {
-    fun navigateToOnboarding()
+    fun navigateToOnboarding(fromEditProfile: Boolean = true)
 }

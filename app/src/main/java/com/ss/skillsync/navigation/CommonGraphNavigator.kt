@@ -50,11 +50,19 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToOnboarding() {
-        navController.navigate(OnboardingScreenDestination)
+        navController.navigate(OnboardingScreenDestination((false)))
     }
 
     fun navigate(route: String) {
         navController.navigate(route)
+    }
+
+    override fun navigateToOnboarding(fromEditProfile: Boolean) {
+        navController.navigate(OnboardingScreenDestination(fromEditProfile))
+    }
+
+    override fun popBackToEditProfile() {
+        navController.popBackStack(EditProfileScreenDestination.route, false)
     }
 
     override fun navigateToProfile() {

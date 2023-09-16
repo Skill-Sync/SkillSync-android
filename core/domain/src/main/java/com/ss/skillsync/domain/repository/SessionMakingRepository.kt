@@ -12,7 +12,7 @@ interface SessionMakingRepository {
 
     val eventsFlow: Flow<SessionMakingEvent>
 
-    suspend fun connect(user: User)
+    suspend fun connect(user: User): Result<Unit>
 
     suspend fun startSearching(
         user: User,

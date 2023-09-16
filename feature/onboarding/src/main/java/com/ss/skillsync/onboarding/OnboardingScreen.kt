@@ -31,6 +31,7 @@ fun OnboardingScreen(
     navigator: OnboardingNavigator,
     snackbarHostState: SnackbarHostState,
     viewModel: OnboardingViewModel = hiltViewModel(),
+    fromEditProfile: Boolean = false,
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -51,7 +52,10 @@ fun OnboardingScreen(
 
     LaunchedEffect(state.onboardingDone) {
         if (state.onboardingDone) {
-            navigator.navigateToHome()
+            if (fromEditProfile)
+                navigator.popBackToEditProfile()
+            else
+                navigator.navigateToHome()
             viewModel.navigatedSuccessfully()
         }
     }

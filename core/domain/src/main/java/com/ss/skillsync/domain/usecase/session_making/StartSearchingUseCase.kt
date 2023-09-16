@@ -19,9 +19,12 @@ class StartSearchingUseCase @Inject constructor(
                 return Result.failure(it)
             }.getOrNull()!!
 
-        sessionMakingRepository.connect(activeUser)
-        return Result.success(
-            sessionMakingRepository.startSearching(activeUser, skill)
-        )
+        return sessionMakingRepository.connect(activeUser).onSuccess {
+            return Result.success(
+                sessionMakingRepository.startSearching(activeUser, skill)
+            )
+        }.onFailure {
+            return Result.failure(it)
+        }
     }
 }
