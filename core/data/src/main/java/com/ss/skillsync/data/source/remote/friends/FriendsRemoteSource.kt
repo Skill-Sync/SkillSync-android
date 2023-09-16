@@ -9,10 +9,14 @@ class FriendsRemoteSource @Inject constructor(
     private val friendsApiService: FriendsApiService,
 ) {
 
+    companion object {
+        private const val TAG = "FriendsRemoteSource"
+    }
+
     suspend fun getAllFriends() = kotlin.runCatching {
         val response = friendsApiService.getAllFriends()
         response.body()?.friends ?: emptyList()
     }.onFailure {
-        it.printStackTrace()
+        com.timers.stopwatch.core.log.error(TAG, it)
     }
 }
