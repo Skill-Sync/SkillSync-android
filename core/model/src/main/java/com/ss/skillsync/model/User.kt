@@ -6,9 +6,11 @@ package com.ss.skillsync.model
  */
 
 data class User(
+    val id: String = "",
     val name: String = "",
     val email: String = "",
     val about: String = "",
+    val authToken: String = "",
     val profilePictureUrl: String = "",
     val onboardingCompleted: Boolean = false,
     val interestedSkills: List<Skill> = emptyList(),

@@ -1,6 +1,7 @@
 package com.ss.skillsync.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -14,8 +15,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ss.skillsync.commonandroid.components.ScreenColumn
 import com.ss.skillsync.commonandroid.theme.SkillSyncTheme
 import com.ss.skillsync.onboarding.pages.InterestedSkillsPage
 import com.ss.skillsync.onboarding.pages.StrengthsPage
@@ -31,8 +34,13 @@ fun OnboardingScreen(
     navigator: OnboardingNavigator,
     snackbarHostState: SnackbarHostState,
     viewModel: OnboardingViewModel = hiltViewModel(),
+    fromEditProfile: Boolean = false,
 ) {
     val state by viewModel.state.collectAsState()
+
+    if (fromEditProfile) {
+        viewModel.onEvent(OnboardingEvent.FromEditProfile)
+    }
 
     val pagerState = rememberPagerState(pageCount = { 2 })
     LaunchedEffect(key1 = state.currentPageIndex) {
@@ -51,7 +59,10 @@ fun OnboardingScreen(
 
     LaunchedEffect(state.onboardingDone) {
         if (state.onboardingDone) {
-            navigator.navigateToHome()
+            if (state.fromEditProfile)
+                navigator.popBackToEditProfile()
+            else
+                navigator.navigateToHome()
             viewModel.navigatedSuccessfully()
         }
     }
@@ -70,14 +81,20 @@ fun OnboardingContent(
     onEvent: (OnboardingEvent) -> Unit,
     pagerState: PagerState,
 ) {
-    HorizontalPager(
-        state = pagerState,
-        userScrollEnabled = false,
+    ScreenColumn(
         modifier = Modifier.fillMaxSize(),
-    ) { pageIndex ->
-        when (pageIndex) {
-            0 -> InterestedSkillsPage(state, onEvent)
-            1 -> StrengthsPage(state, onEvent)
+        isLoading = state.isUpdating,
+        contentPadding = PaddingValues(0.dp)
+    ) {
+        HorizontalPager(
+            state = pagerState,
+            userScrollEnabled = false,
+            modifier = Modifier.fillMaxSize(),
+        ) { pageIndex ->
+            when (pageIndex) {
+                0 -> InterestedSkillsPage(state, onEvent)
+                1 -> StrengthsPage(state, onEvent)
+            }
         }
     }
 }

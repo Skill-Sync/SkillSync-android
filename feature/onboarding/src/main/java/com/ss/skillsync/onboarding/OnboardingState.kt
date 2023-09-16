@@ -12,7 +12,9 @@ data class OnboardingState(
     val queryResult: Set<Skill> = emptySet(),
     val selectedInterests: Set<Skill> = emptySet(),
     val selectedStrengths: Set<Skill> = emptySet(),
+    val isUpdating: Boolean = false,
     val onboardingDone: Boolean = false,
+    val fromEditProfile: Boolean = false,
     val error: Throwable? = null,
 ) {
     val isNextEnabled: Boolean
@@ -21,5 +23,5 @@ data class OnboardingState(
         get() = selectedStrengths.isNotEmpty()
             && selectedStrengths.none { it.level == SkillLevel.NOCHOICE }
     val isBackVisible: Boolean
-        get() = currentPageIndex != 0
+        get() = currentPageIndex != 0 || fromEditProfile
 }

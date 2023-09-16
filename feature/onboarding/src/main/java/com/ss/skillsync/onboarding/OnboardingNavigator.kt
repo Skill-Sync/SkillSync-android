@@ -6,4 +6,5 @@ package com.ss.skillsync.onboarding
  */
 interface OnboardingNavigator {
     fun navigateToHome()
+    fun popBackToEditProfile()
 }

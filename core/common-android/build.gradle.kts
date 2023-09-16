@@ -11,5 +11,6 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.meeting.api)
     implementation(libs.lottie)
 }

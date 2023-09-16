@@ -12,9 +12,14 @@ import javax.inject.Inject
 class SearchSkillsUseCase @Inject constructor(
     private val skillRepository: SkillRepository,
 ) {
+    companion object {
+        private const val MAX_RESULT = 4
+    }
     suspend operator fun invoke(query: String, selectedSkills: Set<Skill>): Result<Set<Skill>> {
         return try {
-            val skills = skillRepository.searchSkills(query).toSet() - selectedSkills
+            val skills = (skillRepository.searchSkills(query).toSet() - selectedSkills)
+                .take(MAX_RESULT).toSet()
+
             Result.success(skills)
         } catch (e: Exception) {
             Result.failure(e)

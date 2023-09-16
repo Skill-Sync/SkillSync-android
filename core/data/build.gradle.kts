@@ -22,4 +22,6 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.model)
     implementation(libs.datastore)
+    implementation(libs.socketIO)
+    implementation(libs.socketIO.coroutines)
 }

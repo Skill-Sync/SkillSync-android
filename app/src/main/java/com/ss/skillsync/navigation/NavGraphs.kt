@@ -37,6 +37,7 @@ class NavGraphs private constructor(
             get() = listOf(
                 welcome,
                 auth,
+                onboarding,
                 main,
                 onboarding,
                 settings,

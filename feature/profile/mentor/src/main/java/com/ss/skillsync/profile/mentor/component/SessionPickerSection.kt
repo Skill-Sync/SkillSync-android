@@ -57,16 +57,21 @@ fun SessionDayPickerSection(
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                val day = selectedDay!!
-                SectionWithText(
-                    header = stringResource(R.string.pick_session_hour),
-                    text = stringResource(id = R.string.from_to, day.startHour, day.endHour),
-                )
-                SessionPicker(
-                    sessions = day.sessions,
-                    selectedSession = selectedSession,
-                    onSessionPicked = onSessionPicked
-                )
+                if (selectedDay != null) {
+                    SectionWithText(
+                        header = stringResource(R.string.pick_session_hour),
+                        text = stringResource(
+                            id = R.string.from_to,
+                            selectedDay.startHour,
+                            selectedDay.endHour
+                        ),
+                    )
+                    SessionPicker(
+                        sessions = selectedDay.sessions,
+                        selectedSession = selectedSession,
+                        onSessionPicked = onSessionPicked
+                    )
+                }
             }
         }
     }

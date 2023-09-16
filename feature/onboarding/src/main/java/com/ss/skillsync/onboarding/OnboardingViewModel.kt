@@ -52,6 +52,12 @@ class OnboardingViewModel @Inject constructor(
 
     fun onEvent(onboardingEvent: OnboardingEvent) {
         when (onboardingEvent) {
+            is OnboardingEvent.FromEditProfile -> {
+                _state.value = _state.value.copy(
+                    fromEditProfile = true,
+                )
+            }
+
             is OnboardingEvent.SearchQueryChanged -> {
                 _state.value = _state.value.copy(
                     searchQuery = onboardingEvent.query,
@@ -63,7 +69,10 @@ class OnboardingViewModel @Inject constructor(
                     return
                 }
                 viewModelScope.launch {
-                    searchSkillsUseCase(onboardingEvent.query, _state.value.selectedInterests).onSuccess {
+                    searchSkillsUseCase(
+                        onboardingEvent.query,
+                        _state.value.selectedInterests
+                    ).onSuccess {
                         _state.value = _state.value.copy(
                             queryResult = it,
                         )
@@ -96,21 +105,29 @@ class OnboardingViewModel @Inject constructor(
             }
 
             is OnboardingEvent.BackClicked -> {
-                _state.value = _state.value.copy(
-                    currentPageIndex = 0,
-                    searchQuery = "",
-                )
+                val currentPageIndex = _state.value.currentPageIndex
+                if (currentPageIndex == 0) {
+                    _state.value = _state.value.copy(
+                        onboardingDone = true
+                    )
+                } else
+                    _state.value = _state.value.copy(
+                        currentPageIndex = 0,
+                        searchQuery = "",
+                    )
             }
 
             is OnboardingEvent.SkillLevelUpdated -> {
                 if (_state.value.currentPageIndex == 1) {
                     val updatedSet = _state.value.selectedStrengths.toMutableList()
-                    updatedSet[updatedSet.indexOf(onboardingEvent.skill)] = onboardingEvent.skill.copy(level = onboardingEvent.skillLevel)
+                    updatedSet[updatedSet.indexOf(onboardingEvent.skill)] =
+                        onboardingEvent.skill.copy(level = onboardingEvent.skillLevel)
                     _state.value = _state.value.copy(
                         selectedStrengths = updatedSet.toMutableSet(),
                     )
                 }
             }
+
             is OnboardingEvent.SkillRemoved -> {
                 if (_state.value.currentPageIndex == 0) {
                     _state.value = _state.value.copy(
@@ -127,11 +144,15 @@ class OnboardingViewModel @Inject constructor(
 
     private fun saveSkills() {
         viewModelScope.launch {
+            _state.value = _state.value.copy(
+                isUpdating = true
+            )
             val interestedSkills = _state.value.selectedInterests.toList()
             val strengthSkills = _state.value.selectedStrengths.toList()
             saveSkillsUseCase(interestedSkills, strengthSkills).onSuccess {
                 _state.value = _state.value.copy(
-                    onboardingDone = true
+                    onboardingDone = true,
+                    isUpdating = false
                 )
             }
         }
