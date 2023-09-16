@@ -1,7 +1,6 @@
 package com.ss.skillsync.domain.usecase
 
 import com.ss.skillsync.domain.repository.FriendsRepository
-import com.ss.skillsync.domain.util.StringUtil
 import com.ss.skillsync.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,16 +14,12 @@ class GetUserFriendsUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): Result<List<User>> = withContext(Dispatchers.IO) {
-        return@withContext List(10) {
-            User(
-                id = "id$it",
-                name = "Mohammed Sal",
-                email = "email",
-                about = "about",
-                profilePictureUrl = StringUtil.getRandomImageUrl(),
-            )
-        }.let {
-            Result.success(it)
+        val result = friendsRepository.getAllFriends()
+        if (result.isSuccess) {
+            val friends = result.getOrNull()!!
+            Result.success(friends)
+        } else {
+            Result.failure(result.exceptionOrNull()!!)
         }
     }
 }

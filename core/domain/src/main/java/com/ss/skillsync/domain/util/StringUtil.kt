@@ -14,7 +14,7 @@ object StringUtil {
     }
 
     fun reformatHourTo12System(hour: String): String {
-        return if (hour.startsWith("0")) {
+        return if (hour.none { it.isDigit() && it.digitToInt() > 0 }) {
             "12${hour.substring(1)}".padEnd(4, '0')
         } else {
             val timeSplit = hour.split(" ")
