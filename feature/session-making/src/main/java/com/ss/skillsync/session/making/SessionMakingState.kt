@@ -22,7 +22,7 @@ data class SessionMakingState(
         get() = searchQuery.isNotBlank() && !isSearching && selectedSkill != null
 
     val shouldJoinSession: Boolean
-        get() = matchResult != null && isMatchApproved && !hasJoinedSession
+        get() = isMatchApproved && !hasJoinedSession
 
     private val isMatchFound: Boolean
         get() = matchResult != null
@@ -34,7 +34,7 @@ data class SessionMakingState(
         get() = isSearching && !isMatchFound
 
     private val isMatchFoundDisplayed: Boolean
-        get() = isMatchFound && !isSearching
+        get() = isMatchFound && !isSearching && !hasJoinedSession
 
     private val isAfterSessionDisplayed: Boolean
         get() = hasJoinedSession

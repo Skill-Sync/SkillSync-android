@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,10 +24,9 @@ fun SessionMakingScreen(
     val state by viewModel.state.collectAsState()
 
     val meetingManager = LocalMeetingManager.current
-    LaunchedEffect(key1 = state.shouldJoinSession) {
-        if (state.shouldJoinSession) {
-            viewModel.onEvent(SessionMakingUIEvent.OnSessionStarted(meetingManager))
-        }
+
+    if (state.shouldJoinSession) {
+        viewModel.onEvent(SessionMakingUIEvent.OnSessionStarted(meetingManager))
     }
 
     SessionMakingContent(
@@ -49,7 +47,7 @@ private fun SessionMakingContent(
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Right,
                 tween(500),
-                initialOffset = { fullWidth -> fullWidth}
+                initialOffset = { fullWidth -> fullWidth }
             ) togetherWith slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Left,
                 tween(500),

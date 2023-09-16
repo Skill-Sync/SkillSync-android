@@ -99,7 +99,6 @@ private fun SearchBarSection(
             onValueChange = onSearchQueryChanged
         )
         AnimatedVisibility(visible = suggestions.isNotEmpty()) {
-            println(suggestions)
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
