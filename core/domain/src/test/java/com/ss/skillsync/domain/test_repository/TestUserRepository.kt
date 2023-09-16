@@ -25,7 +25,7 @@ class TestUserRepository {
 
     @Test
     fun testSignIn() = runBlocking {
-        val signInPayload = SignInPayload("testuser", "testpassword")
+        val signInPayload = SignInPayload("testuser", "testpassword", "user")
         val result = userRepository.signIn(signInPayload)
         assertTrue(result.isSuccess)
         val user = result.getOrNull()!!

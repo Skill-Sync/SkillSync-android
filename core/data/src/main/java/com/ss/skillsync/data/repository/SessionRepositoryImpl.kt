@@ -3,7 +3,6 @@ package com.ss.skillsync.data.repository
 import com.ss.skillsync.data.mapper.toDomain
 import com.ss.skillsync.data.source.remote.session.SessionRemoteSource
 import com.ss.skillsync.domain.repository.SessionRepository
-import com.ss.skillsync.domain.util.isDebug
 import com.ss.skillsync.model.Mentor
 import com.ss.skillsync.model.MentorSessions
 import com.ss.skillsync.model.Session
@@ -27,8 +26,7 @@ class SessionRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMentorSessions(mentor: Mentor): Result<MentorSessions> {
-        // using this static id because it contains sessions
-        val mentorId = if (isDebug()) "64fe2c5c23e74488c8a23bb9" else mentor.id
+        val mentorId = mentor.id
         val sessions = sessionRemoteSource.getMentorSessions(mentorId)
         if (sessions.isFailure) {
             return Result.failure(sessions.exceptionOrNull()!!)

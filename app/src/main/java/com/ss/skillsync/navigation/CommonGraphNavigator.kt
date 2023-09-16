@@ -2,14 +2,17 @@ package com.ss.skillsync.navigation
 
 import androidx.navigation.NavController
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ss.skillsync.editprofile.EditProfileNavigator
+import com.ss.skillsync.editprofile.destinations.EditProfileScreenDestination
 import com.ss.skillsync.home.HomeNavigator
 import com.ss.skillsync.home.destinations.HomeScreenDestination
-import com.ss.skillsync.model.Session
 import com.ss.skillsync.onboarding.OnboardingNavigator
 import com.ss.skillsync.onboarding.destinations.OnboardingScreenDestination
 import com.ss.skillsync.profile.mentor.destinations.MentorProfileScreenDestination
 import com.ss.skillsync.profile.user.destinations.UserProfileScreenDestination
 import com.ss.skillsync.session.making.destinations.SessionMakingScreenDestination
+import com.ss.skillsync.settings.SettingsNavigator
+import com.ss.skillsync.settings.destinations.PrivacyPolicyScreenDestination
 import com.ss.skillsync.settings.destinations.SettingsScreenDestination
 import com.ss.skillsync.signin.SignInNavigator
 import com.ss.skillsync.signin.destinations.SignInScreenDestination
@@ -26,7 +29,9 @@ class CommonGraphNavigator(
     SignInNavigator,
     SignupNavigator,
     OnboardingNavigator,
-    HomeNavigator {
+    HomeNavigator,
+    SettingsNavigator,
+    EditProfileNavigator {
 
     override fun leaveWelcomeScreen() {
         navController.navigate(SignupScreenDestination)
@@ -45,11 +50,19 @@ class CommonGraphNavigator(
     }
 
     override fun navigateToOnboarding() {
-        navController.navigate(OnboardingScreenDestination)
+        navController.navigate(OnboardingScreenDestination((false)))
     }
 
     fun navigate(route: String) {
         navController.navigate(route)
+    }
+
+    override fun navigateToOnboarding(fromEditProfile: Boolean) {
+        navController.navigate(OnboardingScreenDestination(fromEditProfile))
+    }
+
+    override fun popBackToEditProfile() {
+        navController.popBackStack(EditProfileScreenDestination.route, false)
     }
 
     override fun navigateToProfile() {
@@ -64,12 +77,20 @@ class CommonGraphNavigator(
         navController.navigate(MentorProfileScreenDestination)
     }
 
-    override fun navigateToSessionDetails(session: Session) {
-        TODO("Not yet implemented")
-    }
-
     override fun navigateToMatch() {
         navController.navigate(SessionMakingScreenDestination)
+    }
+
+    override fun navigateToSignInScreen() {
+        navController.navigate(SignInScreenDestination)
+    }
+
+    override fun navigateToPrivacyPolicyScreen() {
+        navController.navigate(PrivacyPolicyScreenDestination)
+    }
+
+    override fun navigateToEditProfileScreen() {
+        navController.navigate(EditProfileScreenDestination)
     }
 
     override fun popBackStack() {

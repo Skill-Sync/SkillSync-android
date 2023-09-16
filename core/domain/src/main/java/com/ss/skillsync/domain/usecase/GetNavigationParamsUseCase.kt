@@ -19,7 +19,8 @@ class GetNavigationParamsUseCase @Inject constructor(
                 val activeUser = userRepository.getActiveUser()
                 val isUserActive = activeUser.isSuccess
                 val isOnboardingComplete = activeUser.getOrNull()?.onboardingCompleted ?: false
-                Result.success(NavigationParams(isFirstOpen, isUserActive, isOnboardingComplete))
+                val userImage = activeUser.getOrNull()?.profilePictureUrl
+                Result.success(NavigationParams(isFirstOpen, isUserActive, isOnboardingComplete, userImage))
             } catch (e: Exception) {
                 Result.failure(e)
             }

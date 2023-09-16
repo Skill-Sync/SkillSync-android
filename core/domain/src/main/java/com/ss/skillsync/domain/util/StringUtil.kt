@@ -10,19 +10,38 @@ object StringUtil {
     }
 
     fun isUrl(url: String?): Boolean {
-        return url?.startsWith("http") ?: false
+        val regex =
+            "^(https?://)?[A-Za-z0-9.-]+(/[A-Za-z0-9%.-]*)*(\\?[A-Za-z0-9%.-]*)?$"
+        return url?.contains(Regex(regex)) ?: false
     }
 
     fun reformatHourTo12System(hour: String): String {
-        return if (hour.startsWith("0")) {
-            "12${hour.substring(1)}".padEnd(4, '0')
-        } else {
-            val timeSplit = hour.split(" ")
-            val amPm = timeSplit[1]
-            val time = timeSplit[0].split(":")
-            val hour = time[0].padStart(2, '0')
-            val minute = time[1].padStart(2, '0')
-            "$hour:$minute $amPm"
+        val parts = hour.split(" ")
+        if (parts.size == 2) {
+            val timePart = parts[0]
+            val amPmPart = parts[1]
+
+            val timeComponents = timePart.split(":")
+            if (timeComponents.size == 2) {
+                val hourValue = timeComponents[0].toIntOrNull() ?: 0
+                val minuteValue = timeComponents[1].toIntOrNull() ?: 0
+
+                val formattedHour = when {
+                    hourValue == 0 -> "12"
+                    hourValue < 10 -> "0$hourValue"
+                    else -> hourValue.toString()
+                }
+
+                val formattedMinute = when {
+                    minuteValue < 10 -> "0$minuteValue"
+                    else -> minuteValue.toString()
+                }
+
+                return "$formattedHour:$formattedMinute $amPmPart"
+            }
         }
+
+        // Return the input unchanged if it doesn't match the expected format
+        return hour
     }
 }
